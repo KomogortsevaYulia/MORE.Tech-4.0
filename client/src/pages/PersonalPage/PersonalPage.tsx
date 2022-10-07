@@ -110,7 +110,7 @@ const PersonalPage = () => {
         Заказы
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {transferRuble && transferRuble?.map((item) => <li>{item.id}</li>)}
+        {transferRuble && transferRuble?.map((item) => <li>{item.id} {item.amount}</li>)}
       </TabPanel>
     </div>
   );

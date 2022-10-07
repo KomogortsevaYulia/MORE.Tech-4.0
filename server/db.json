@@ -73,8 +73,26 @@
   "transferRuble": [
     {
       "id": 1,
-      "fromId": 3,
+      "userId": 3,
       "toId": 2,
+      "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toPublicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "amount": 0.9,
+      "why": "За кофе"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "toId": 4,
+      "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toPublicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "amount": 0.9,
+      "why": "За кофе"
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "toId": 3,
       "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
       "toPublicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "amount": 0.9,
