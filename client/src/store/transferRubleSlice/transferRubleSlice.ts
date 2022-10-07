@@ -18,7 +18,7 @@ const initialState: TransferRubleStateState = {
 export const fetchTransferRubleByUsers = createAsyncThunk(
   "transferRuble/fetchTransferRubleByUsers",
   async (id: number) => {
-    return MainApi.fetchUserById(id);
+    return MainApi.fetchTransferRubleByUsers(id);
   }
 );
 

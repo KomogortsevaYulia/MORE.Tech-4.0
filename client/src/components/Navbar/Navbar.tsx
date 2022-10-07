@@ -21,6 +21,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { ROUTES } from "../../const/routes";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppRouter from "../AppRouter/AppRouter";
+import { useAppSelector } from "../../hooks/hooks";
 
 const drawerWidth = 240;
 
@@ -97,6 +98,8 @@ export default function MiniDrawer() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { user } = useAppSelector((state) => state.user);
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -143,8 +146,8 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {Object.values(ROUTES).map(
-            ({ name, url }, index) =>
-              url !== "/login" && (
+            ({ name, url, roleId }, index) =>
+              (roleId === 0 || roleId === user?.roleId) && (
                 <ListItem
                   key={name}
                   disablePadding

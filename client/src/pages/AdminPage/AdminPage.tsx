@@ -8,8 +8,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchTransferRubleByUsers } from "../../store/transferRubleSlice/transferRubleSlice";
+import { useAppSelector } from "../../hooks/hooks";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,10 +43,12 @@ function a11yProps(index: number) {
   };
 }
 
-const PersonalPage = () => {
+const AdminPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
-  React.useEffect(() => {}, [user]);
+  React.useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -55,43 +56,8 @@ const PersonalPage = () => {
     setValue(newValue);
   };
 
-  const dispatch = useAppDispatch();
-
-  const { transferRuble } = useAppSelector((state) => state.transferRuble);
-  React.useEffect(() => {
-    console.log(transferRuble);
-  }, [transferRuble]);
-
-  React.useEffect(() => {
-    dispatch(fetchTransferRubleByUsers(user!.id));
-  }, []);
-
   return (
     <div>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Avatar
-            alt="ФИО"
-            src="/static/images/avatar/1.jpg"
-            sx={{ width: 150, height: 150 }}
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          >
-            <ListItem>
-              <ListItemText primary={user?.FIO} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Статус" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Баланс" />
-            </ListItem>
-          </List>
-        </Grid>
-      </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -110,10 +76,10 @@ const PersonalPage = () => {
         Заказы
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {transferRuble && transferRuble?.map((item) => <li>{item.id}</li>)}
+        Начисления/списания
       </TabPanel>
     </div>
   );
 };
 
-export default PersonalPage;
+export default AdminPage;
