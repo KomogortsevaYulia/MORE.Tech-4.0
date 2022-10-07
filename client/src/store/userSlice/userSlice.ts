@@ -3,7 +3,7 @@ import { RootState, AppThunk } from "../store";
 import { MainApi, IUser } from "../../api/mainApi";
 
 export interface UserState {
-  user: IUser[] | null;
+  user: IUser | null;
   fethcUserStatus: string | null;
   fetchUserError: string | null;
 }

@@ -8,6 +8,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useAppSelector } from "../../hooks/hooks";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,8 +43,14 @@ function a11yProps(index: number) {
   };
 }
 
-
 const PersonalPage = () => {
+
+  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+
+  React.useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -63,7 +70,7 @@ const PersonalPage = () => {
         <Grid item xs={2}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             <ListItem>
-              <ListItemText primary="ФИО" />
+              <ListItemText primary={user?.FIO} />
             </ListItem>
             <ListItem>
               <ListItemText primary="Статус" />
