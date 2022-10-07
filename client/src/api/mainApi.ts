@@ -50,12 +50,24 @@ export class MainApi {
   }
 
   static async fetchTransferRubleByUsers(id: number) {
-    return axios
-      .get<ITransferRuble[]>(`${apiUrl}/transferRuble?fromId=${id}`)
+    
+    const transfer=(await axios
+      .get<ITransferRuble[]>(`${apiUrl}/transferRuble?fromId=${id}&_expand=user`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
-      });
+      }))
+    
+
+    const users=(await axios
+      .get<IUser[]>(`${apiUrl}/users`)
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      }))
+
+    return transfer.map((item: any[]) => item.push(users.filter((el) => el.id===item.toId)));
   }
 }
