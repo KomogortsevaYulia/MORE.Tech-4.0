@@ -1,20 +1,25 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": 4,
+      "roleId": 4,
+      "privateKey": "4e29114ac856f75adbe44fd20bc52c39780b3328856dfeeb4aff2271637b8b27",
+      "publicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "FIO": "Работяга (Бунтует)"
+    },
+    {
+      "id": 3,
       "roleId": 3,
-      "privateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "publicKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "publicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "privateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
       "FIO": "Первых Алексей"
-
     },
     {
       "id": 2,
       "roleId": 2,
-      "privateKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
-      "publicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "publicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "privateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "FIO": "Лукаш Олег"
-
     },
     {
       "id": 1,
