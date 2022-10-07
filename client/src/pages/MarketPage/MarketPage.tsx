@@ -1,7 +1,10 @@
 import React from "react";
+import Shop from "../../components/Shop/Shop";
 
 const MarketPage = () => {
-  return <div>MarketPage</div>;
+  return <div>
+    <Shop/>
+  </div>;
 };
 
 export default MarketPage;
