@@ -16,6 +16,14 @@ export interface IProduct {
   title: string;
 }
 
+export interface IActivities {
+  id: number;
+  typeId: number;
+  title: string;
+  description: string;
+  date: string;
+}
+
 export interface ITransferRuble {
   id: number;
   userId: number;
@@ -72,15 +80,25 @@ export class MainApi {
   }
 
   static async fetchTransferRubleByUsers(id: number) {
-    const transfer = await axios
+    const transfer0 = await axios
       .get<ITransferRuble[]>(
-        `${apiUrl}/transferRuble?fromId=${id}&_expand=user`
+        `${apiUrl}/transferRuble?userId=${id}&_expand=user`
       )
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
       });
+
+    transfer0.push( await axios
+      .get<ITransferRuble[]>(
+        `${apiUrl}/transferRuble?toId=${id}&_expand=user`
+      )
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      }))
 
     const users = await axios
       .get<IUser[]>(`${apiUrl}/users`)
@@ -90,9 +108,20 @@ export class MainApi {
         return err;
       });
 
-    return transfer.map((item: any) => ({
+    return transfer0.map((item: any) => ({
       ...item,
       users2: users.find((user: IUser) => user.id === item.toId),
     }));
+  }
+
+
+  static async fetchActivities() {
+    return axios
+      .get<IActivities[]>(`${apiUrl}/activities`)
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
   }
 }

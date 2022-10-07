@@ -10,6 +10,14 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchTransferRubleByUsers } from "../../store/transferRubleSlice/transferRubleSlice";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -110,7 +118,34 @@ const PersonalPage = () => {
         Заказы
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {transferRuble && transferRuble?.map((item) => <li>{item.id} {item.amount}</li>)}
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align="right">ФИО кто</TableCell>
+                <TableCell align="right">ФИО</TableCell>
+                <TableCell align="right">Сколько</TableCell>
+                <TableCell align="right">Причина</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {transferRuble && transferRuble?.map((row) => (
+                <TableRow
+                  key={row.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.users.FIO}
+                  </TableCell>
+                  <TableCell align="right">{row.users2.FIO}</TableCell>
+                  <TableCell align="right">{row.amount}</TableCell>
+                  <TableCell align="right">{row.why}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </TabPanel>
     </div>
   );

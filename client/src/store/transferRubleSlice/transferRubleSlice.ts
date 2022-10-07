@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
-import { MainApi, ITransferRuble } from "../../api/mainApi";
+import { MainApi, ITransferRuble, ITransferRubleWithUsers } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
 
 export interface TransferRubleStateState {
-  transferRuble: ITransferRuble[] | null;
+  transferRuble: ITransferRubleWithUsers[] | null;
   fethcTransferRubleStatus: LoadingStatus | null;
   fetchTransferRubleError: string | null;
 }
