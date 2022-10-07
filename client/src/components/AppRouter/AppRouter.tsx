@@ -12,6 +12,7 @@ import MarketPage from "../../pages/MarketPage/MarketPage";
 import PersonalPage from "../../pages/PersonalPage/PersonalPage";
 import TransactionsPage from "../../pages/TransactionsPage/TransactionsPage";
 import { LoadingStatuses, ROLES_IDS } from "../../types/enums";
+import Navbar from "../Navbar/Navbar";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const AppRouter = () => {
@@ -44,26 +45,28 @@ const AppRouter = () => {
             />
           }
         >
-          <Route
-            element={
-              <ProtectedRoute
-                isLoading={false}
-                isSuccess={user?.roleId === ROLES_IDS.ADMIN}
-                onFailRedirectPath="/"
-              />
-            }
-          >
-            <Route path={ROUTES.admin.url} element={<AdminPage />} />
+          <Route element={<Navbar />}>
+            <Route
+              element={
+                <ProtectedRoute
+                  isLoading={false}
+                  isSuccess={user?.roleId === ROLES_IDS.ADMIN}
+                  onFailRedirectPath="/"
+                />
+              }
+            >
+              <Route path={ROUTES.admin.url} element={<AdminPage />} />
+            </Route>
+            <Route path={ROUTES.home.url} element={<HomePage />} />
+            <Route path={ROUTES.activities.url} element={<ActivitiesPage />} />
+            <Route path={ROUTES.analytic.url} element={<AnalyticPage />} />
+            <Route path={ROUTES.market.url} element={<MarketPage />} />
+            <Route path={ROUTES.personal.url} element={<PersonalPage />} />
+            <Route
+              path={ROUTES.transactions.url}
+              element={<TransactionsPage />}
+            />
           </Route>
-          <Route path={ROUTES.home.url} element={<HomePage />} />
-          <Route path={ROUTES.activities.url} element={<ActivitiesPage />} />
-          <Route path={ROUTES.analytic.url} element={<AnalyticPage />} />
-          <Route path={ROUTES.market.url} element={<MarketPage />} />
-          <Route path={ROUTES.personal.url} element={<PersonalPage />} />
-          <Route
-            path={ROUTES.transactions.url}
-            element={<TransactionsPage />}
-          />
         </Route>
       </Routes>
     </>

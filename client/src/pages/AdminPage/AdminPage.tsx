@@ -1,14 +1,14 @@
 import React from "react";
-import Avatar from "@mui/material/Avatar";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { fetchUsers } from "../../store/adminSlice/adminSlice";
+import UsersTable from "./UsersTable/UsersTable";
+import AddModal from "./AddModal/AddModal";
+import { IUser } from "../../api/mainApi";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,11 +44,12 @@ function a11yProps(index: number) {
 }
 
 const AdminPage = () => {
-  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { users } = useAppSelector((state) => state.admin);
 
   React.useEffect(() => {
-    console.log(user);
-  }, [user]);
+    dispatch(fetchUsers());
+  }, []);
 
   const [value, setValue] = React.useState(0);
 
@@ -56,29 +57,68 @@ const AdminPage = () => {
     setValue(newValue);
   };
 
+  const [currentUser, setCurrentUser] = React.useState<IUser | null>(null);
+
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const openModalClick = React.useCallback(
+    (user: IUser) => {
+      setOpenModal(true);
+      setCurrentUser(user);
+    },
+    [setOpenModal]
+  );
+
+  const closeModal = React.useCallback(() => {
+    setOpenModal(false);
+  }, [setOpenModal]);
+
   return (
-    <div>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Активности" {...a11yProps(0)} />
-          <Tab label="Заказы" {...a11yProps(1)} />
-          <Tab label="Начисления/списания" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        Активности
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Заказы
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Начисления/списания
-      </TabPanel>
-    </div>
+    <>
+      <div>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Пользователи и зачисления" {...a11yProps(0)} />
+            <Tab label="Заказы" {...a11yProps(1)} />
+            <Tab label="Начисления/списания" {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          {/* <ul>
+          {users?.map((user) => (
+            <li>{user.FIO}</li>
+          ))}
+        </ul> */}
+          <UsersTable
+            data={
+              users?.map((user) => ({
+                ...user,
+                balance: 0,
+                add: (
+                  <Button
+                    variant="outlined"
+                    onClick={() => openModalClick(user)}
+                  >
+                    Начислить
+                  </Button>
+                ),
+              })) || []
+            }
+          />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Заказы
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          Начисления/списания
+        </TabPanel>
+      </div>
+      <AddModal open={openModal} handleClose={closeModal} user={currentUser} />
+    </>
   );
 };
 

@@ -18,12 +18,24 @@ export interface IProduct {
 
 export interface ITransferRuble {
   id: number;
-  fromId: number;
+  userId: number;
   toId: number;
   fromPrivateKey: string;
   toPublicKey: string;
   amount: number;
   why: string;
+}
+
+export interface ITransferRubleWithUsers {
+  id: number;
+  userId: number;
+  toId: number;
+  fromPrivateKey: string;
+  toPublicKey: string;
+  amount: number;
+  why: string;
+  users: IUser;
+  users2: IUser;
 }
 
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3004";
@@ -33,6 +45,16 @@ export class MainApi {
     return axios
       .get<IUser[]>(`${apiUrl}/users?id=${id}`)
       .then((response) => response.data[0])
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }
+
+  static async fetchUsers() {
+    return axios
+      .get<IUser[]>(`${apiUrl}/users`)
+      .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
@@ -50,24 +72,27 @@ export class MainApi {
   }
 
   static async fetchTransferRubleByUsers(id: number) {
-    
-    const transfer=(await axios
-      .get<ITransferRuble[]>(`${apiUrl}/transferRuble?fromId=${id}&_expand=user`)
+    const transfer = await axios
+      .get<ITransferRuble[]>(
+        `${apiUrl}/transferRuble?fromId=${id}&_expand=user`
+      )
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
-      }))
-    
+      });
 
-    const users=(await axios
+    const users = await axios
       .get<IUser[]>(`${apiUrl}/users`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
-      }))
+      });
 
-    return transfer.map((item: any[]) => item.push(users.filter((el) => el.id===item.toId)));
+    return transfer.map((item: any) => ({
+      ...item,
+      users2: users.find((user: IUser) => user.id === item.toId),
+    }));
   }
 }
