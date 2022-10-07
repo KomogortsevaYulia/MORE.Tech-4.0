@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
 import { MainApi, IUser } from "../../api/mainApi";
+import { LoadingStatus } from "../../types/types";
 
 export interface UserState {
   user: IUser | null;
-  fethcUserStatus: string | null;
+  fethcUserStatus: LoadingStatus | null;
   fetchUserError: string | null;
 }
 

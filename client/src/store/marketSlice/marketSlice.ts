@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
 import { MainApi, IProduct } from "../../api/mainApi";
+import { LoadingStatus } from "../../types/types";
 
 export interface MarketState {
   products: IProduct[] | null;
-  fetchProductsStatus: string | null;
+  fetchProductsStatus: LoadingStatus | null;
   fetchProductsError: string | null;
 }
 
