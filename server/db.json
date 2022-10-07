@@ -1,19 +1,107 @@
 {
-  "posts": [
+  "users": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "roleId": 3,
+      "privateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "publicKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "FIO": "Первых Алексей"
+
+    },
+    {
+      "id": 2,
+      "roleId": 2,
+      "privateKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "publicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "FIO": "Лукаш Олег"
+
+    },
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "roleId": 1,
+      "privateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "publicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "FIO": "Админ Админович"
     }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "role": [
+    {
+      "title": "Админ",
+      "id": 1
+    },
+    {
+      "title": "HR",
+      "id": 2
+    },
+    {
+      "title": "Руководитель",
+      "id": 3
+    },
+    {
+      "title": "Сотрудник",
+      "id": 4
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "typeId": 2,
+      "title": "Конкурс мемов",
+      "description": "ЛАЛАЛА",
+      "date": "2022-10-07"
+    }
+  ],
+  "typeActivity": [
+    {
+      "title": "Битва",
+      "id": 1
+    },
+    {
+      "title": "Челлендж",
+      "id": 2
+    },
+    {
+      "title": "Обучение",
+      "id": 3
+    }
+  ],
+  "transferRuble": [
+    {
+      "id": 1,
+      "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toPublicKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "amount": 0.9,
+      "why": "За кофе"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "priceRuble": 25,
+      "count": 10,
+      "description": "ЛАЛАЛА",
+      "title": "Футболка ВТБ"
+    },
+    {
+      "id": 2,
+      "priceRuble": 5,
+      "count": 19,
+      "description": "ЛАЛАЛА",
+      "title": "Ручка ВТБ"
+    }
+  ],
+  "basket": [
+    {
+      "id": 1,
+      "usersId": 2,
+      "productsId": 1,
+      "count": 1
+    },
+    {
+      "id": 1,
+      "usersId": 2,
+      "productsId": 2,
+      "count": 2
+    }
+  ]
 }
