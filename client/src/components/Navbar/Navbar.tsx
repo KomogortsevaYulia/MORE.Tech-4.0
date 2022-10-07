@@ -19,7 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { ROUTES } from "../../const/routes";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AppRouter from "../AppRouter/AppRouter";
 
 const drawerWidth = 240;
@@ -95,6 +95,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -141,33 +142,42 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {Object.values(ROUTES).map(({ name, url }, index) => (
-            <ListItem
-              key={name}
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => navigate(url)}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {Object.values(ROUTES).map(
+            ({ name, url }, index) =>
+              url !== "/login" && (
+                <ListItem
+                  key={name}
+                  disablePadding
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    display: "block",
+                    background: location.pathname === url ? "#E0FFDF" : "",
                   }}
+                  onClick={() => navigate(url)}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={name} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={name}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              )
+          )}
         </List>
         <Divider />
         {/* <List>

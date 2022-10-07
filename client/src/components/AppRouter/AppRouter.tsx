@@ -10,24 +10,51 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import MarketPage from "../../pages/MarketPage/MarketPage";
 import PersonalPage from "../../pages/PersonalPage/PersonalPage";
 import TransactionsPage from "../../pages/TransactionsPage/TransactionsPage";
+import { LoadingStatuses } from "../../types/enums";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const AppRouter = () => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   React.useEffect(() => {
     console.log(user);
   }, [user]);
 
   return (
-    <Routes>
-      <Route path={ROUTES.home.url} element={<HomePage />} />
-      <Route path={ROUTES.login.url} element={<LoginPage />} />
-      <Route path={ROUTES.activities.url} element={<ActivitiesPage />} />
-      <Route path={ROUTES.analytic.url} element={<AnalyticPage />} />
-      <Route path={ROUTES.market.url} element={<MarketPage />} />
-      <Route path={ROUTES.personal.url} element={<PersonalPage />} />
-      <Route path={ROUTES.transactions.url} element={<TransactionsPage />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route
+          element={
+            <ProtectedRoute
+              isLoading={fethcUserStatus === LoadingStatuses.LOADING}
+              isSuccess={user !== null}
+              onSuccessRedirectPath="/"
+            />
+          }
+        >
+          <Route path={ROUTES.login.url} element={<LoginPage />} />
+        </Route>
+        <Route
+          element={
+            <ProtectedRoute
+              isLoading={fethcUserStatus === LoadingStatuses.LOADING}
+              isSuccess={user !== null}
+              onFailRedirectPath={ROUTES.login.url}
+            />
+          }
+        >
+          <Route path={ROUTES.home.url} element={<HomePage />} />
+          <Route path={ROUTES.activities.url} element={<ActivitiesPage />} />
+          <Route path={ROUTES.analytic.url} element={<AnalyticPage />} />
+          <Route path={ROUTES.market.url} element={<MarketPage />} />
+          <Route path={ROUTES.personal.url} element={<PersonalPage />} />
+          <Route
+            path={ROUTES.transactions.url}
+            element={<TransactionsPage />}
+          />
+        </Route>
+      </Routes>
+    </>
   );
 };
 
