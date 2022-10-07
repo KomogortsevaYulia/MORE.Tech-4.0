@@ -97,7 +97,7 @@ const AdminPage = () => {
             data={
               users?.map((user) => ({
                 ...user,
-                balance: 0,
+                balance: +user.balance.coinsAmount,
                 add: (
                   <Button
                     variant="outlined"
@@ -117,7 +117,11 @@ const AdminPage = () => {
           Начисления/списания
         </TabPanel>
       </div>
-      <AddModal open={openModal} handleClose={closeModal} user={currentUser} />
+      <AddModal
+        open={openModal}
+        handleClose={closeModal}
+        currentUser={currentUser}
+      />
     </>
   );
 };

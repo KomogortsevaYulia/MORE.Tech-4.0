@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BalanceFiat, BlockchainApi } from "./blockchainApi";
 
 export interface IUser {
   id: number;
@@ -6,6 +7,15 @@ export interface IUser {
   privateKey: string;
   publicKey: string;
   FIO: string;
+}
+
+export interface IUserWithBalance {
+  id: number;
+  roleId: number;
+  privateKey: string;
+  publicKey: string;
+  FIO: string;
+  balance: BalanceFiat;
 }
 
 export interface IProduct {
@@ -42,7 +52,7 @@ export interface ITransferRubleWithUsers {
   toPublicKey: string;
   amount: number;
   why: string;
-  users: IUser;
+  user: IUser;
   users2: IUser;
 }
 
@@ -60,13 +70,27 @@ export class MainApi {
   }
 
   static async fetchUsers() {
-    return axios
+    const users = await axios
       .get<IUser[]>(`${apiUrl}/users`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
       });
+
+    const promises = [];
+
+    for (let user of users) {
+      promises.push(
+        BlockchainApi.balanceFiat(user.publicKey).then(
+          (balance: BalanceFiat) => (user.balance = balance)
+        )
+      );
+    }
+
+    await Promise.all(promises);
+
+    return users as IUserWithBalance[];
   }
 
   static async fetchMarketProducts() {
@@ -90,15 +114,17 @@ export class MainApi {
         return err;
       });
 
-    transfer0.push( await axios
-      .get<ITransferRuble[]>(
-        `${apiUrl}/transferRuble?toId=${id}&_expand=user`
-      )
-      .then((response) => response.data)
-      .catch((err) => {
-        console.log(err);
-        return err;
-      }))
+    transfer0.push(
+      ...(await axios
+        .get<ITransferRuble[]>(
+          `${apiUrl}/transferRuble?toId=${id}&_expand=user`
+        )
+        .then((response) => response.data)
+        .catch((err) => {
+          console.log(err);
+          return err;
+        }))
+    );
 
     const users = await axios
       .get<IUser[]>(`${apiUrl}/users`)
@@ -113,7 +139,6 @@ export class MainApi {
       users2: users.find((user: IUser) => user.id === item.toId),
     }));
   }
-
 
   static async fetchActivities() {
     return axios

@@ -12,7 +12,15 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        height: "100vh",
+        alignItems: "center",
+        gap: "16px",
+      }}
+    >
       <Button variant="outlined" onClick={() => login(1)}>
         Админчик
       </Button>

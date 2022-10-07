@@ -10,14 +10,13 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchTransferRubleByUsers } from "../../store/transferRubleSlice/transferRubleSlice";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -130,19 +129,20 @@ const PersonalPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {transferRuble && transferRuble?.map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.users.FIO}
-                  </TableCell>
-                  <TableCell align="right">{row.users2.FIO}</TableCell>
-                  <TableCell align="right">{row.amount}</TableCell>
-                  <TableCell align="right">{row.why}</TableCell>
-                </TableRow>
-              ))}
+              {transferRuble &&
+                transferRuble?.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.user.FIO}
+                    </TableCell>
+                    <TableCell align="right">{row.users2.FIO}</TableCell>
+                    <TableCell align="right">{row.amount}</TableCell>
+                    <TableCell align="right">{row.why}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

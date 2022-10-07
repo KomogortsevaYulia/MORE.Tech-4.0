@@ -20,7 +20,6 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { ROUTES } from "../../const/routes";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import AppRouter from "../AppRouter/AppRouter";
 import { useAppSelector } from "../../hooks/hooks";
 
 const drawerWidth = 240;
@@ -118,39 +117,38 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      {/* <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" noWrap component="div">
             Нозвание страницы
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
+          {open ? (
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
+          ) : (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
         </DrawerHeader>
-        <Divider />
+        {/* <Divider /> */}
         <List>
           {Object.values(ROUTES).map(
-            ({ name, url, roleId }, index) =>
+            ({ name, url, roleId, icon }, index) =>
               (roleId === 0 || roleId === user?.roleId) && (
                 <ListItem
                   key={name}
@@ -175,7 +173,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                         justifyContent: "center",
                       }}
                     >
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                      {icon ? icon : <MailIcon />}
                     </ListItemIcon>
                     <ListItemText
                       primary={name}
@@ -186,7 +184,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
               )
           )}
         </List>
-        <Divider />
+        {/* <Divider /> */}
         {/* <List>
           {["All mail", "Trash", "Spam"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
