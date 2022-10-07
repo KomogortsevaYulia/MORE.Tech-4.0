@@ -8,7 +8,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { fetchTransferRubleByUsers } from "../../store/transferRubleSlice/transferRubleSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,7 +49,7 @@ const PersonalPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   React.useEffect(() => {
-    console.log(user);
+    
   }, [user]);
 
   const [value, setValue] = React.useState(0);
@@ -57,6 +58,20 @@ const PersonalPage = () => {
     setValue(newValue);
   };
   
+  const dispatch = useAppDispatch();
+
+  const { transferRuble } = useAppSelector((state) => state.transferRuble);
+  React.useEffect(() => {
+   console.log(transferRuble)
+    
+  }, [transferRuble]);
+
+
+  React.useEffect(() => {
+    dispatch(fetchTransferRubleByUsers(user!.id))
+    
+  }, []);
+
   return (
     <div>
       <Grid container spacing={2}>
@@ -95,7 +110,9 @@ const PersonalPage = () => {
         Заказы
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Начисления/списания
+        {transferRuble && transferRuble?.map(item => (
+          <li>{item.id}</li>
+        ))}
       </TabPanel>
     </div>
   )

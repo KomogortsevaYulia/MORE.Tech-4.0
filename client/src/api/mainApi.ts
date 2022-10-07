@@ -16,6 +16,16 @@ export interface IProduct {
   title: string;
 }
 
+export interface ITransferRuble {
+  id: number;
+  fromId: number;
+  toId: number;
+  fromPrivateKey: string;
+  toPublicKey: string;
+  amount: number;
+  why: string;
+}
+
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3004";
 
 export class MainApi {
@@ -39,9 +49,9 @@ export class MainApi {
       });
   }
 
-  static async fetchTransferRubleByUsers() {
+  static async fetchTransferRubleByUsers(id: number) {
     return axios
-      .get<IProduct[]>(`${apiUrl}/transferRuble?fromId=3`)
+      .get<ITransferRuble[]>(`${apiUrl}/transferRuble?fromId=${id}`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);

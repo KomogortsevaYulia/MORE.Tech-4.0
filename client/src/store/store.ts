@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import marketSlice from "./marketSlice/marketSlice";
 import userSlice from "./userSlice/userSlice";
+import transferRubleSlice from "./transferRubleSlice/transferRubleSlice";
 
 export const store = configureStore({
   reducer: {
     market: marketSlice,
     user: userSlice,
+    transferRuble: transferRubleSlice
   },
 });
 
