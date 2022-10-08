@@ -115,7 +115,7 @@ const ActivitiesPage = () => {
             <div className={styles.filtersItem}>
               {user?.roleId === 1 ? (
                 <Button variant="contained" className="mt-4" onClick={handleOpen}>
-                Создать активность
+                  Создать активность
                 </Button>
               ) : (
                 null
@@ -184,7 +184,7 @@ const ActivitiesPage = () => {
         </div>
       </div>
     </div>
-    
+
   );
 };
 

@@ -46,7 +46,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
   const [currentActivity, setCurrentActivity] = React.useState(row);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const isRec = () => ()
+  //const isRec = () => ()
   return (
     <div className={styles.activity}>
       <Modal
