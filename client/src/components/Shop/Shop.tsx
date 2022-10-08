@@ -26,24 +26,26 @@ export default function Shop() {
 
   const filterProducts = () => {
     if (products) {
-      setFilteredProducts(
-        products!.filter(function (el: IProduct) {
-          return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
-        })
-      );
+		if (priceMax === 0){
+			setPriceMax(maxPrice);
+		}
+
+		setFilteredProducts(
+			products!.filter(function (el: IProduct) {
+			return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
+			})
+		);
     }
   };
 
   const [priceMin, setPriceMin] = React.useState(0);
   const handleChangePriceMin = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPriceMin(Number(event.target.value));
-    // filterProducts([priceMin, priceMax]);
   };
 
   const [priceMax, setPriceMax] = React.useState(maxPrice);
   const handleChangePriceMax = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPriceMax(Number(event.target.value));
-    // filterProducts([priceMin, priceMax]);
   };
 
   React.useEffect(() => {
@@ -64,38 +66,34 @@ export default function Shop() {
           <div className="card">
             <div className="card-body">
               <div className="mb-4 card-title">Filter</div>
-              <div>
-                <h5 className="mb-3">Price</h5>
+				<div>
+					<h5 className="mb-3">Price</h5>
 
-                <div className="">
-                  <label className="form-label">Price</label>
-
-                  <div className="input-group">
-                    <span className="input-group-text">c</span>
-                    <input
-                      id="minPrice"
-                      type="number"
-                      className="form-control"
-                      placeholder="Min."
-                      value={priceMin.toString()}
-                      onChange={handleChangePriceMin}
-                    ></input>
-                    <span className="input-group-text">по</span>
-                    <input
-                      id="maxPrice"
-                      type="number"
-                      className="form-control"
-                      placeholder="Max."
-                      value={priceMax.toString()}
-                      onChange={handleChangePriceMax}
-                    ></input>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 pt-3">
-                <h5 className="mb-3">Price</h5>
-              </div>
-            </div>
+					<div className="input-group">
+						<span className="input-group-text">c</span>
+						<input
+							id="minPrice"
+							type="number"
+							className="form-control"
+							placeholder="Min."
+							value={priceMin.toString()}
+							onChange={handleChangePriceMin}
+						></input>
+						<span className="input-group-text">по</span>
+						<input
+							id="maxPrice"
+							type="number"
+							className="form-control"
+							placeholder="Max."
+							value={priceMax.toString()}
+							onChange={handleChangePriceMax}
+						></input>
+					</div>
+					<div className="mt-4 pt-3">
+						<h5 className="mb-3">Price</h5>
+					</div>
+				</div>
+			</div>
           </div>
         </div>
 
