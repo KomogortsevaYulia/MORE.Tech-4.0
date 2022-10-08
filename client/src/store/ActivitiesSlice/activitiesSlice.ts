@@ -11,7 +11,7 @@ import { LoadingStatus } from "../../types/types";
 
 export interface ActivitiesStateState {
   Activities: IActivities[] | null;
-  ActivitiesRecords: IActivityRecords[] | null;
+  ActivitiesRecords: IActivities[] | null;
   fethcActivitiesStatus: LoadingStatus | null;
   fetchActivitiesError: string | null;
 }
