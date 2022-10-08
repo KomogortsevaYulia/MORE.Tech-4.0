@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
-import { MainApi,  IOrder } from "../../api/mainApi";
+import { MainApi, IOrder } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
 
 export interface OrderState {
@@ -18,7 +18,7 @@ const initialState: OrderState = {
 export const fetchOrderWithUser = createAsyncThunk(
   "order/fetchOrderWithUser",
   async (id: number) => {
-    return MainApi.fetchTransferRubleByUsers(id);
+    return MainApi.fetchOrderWithUser(id);
   }
 );
 

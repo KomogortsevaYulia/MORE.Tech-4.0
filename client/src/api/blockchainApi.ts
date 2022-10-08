@@ -1,12 +1,14 @@
+import { AxiosResponse } from "axios";
+
 export interface TransactionResponse {
   transactionHash: string;
 }
 
 export interface BalanceNFT {
-  balance: {
+  balance: Array<{
     URI: string; // унифицированный (единообразный) идентификатор ресурса, сопряженный с NFT-коллекцией
     tokens: []; // массив NFT. Т.е. 5,3,4,6 - уникальные идентификаторы отдельного NFT в NFT-коллекции
-  };
+  }>;
 }
 
 export interface BalanceFiat {
@@ -172,8 +174,8 @@ export class BlockchainApi {
   static balanceNFT(publicKey: string) {
     return axios
       .get(`${baseUrl}/v1/wallets/${publicKey}/nft/balance`, {})
-      .then(function (response: BalanceNFT) {
-        return response;
+      .then(function (response: AxiosResponse) {
+        return response.data;
       })
       .catch(function (error: any) {
         return error;
