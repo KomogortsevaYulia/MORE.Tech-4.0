@@ -31,7 +31,6 @@ const ShopItem: React.FC<IShopItemProps> = ({
         const product = { product: { ...shopItem }, user: { ...user } } as IProductWithCustomer;
         dispatch(addToCart(product));
         setOpen(true);
-        console.log('ASdASD')
     };
 
     const [openModal, setOpenModal] = React.useState(false);
