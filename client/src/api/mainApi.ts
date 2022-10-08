@@ -1,4 +1,5 @@
 import axios from "axios";
+import { number } from "echarts";
 import { BalanceFiat, BalanceNFT, BlockchainApi } from "./blockchainApi";
 
 export interface IUser {
@@ -236,5 +237,30 @@ export class MainApi {
         console.log(err);
         return err;
       });
+  }
+
+  static async fetchOrderForAnalytic() {
+    
+    const orders = await axios
+      .get<IOrder[]>(
+        `${apiUrl}/orders?&_expand=user&_expand=product`
+      )
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+      
+      let res:{[key:string]:number} = {};
+
+      return orders.map((item: any) => ({
+
+        if (res.hasOwnProperty(item.product.title)) {
+          res[item.product.title]=res[item.product.title]+item.count
+        }
+        else{
+          res[item.product.title]=item.count
+        }
+      }));
   }
 }
