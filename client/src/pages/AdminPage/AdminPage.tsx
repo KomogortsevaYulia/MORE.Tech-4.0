@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -8,17 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchNFTBalance, fetchUsers } from "../../store/adminSlice/adminSlice";
 import UsersTable from "./UsersTable/UsersTable";
 import AddModal from "./AddModal/AddModal";
-import { IUser } from "../../api/mainApi";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
   IconButton,
 } from "@mui/material";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { GridRowId } from "@mui/x-data-grid";
-import { setUseProxies } from "immer";
 import NftCard from "./NftCard/NftCard";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
@@ -63,7 +56,7 @@ const AdminPage = () => {
   React.useEffect(() => {
     dispatch(fetchUsers());
     dispatch(fetchNFTBalance(user!.publicKey));
-  }, []);
+  }, [user, dispatch]);
 
   const [value, setValue] = React.useState(0);
 
