@@ -37,18 +37,12 @@ const Accordion = styled((props: AccordionProps) => (
 
 const ActivitiesPage = () => {
 
-  const [expanded, setExpanded] = React.useState<string | false>(false);
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
 
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   React.useEffect(() => { }, [user]);
 
-  const [value, setValue] = React.useState(0);
 
   const dispatch = useAppDispatch();
   const handleDelete = () => {
@@ -70,7 +64,6 @@ const ActivitiesPage = () => {
       <Stack spacing={2} direction="row">
         <div className={styles.filtersItem}>
           <Typography sx={{ color: 'text.secondary' }}>Название</Typography>
-
           <Autocomplete
             id="free-solo-demo"
             freeSolo
@@ -123,6 +116,8 @@ const ActivitiesPage = () => {
     <div className={styles.content}>
 
       <div>
+        <Typography sx={{ color: 'text.secondary' }}>Примененные фильтры</Typography>
+
         <div className={styles.applyFilters}>
           {
             [1, 2, 3, 3].map(() => (
@@ -147,8 +142,6 @@ const ActivitiesPage = () => {
                     <div className={styles.meta}>
                       <Typography>{row.title}</Typography>
                       <Typography sx={{ color: 'text.secondary' }}>c {row.date} до {row.date}</Typography>
-
-
                     </div>
 
                   </div>
@@ -156,6 +149,12 @@ const ActivitiesPage = () => {
                 <AccordionDetails>
 
                   <div className={styles.details}>
+                    <div className={styles.activityButtons}>
+                      <Tooltip title="Записаться на мероприятие">
+                        <Button variant="contained">Записаться</Button>
+                      </Tooltip>
+
+                    </div>
                     <div className={styles.flexColumn}>
                       <Typography sx={{ color: 'text.secondary' }}>Описание</Typography>
                       <Typography>
@@ -164,8 +163,6 @@ const ActivitiesPage = () => {
                     </div>
                     <div className={styles.members}>
                       <div className={styles.flexColumn}>
-
-
                       </div>
                     </div>
                     <Accordion>
@@ -207,6 +204,7 @@ const ActivitiesPage = () => {
                         </div>
                       </AccordionDetails>
                     </Accordion>
+
                   </div>
                 </AccordionDetails>
               </Accordion>
