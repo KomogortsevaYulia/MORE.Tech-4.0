@@ -8,6 +8,12 @@ export interface IUser {
   publicKey: string;
   image: string;
   FIO: string;
+  departmentId:number;
+}
+
+export interface IDepartment {
+  id: number;
+  title: string;
 }
 
 export interface IUserWithBalance {
@@ -19,6 +25,7 @@ export interface IUserWithBalance {
   image: string;
   balance: BalanceFiat;
   balanceNFT: BalanceNFT;
+  departmentId:number;
 }
 
 export interface IProduct {
@@ -104,6 +111,12 @@ export interface ICreateRecordUserActivity {
   userId: number;
   activitiesId: number;
 }
+export interface ITypeActivities {
+  id: number;
+  title: string;
+}
+
+
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3004';
 
@@ -277,6 +290,26 @@ export class MainApi {
   static async fetchOrderWithUser(id: number) {
     return axios
       .get<IOrder[]>(`${apiUrl}/orders?userId=${id}&_expand=user&_expand=product`)
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }
+
+  static async fetchDepartmentsWithUsers() {
+    return axios
+      .get<IOrder[]>(`${apiUrl}/users?&_expand=department`)
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }
+
+  static async fetchTypeActivities() {
+    return axios
+      .get<ITypeActivities[]>(`${apiUrl}/typeActivity`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);

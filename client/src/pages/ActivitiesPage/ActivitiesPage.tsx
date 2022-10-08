@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchActivities } from "../../store/ActivitiesSlice/activitiesSlice";
+import { fetchActivities, fetchTypeActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -15,6 +15,9 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
+import { FormLabel, RadioGroup, FormControlLabel } from "@mui/material";
+import { Radio } from "antd";
+
 
 const ActivitiesPage = () => {
   const { user } = useAppSelector((state) => state.user);
@@ -26,6 +29,25 @@ const ActivitiesPage = () => {
   React.useEffect(() => {
     dispatch(fetchActivities());
   }, [dispatch]);
+
+  const typeActivity: any = [
+    {
+      title: "Битва",
+      id: 1,
+    },
+     {
+      title: "Челлендж",
+      id: 2,
+    },
+     {
+      title: "Обучение",
+      id: 3,
+    },
+     {
+      title: "Общественная деятельность",
+      id: 4,}
+    ];
+  
 
   const [value11, setValue11] = React.useState<Date | null>(null);
   const [value2, setValue2] = React.useState<Date | null>(null);
@@ -74,11 +96,24 @@ const ActivitiesPage = () => {
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 Добавление активности
               </Typography>
+
+              <FormLabel id="demo-radio-buttons-group-label">Тип</FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+              >
+                {typeActivity && typeActivity?.map((row:any) =>
+                  <FormControlLabel value={row.title} control={<Radio />} label={row.title} />
+                )}
+
+              </RadioGroup>
+
+
               <TextField label="Название активности" variant="outlined" />
               <TextField label="Описание активности" variant="outlined" />
 
               <Typography sx={{ color: "text.secondary" }}>
-                Даты начала
+                Дата начала
               </Typography>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -92,7 +127,7 @@ const ActivitiesPage = () => {
               </LocalizationProvider>
 
               <Typography sx={{ color: "text.secondary" }}>
-                Даты окончания
+                Дата окончания
               </Typography>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -121,6 +156,7 @@ const ActivitiesPage = () => {
                 null
               )}
             </div>
+
             <div className={styles.filtersItem}>
               <Typography sx={{ color: "text.secondary" }}>Название</Typography>
               <Autocomplete
@@ -134,13 +170,9 @@ const ActivitiesPage = () => {
               />
             </div>
             <div className={styles.filtersItem}>
-              <Typography sx={{ color: "text.secondary" }}>
-                Даты начала до
-              </Typography>
-
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                  label="Даты начала до"
+                  label="Дата начала"
                   value={value11}
                   onChange={(newValue) => {
                     setValue11(newValue);
@@ -150,12 +182,9 @@ const ActivitiesPage = () => {
               </LocalizationProvider>
             </div>
             <div className={styles.filtersItem}>
-              <Typography sx={{ color: "text.secondary" }}>
-                Даты начала после
-              </Typography>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                  label="Даты начала после"
+                  label="Дата окончания"
                   value={value2}
                   onChange={(newValue) => {
                     setValue2(newValue);

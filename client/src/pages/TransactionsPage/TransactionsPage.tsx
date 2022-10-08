@@ -135,7 +135,7 @@ const TransactionsPage = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#8e47e4",
+      backgroundColor: "#1976D2",
       color: "#FFFFFF",
       fontSize: 16,
     },
