@@ -95,7 +95,7 @@ const PersonalPage = () => {
             sx={{ width: 150, height: 150, border: "1px solid black" }}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={8}>
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
@@ -107,7 +107,7 @@ const PersonalPage = () => {
             </ListItem>
             <ListItem>
               <ListItemText
-                primary={`Баланс: ${user?.balance.coinsAmount.toLocaleString()}`}
+                primary={`Баланс: ${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`}
               />
             </ListItem>
           </List>
@@ -122,6 +122,7 @@ const PersonalPage = () => {
           <Tab label="Активности" {...a11yProps(0)} />
           <Tab label="Заказы" {...a11yProps(1)} />
           <Tab label="Начисления/списания" {...a11yProps(2)} />
+          <Tab label="NFT" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -176,6 +177,9 @@ const PersonalPage = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Заказы
       </TabPanel>
     </div>
   );
