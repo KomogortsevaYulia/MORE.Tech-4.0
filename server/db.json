@@ -154,14 +154,14 @@
   "basket": [
     {
       "id": 1,
-      "usersId": 2,
-      "productsId": 1,
+      "userId": 2,
+      "productId": 1,
       "count": 1
     },
     {
       "id": 1,
-      "usersId": 2,
-      "productsId": 2,
+      "userId": 2,
+      "productId": 2,
       "count": 2
     }
   ],
@@ -175,6 +175,20 @@
       "id": 1,
       "userId": 2,
       "activitiesId": 2
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "userId": 2,
+      "productId": 1,
+      "count": 1
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "productId": 2,
+      "count": 1
     }
   ]
 }

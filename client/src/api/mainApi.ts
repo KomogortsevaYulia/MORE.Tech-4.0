@@ -66,6 +66,12 @@ export interface IActivityRecords {
   activities: IActivities;
 }
 
+export interface IOrder {
+  id: number;
+  userId: IUser;
+  productId: IProduct;
+}
+
 export interface ICreateTransaction {
   userId: number;
   toId: number;
@@ -208,5 +214,17 @@ export class MainApi {
           } as ITransferRubleWithUsers)
       );
     });
+  }
+
+  static async fetchOrderWithUser(id: number) {
+    return axios
+      .get<IOrder[]>(
+        `${apiUrl}/orders?userId=${id}&_expand=user&_expand=product`
+      )
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
   }
 }
