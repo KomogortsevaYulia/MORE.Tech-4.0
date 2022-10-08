@@ -37,18 +37,12 @@ const Accordion = styled((props: AccordionProps) => (
 
 const ActivitiesPage = () => {
 
-  const [expanded, setExpanded] = React.useState<string | false>(false);
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
 
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   React.useEffect(() => { }, [user]);
 
-  const [value, setValue] = React.useState(0);
 
   const dispatch = useAppDispatch();
   const handleDelete = () => {
@@ -122,6 +116,8 @@ const ActivitiesPage = () => {
     <div className={styles.content}>
 
       <div>
+        <Typography sx={{ color: 'text.secondary' }}>Примененные фильтры</Typography>
+
         <div className={styles.applyFilters}>
           {
             [1, 2, 3, 3].map(() => (
