@@ -89,7 +89,7 @@ export default function Shop() {
 
 				<div className={` ${styles.cartCard} overflow-auto block`}>
 					{cart && cart?.map((item) => (
-						<div className={`${styles.cartItem} mb-3 p-2 rounded `} >
+						<div key={item.product.id} className={`${styles.cartItem} mb-3 p-2 rounded `} >
 							<div className="d-flex justify-content-between">
 								<div className="d-flex flex-row align-items-center justify-content-between w-100">
 									<div>
@@ -185,7 +185,7 @@ export default function Shop() {
 
 					<div className="g-2 row">
 						{filteredProducts &&
-							filteredProducts?.map((item) => <ShopItem shopItem={item} />)}
+							filteredProducts?.map((item) => <ShopItem key={item.id} shopItem={item} />)}
 					</div>
 				</div>
 			</div>

@@ -5,6 +5,12 @@ import { LoadingStatus } from "../../types/types";
 import { BlockchainApi } from "../../api/blockchainApi";
 import { TransferData } from "../adminSlice/adminSlice";
 
+interface ITransferNft {
+  fromPrivateKey: string;
+  toPublicKey: string;
+  tokenId: number;
+}
+
 export interface TransactionsState {
   transactions: ITransferRubleWithUsers[] | null;
   fetchTransactionsStatus: LoadingStatus | null;
@@ -21,6 +27,17 @@ export const fetchTransactions = createAsyncThunk(
   "transactions/fetchTransactions",
   async () => {
     return MainApi.fetchAllTransactions();
+  }
+);
+
+export const transferNft = createAsyncThunk(
+  "transactions/transferNft",
+  async (data: ITransferNft) => {
+    return BlockchainApi.nftTransfer(
+      data.fromPrivateKey,
+      data.toPublicKey,
+      data.tokenId
+    );
   }
 );
 
