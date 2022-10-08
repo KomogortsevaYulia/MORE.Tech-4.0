@@ -15,15 +15,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {
-  fetchActivitiesWithUser,
-} from "../../store/ActivitiesSlice/activitiesSlice";
-import {
-  Stack,
-  Chip,
-} from "@mui/material";
+import { fetchActivitiesWithUser } from "../../store/ActivitiesSlice/activitiesSlice";
+import { Stack, Chip, IconButton } from "@mui/material";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
+import { fetchNFTBalance } from "../../store/adminSlice/adminSlice";
+import NftCard from "../AdminPage/NftCard/NftCard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,8 +56,8 @@ function a11yProps(index: number) {
 }
 
 const PersonalPage = () => {
-  const { user } = useAppSelector((state) => state.user);
-  React.useEffect(() => { }, [user]);
+  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  React.useEffect(() => {}, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -74,11 +71,13 @@ const PersonalPage = () => {
     dispatch(fetchTransferRubleByUsers(user!.id));
     dispatch(fetchActivitiesWithUser(user!.id));
     dispatch(fetchOrderWithUser(user!.id));
+    dispatch(fetchNFTBalance(user!.publicKey));
   }, [dispatch, user]);
 
   const { transferRuble } = useAppSelector((state) => state.transferRuble);
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
   const { order } = useAppSelector((state) => state.orders);
+  const { nftCollections } = useAppSelector((state) => state.admin);
 
   return (
     <div>
@@ -189,7 +188,10 @@ const PersonalPage = () => {
         </TableContainer>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        NFT
+        <Grid style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+          {nftCollections &&
+            nftCollections.balance.map((nft) => <NftCard nft={nft} />)}
+        </Grid>
       </TabPanel>
     </div>
   );

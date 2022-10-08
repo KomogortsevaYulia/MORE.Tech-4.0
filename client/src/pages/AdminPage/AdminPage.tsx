@@ -4,16 +4,22 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchNFTBalance, fetchUsers } from "../../store/adminSlice/adminSlice";
+import {
+  fetchNFTBalance,
+  fetchUsers,
+  generateNft,
+} from "../../store/adminSlice/adminSlice";
 import UsersTable from "./UsersTable/UsersTable";
 import AddModal from "./AddModal/AddModal";
 import {
   IconButton,
+  Grid,
 } from "@mui/material";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { GridRowId } from "@mui/x-data-grid";
 import NftCard from "./NftCard/NftCard";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import GenerateNftModal from "./GenerateNftModal/GenerateNftModal";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -65,10 +71,15 @@ const AdminPage = () => {
   };
 
   const [openModal, setOpenModal] = React.useState(false);
+  const [nftModalOpen, setNftModalOpen] = React.useState(false);
 
   const closeModal = React.useCallback(() => {
     setOpenModal(false);
   }, [setOpenModal]);
+
+  const closeNftModal = React.useCallback(() => {
+    setNftModalOpen(false);
+  }, [setNftModalOpen]);
 
   const [usersToGetMoney, setUsersToGetMoney] = React.useState<any[]>([]);
 
@@ -77,6 +88,10 @@ const AdminPage = () => {
       setUsersToGetMoney(users!.filter((u) => ids.includes(u.id)));
     }
     setOpenModal(true);
+  };
+
+  const openNftGenerateModal = () => {
+    setNftModalOpen(true);
   };
 
   const accrueClick = (amount: number) => {
@@ -95,6 +110,11 @@ const AdminPage = () => {
     closeModal();
   };
 
+  const generateClick = (uri: string, nftCount: number) => {
+    dispatch(generateNft({ publicKey: user!.publicKey, count: nftCount, uri }));
+    closeNftModal();
+  };
+
   return (
     <>
       <div>
@@ -105,8 +125,8 @@ const AdminPage = () => {
             aria-label="basic tabs example"
           >
             <Tab label="Пользователи и зачисления" {...a11yProps(0)} />
-            <Tab label="Заказы" {...a11yProps(1)} />
-            <Tab label="Генерация NFT" {...a11yProps(2)} />
+
+            <Tab label="Генерация NFT" {...a11yProps(1)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -124,22 +144,24 @@ const AdminPage = () => {
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Заказы
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Box style={{ display: "flex", gap: "16px" }}>
+          <Grid style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             {nftCollections &&
               nftCollections.balance.map((nft) => <NftCard nft={nft} />)}
-            <IconButton sx={{ width: 256 }}>
+            <IconButton sx={{ width: 256 }} onClick={openNftGenerateModal}>
               <AddAPhotoIcon sx={{ fontSize: 128 }} />
             </IconButton>
-          </Box>
+          </Grid>
         </TabPanel>
       </div>
       <AddModal
         open={openModal}
         handleClose={closeModal}
         onAccrueClick={accrueClick}
+      />
+      <GenerateNftModal
+        open={nftModalOpen}
+        handleClose={closeNftModal}
+        onGenerateClick={generateClick}
       />
     </>
   );
