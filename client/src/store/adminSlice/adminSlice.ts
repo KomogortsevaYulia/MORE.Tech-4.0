@@ -3,6 +3,7 @@ import { RootState, AppThunk } from "../store";
 import { MainApi, IProduct, IUser, IUserWithBalance } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
 import { BalanceNFT, BlockchainApi } from "../../api/blockchainApi";
+import { StringLiteral } from "typescript";
 
 export interface AdminState {
   users: IUserWithBalance[] | null;
@@ -17,6 +18,7 @@ export interface TransferData {
   fromPrivateKey: string;
   toPublicKey: string;
   amount: number;
+  why: string;
 }
 
 const initialState: AdminState = {
@@ -37,24 +39,6 @@ export const fetchNFTBalance = createAsyncThunk(
   }
 );
 
-export const transferRubles = createAsyncThunk(
-  "admin/transferRubles",
-  async (data: TransferData) => {
-    const transaction = await MainApi.addTransaction({
-      ...data,
-      why: "Начисление от администратора",
-    });
-
-    console.log(transaction);
-
-    return BlockchainApi.rubleTransfer(
-      data.fromPrivateKey,
-      data.toPublicKey,
-      data.amount
-    );
-  }
-);
-
 export const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -71,7 +55,7 @@ export const adminSlice = createSlice({
       .addCase(fetchUsers.rejected, (state) => {
         state.fetchUsersError = "failed";
       })
-      .addCase(transferRubles.fulfilled, (state, action) => {})
+
       .addCase(fetchNFTBalance.fulfilled, (state, action) => {
         state.nftCollections = action.payload;
       });
