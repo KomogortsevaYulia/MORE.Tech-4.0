@@ -27,8 +27,6 @@ const ProductDetail: React.FC<IProductDetail> = ({
 
   const { user } = useAppSelector((state) => state.user);
 
-  const [transferType, setTransferType] = React.useState("rubles");
-
   const addClick = () => {
 	const product = { product: {...shopItem}, user: { ...user } } as IProductWithCustomer;
     dispatch(addToCart(product));
@@ -72,7 +70,7 @@ const ProductDetail: React.FC<IProductDetail> = ({
                     </h2>
 
                     <p className="card-text font-size-18">
-                      ₽{shopItem?.priceRuble}
+                      ₽ {shopItem?.priceRuble}
                     </p>
                     <p
                       className="card-text p-20 bg-light overflow-auto"
