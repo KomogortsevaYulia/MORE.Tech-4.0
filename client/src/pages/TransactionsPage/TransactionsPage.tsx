@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./TransactionPage.module.css";
 import Paper from "@mui/material/Paper";
-import { styled } from '@mui/material/styles';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { styled } from "@mui/material/styles";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   fetchTransactions,
+  transferNft,
   transferRubles,
 } from "../../store/transactionsSlice/transactionsSlice";
 import {
@@ -121,12 +122,24 @@ const TransactionsPage = () => {
     );
   };
 
+  const handleTransferNft = () => {
+    const tokenId = nftCollections!.balance.find(
+      (nft) => nft.uri === nftToTransfer
+    )!.tokens[0];
+    dispatch(
+      transferNft({
+        fromPrivateKey: user!.privateKey,
+        tokenId,
+        toPublicKey: personNftReciever,
+      })
+    );
+  };
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#8e47e4",
       color: "#FFFFFF",
       fontSize: 16,
-
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -134,11 +147,11 @@ const TransactionsPage = () => {
   }));
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
+    "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
     },
     // hide last border
-    '&:last-child td, &:last-child th': {
+    "&:last-child td, &:last-child th": {
       border: 0,
     },
   }));
@@ -163,7 +176,9 @@ const TransactionsPage = () => {
               </div>
             </div>
             <div className="row d-flex justify-content-center">
-              <h2 className="fw-normal">{user?.balance.coinsAmount.toLocaleString()}</h2>
+              <h2 className="fw-normal">
+                {user?.balance.coinsAmount.toLocaleString()}
+              </h2>
             </div>
           </div>
         </Box>
@@ -200,7 +215,10 @@ const TransactionsPage = () => {
                 <ArrowDownwardIcon color="success" />
               </div>
               <div className="col-auto">
-                <Typography sx={{ color: "#1F9D57", fontSize: 12 }} component="p">
+                <Typography
+                  sx={{ color: "#1F9D57", fontSize: 12 }}
+                  component="p"
+                >
                   {currentCourse} Digital Rubles = 1 Цифровой рубль
                 </Typography>
               </div>
@@ -354,7 +372,7 @@ const TransactionsPage = () => {
                 onChange={handleSendNftReasonChange}
               />{" "}
             </div>
-            <Button variant="outlined" onClick={handleTransfer}>
+            <Button variant="outlined" onClick={handleTransferNft}>
               Отправить
             </Button>
           </Box>
@@ -386,9 +404,13 @@ const TransactionsPage = () => {
                   }}
                 >
                   <StyledTableCell align="left">{row.user.FIO}</StyledTableCell>
-                  <StyledTableCell align="left">{row.users2.FIO}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {row.users2.FIO}
+                  </StyledTableCell>
                   <StyledTableCell align="left">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="left">{row.date.split("T")[0]}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {row.date.split("T")[0]}
+                  </StyledTableCell>
                   <StyledTableCell align="left">{row.why}</StyledTableCell>
                 </TableRow>
               ))}

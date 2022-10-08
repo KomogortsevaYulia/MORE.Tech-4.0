@@ -6,7 +6,7 @@ export interface TransactionResponse {
 
 export interface NFT {
   uri: string; // унифицированный (единообразный) идентификатор ресурса, сопряженный с NFT-коллекцией
-  tokens: []; // массив NFT. Т.е. 5,3,4,6 - уникальные идентификаторы отдельного NFT в NFT-коллекции
+  tokens: number[]; // массив NFT. Т.е. 5,3,4,6 - уникальные идентификаторы отдельного NFT в NFT-коллекции
 }
 
 export interface BalanceNFT {
@@ -107,19 +107,19 @@ export class BlockchainApi {
    *  Transfer NFT to any person wallet by public key
    * @param fromPrivateKey приватный ключ кошелька отправителя
    * @param toPublicKey публичный ключ (адрес) кошелька получателя
-   * @param amount сумма перевода валюты
+   * @param tokenId id нфт
    * @returns сигнатура транзакции (идентификатор транзакции в блокчейне)
    */
   static nftTransfer(
     fromPrivateKey: string,
     toPublicKey: string,
-    amount: number
+    tokenId: number
   ) {
     return axios
       .post(`${baseUrl}/v1/transfers/nft`, {
         fromPrivateKey: fromPrivateKey,
         toPublicKey: toPublicKey,
-        amount: amount,
+        tokenId: tokenId,
       })
       .then(function (response: TransactionResponse) {
         return response;
