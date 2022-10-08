@@ -1,6 +1,6 @@
-import { Box, Modal, Button } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import React from "react";
-import { IProduct, IProductWithCustomer, IUser } from "../../../api/mainApi";
+import { IProduct, IProductWithCustomer } from "../../../api/mainApi";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { addToCart } from "../../../store/marketSlice/marketSlice";
@@ -27,14 +27,12 @@ const ProductDetail: React.FC<IProductDetail> = ({
 
   const { user } = useAppSelector((state) => state.user);
 
-  const [transferType, setTransferType] = React.useState("rubles");
-
   const addClick = () => {
-	const product = { product: {...shopItem}, user: { ...user } } as IProductWithCustomer;
+    const product = { product: { ...shopItem }, user: { ...user } } as IProductWithCustomer;
     dispatch(addToCart(product));
-	handleClose()
+    handleClose()
   };
-  const handleCloseMethod = () => {handleClose()};
+  const handleCloseMethod = () => { handleClose() };
 
 
   return (
@@ -72,7 +70,7 @@ const ProductDetail: React.FC<IProductDetail> = ({
                     </h2>
 
                     <p className="card-text font-size-18">
-                      ₽{shopItem?.priceRuble}
+                      ₽ {shopItem?.priceRuble}
                     </p>
                     <p
                       className="card-text p-20 bg-light overflow-auto"
@@ -82,14 +80,14 @@ const ProductDetail: React.FC<IProductDetail> = ({
                       {shopItem?.description}{" "}
                     </p>
                     <div className="form-group m-t-20">
-						<button
-							type="button"
-							className="btn btn-primary btn-rounded btn-lg "
-							onClick={addClick}
-						>
-							<span>Добавить в корзину</span>
-							<i className="icon dripicons-cart text-white"></i>
-						</button>
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-rounded btn-lg "
+                        onClick={addClick}
+                      >
+                        <span>Добавить в корзину</span>
+                        <i className="icon dripicons-cart text-white"></i>
+                      </button>
                     </div>
                   </div>
                 </div>

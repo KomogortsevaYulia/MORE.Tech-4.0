@@ -32,7 +32,7 @@ export interface IProduct {
 
 export interface IProductWithCustomer {
   product: IProduct;
-  count?: number;
+  count: number;
   user?: IUser;
 }
 

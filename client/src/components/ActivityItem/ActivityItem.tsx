@@ -6,6 +6,7 @@ import {
   AccordionDetails,
   AvatarGroup,
   Avatar,
+  Chip,
 } from "@mui/material";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -14,6 +15,7 @@ import { IActivities } from "../../api/mainApi";
 import { styled } from "@mui/material/styles";
 
 import styles from "./ActivityItem.module.css";
+import { typeActivity } from "../../const/activityTypes";
 
 interface IActivityItemProps {
   row: IActivities;
@@ -43,7 +45,17 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
           <div className={styles.header}>
             <div className={styles.meta}>
               <div>
-                <Typography>{row.title}</Typography>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                >
+                  <Typography>{row.title}</Typography>
+                  <Chip
+                    label={typeActivity[row.typeId].title}
+                    style={{
+                      background: typeActivity[row.typeId].color as string,
+                    }}
+                  />
+                </div>
                 <Typography sx={{ color: "var(--purple)" }}>
                   c {row.dateStart} до {row.dateEnd}
                 </Typography>

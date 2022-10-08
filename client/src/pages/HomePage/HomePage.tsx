@@ -1,15 +1,9 @@
-import React from "react";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
+
 import RepeatIcon from "@mui/icons-material/Repeat";
 import Timeline from "@mui/lab/Timeline";
 import styles from "./HomePage.module.css";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import {
   TimelineItem,
-  TimelineOppositeContent,
   TimelineSeparator,
   TimelineConnector,
   TimelineDot,
@@ -24,15 +18,9 @@ import CelebrationIcon from "@mui/icons-material/Celebration";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchActivitiesForHome } from "../../store/ActivitiesSlice/activitiesSlice";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
+import React from "react";
 
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const HomePage = () => {
 
