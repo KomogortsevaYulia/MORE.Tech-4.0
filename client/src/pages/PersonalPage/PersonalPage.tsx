@@ -17,11 +17,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import styles from './PersonalPage.module.css'
 import {
   fetchActivities,
   fetchActivitiesWithUser,
 } from "../../store/ActivitiesSlice/activitiesSlice";
-import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Stack, Chip } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 
@@ -60,7 +61,7 @@ function a11yProps(index: number) {
 
 const PersonalPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-  React.useEffect(() => {}, [user]);
+  React.useEffect(() => { }, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -79,33 +80,27 @@ const PersonalPage = () => {
   const { transferRuble } = useAppSelector((state) => state.transferRuble);
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
   const { order } = useAppSelector((state) => state.orders);
- 
+
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={2}>
           <Avatar
             alt="ФИО"
             src={user!.image}
-            sx={{ width: 150, height: 150, border: "1px solid black" }}
+            sx={{ width: "100%", height: "100%", border: "1px solid black" }}
           />
         </Grid>
-        <Grid item xs={8}>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          >
-            <ListItem>
-              <ListItemText primary={user?.FIO} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Статус" />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={`Баланс: ${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`}
-              />
-            </ListItem>
-          </List>
+        <Grid item xs={10}>
+          <Typography variant="h3" gutterBottom>
+            {user?.FIO}
+          </Typography>
+          <Typography variant="h4" gutterBottom>
+            Статус
+          </Typography>
+          <Stack direction="row" spacing={1} >
+            <Chip label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`} variant="outlined" sx={{background: user?.balance.coinsAmount!='0' ? 'var(--purple)': 'var(--red)' ,}} />
+          </Stack>       
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -143,27 +138,28 @@ const PersonalPage = () => {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <TableContainer component={Paper}>
+        <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="right">Товар</TableCell>
-                <TableCell align="right">Количество</TableCell>
-                <TableCell align="right">Сумма</TableCell>
-                <TableCell align="right">Дата</TableCell>
+                <TableCell align="left">Товар</TableCell>
+                <TableCell align="left">Количество</TableCell>
+                <TableCell align="left">Сумма</TableCell>
+                <TableCell align="left">Дата</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {order &&
-                order?.map((row:any) => (
+                order?.map((row: any) => (
                   <TableRow
                     key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="right">{row.product.title}</TableCell>
-                    <TableCell align="right">{row.sum}</TableCell>
-                    <TableCell align="right">{row.count}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">{row.product.title}</TableCell>
+
+                    <TableCell align="left">{row.count}</TableCell>
+                    <TableCell align="left">{row.sum}</TableCell>
+                    <TableCell align="left">
                       {row.date.split("T")[0]}
                     </TableCell>
                   </TableRow>
@@ -177,11 +173,11 @@ const PersonalPage = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="right">ФИО кто</TableCell>
-                <TableCell align="right">ФИО</TableCell>
-                <TableCell align="right">Сколько</TableCell>
-                <TableCell align="right">Дата</TableCell>
-                <TableCell align="right">Причина</TableCell>
+                <TableCell align="left">ФИО кто</TableCell>
+                <TableCell align="left">ФИО</TableCell>
+                <TableCell align="left">Сколько</TableCell>
+                <TableCell align="left">Дата</TableCell>
+                <TableCell align="left">Причина</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -191,13 +187,13 @@ const PersonalPage = () => {
                     key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="right">{row.user.FIO}</TableCell>
-                    <TableCell align="right">{row.users2.FIO}</TableCell>
-                    <TableCell align="right">{row.amount}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">{row.user.FIO}</TableCell>
+                    <TableCell align="left">{row.users2.FIO}</TableCell>
+                    <TableCell align="left">{row.amount}</TableCell>
+                    <TableCell align="left">
                       {row.date.split("T")[0]}
                     </TableCell>
-                    <TableCell align="right">{row.why}</TableCell>
+                    <TableCell align="left">{row.why}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

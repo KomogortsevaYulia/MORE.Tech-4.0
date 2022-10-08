@@ -155,7 +155,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                   disablePadding
                   sx={{
                     display: "block",
-                    background: location.pathname === url ? "#E0FFDF" : "",
+                    background: location.pathname === url ?  'var(--green)' : "",
                   }}
                   onClick={() => navigate(url)}
                 >
