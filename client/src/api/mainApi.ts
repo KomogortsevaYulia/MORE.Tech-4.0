@@ -100,6 +100,11 @@ export interface ICreateTransaction {
   why: string;
 }
 
+export interface ICreateRecordUserActivity {
+  userId: number;
+  activitiesId: number;
+}
+
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3004';
 
 export class MainApi {
@@ -227,10 +232,8 @@ export class MainApi {
       .then((response) => response.data);
   }
 
-  static async addActi(data: ICreateTransaction) {
-    return axios
-      .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })
-      .then((response) => response.data);
+  static async addActivityToUser(data: ICreateRecordUserActivity) {
+    return axios.post(`${apiUrl}/activity_records`, { ...data }).then((response) => response.data);
   }
 
   static async fetchActivitiesWithUser(id: number) {
@@ -252,6 +255,7 @@ export class MainApi {
 
     return activities.filter((a) => a.users.some((u) => u.userId === id));
   }
+
   static async fetchAllTransactions() {
     const transactions = axios
       .get<ITransferRuble[]>(`${apiUrl}/transferRuble`)
