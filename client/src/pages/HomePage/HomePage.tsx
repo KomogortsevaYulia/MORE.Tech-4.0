@@ -6,6 +6,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Typography } from "@mui/material";
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import FlagIcon from '@mui/icons-material/Flag';
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
+import GradeIcon from '@mui/icons-material/Grade';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -21,6 +25,7 @@ const HomePage = () => {
         <Item>
           <Typography variant="h5" component="h5">
             Достижения
+            <EmojiEventsIcon />
           </Typography>
 
           Достижения – какие либо достижения в рабочей области, в рамках коммандного взаимодействия,мероприятиях от компании и тд.
@@ -36,6 +41,7 @@ const HomePage = () => {
         <Item>
           <Typography variant="h5" component="h5">
             Цель
+            <FlagIcon />
           </Typography>
           повысить мотивацию и вовлеченность в комьюнити компании для формирования дружественной атмосферы и профессионального роста. Помимо материальной мотивации, используется спортивный интерес
         </Item>
@@ -44,6 +50,7 @@ const HomePage = () => {
         <Item>
           <Typography variant="h5" component="h5">
             Мотивация
+            <AccessibleForwardIcon />
           </Typography>
           Повысить мотивацию и вовлеченность сотрудников компании для формирования дружественной атмосферы, а так-же профессионального роста за счет дополнительной мотивации участия в образовательных и общественных мероприятиях
         </Item>
@@ -52,6 +59,7 @@ const HomePage = () => {
         <Item>
           <Typography variant="h5" component="h5">
             Ачивки
+            <GradeIcon />
           </Typography>
 
           Количество дней без опоздания (10, 30, 90, 270 и тд)
