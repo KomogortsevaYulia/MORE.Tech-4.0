@@ -170,7 +170,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                     sx={{
                       display: "block",
                       background:
-                        location.pathname === url ? "var(--green)" : "",
+                        location.pathname === url ? "var(--blue)" : "",
                     }}
                     onClick={() => navigate(url)}
                   >

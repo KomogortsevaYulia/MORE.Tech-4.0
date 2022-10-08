@@ -54,7 +54,7 @@ const AnalyticPage = () => {
   };
 
   const option2 = {
-    color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+    color: ['#1976d2'],
     title: {
       text: 'Gradient Stacked Area Chart'
     },
