@@ -26,7 +26,6 @@ const ProductDetail: React.FC<IProductDetail> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const { products } = useAppSelector((state) => state.market);
   const { user } = useAppSelector((state) => state.user);
 
   const [transferType, setTransferType] = React.useState("rubles");
@@ -34,24 +33,10 @@ const ProductDetail: React.FC<IProductDetail> = ({
   const addClick = () => {
     const product = { ...shopItem, user: { ...user } } as IProductWithCustomer;
     dispatch(addToCart(product));
+	handleClose()
   };
+  const handleCloseMethod = () => {handleClose()};
 
-  const makeTransfer = () => {
-    if (transferType === "rubles") {
-      // dispatch(
-      //   transferRubles({
-      //     amount: +rublesAmount,
-      //     toPublicKey: currentUser!.publicKey,
-      //     fromPrivateKey: user!.privateKey,
-      //     userId: user!.id,
-      //     toId: currentUser!.id,
-      //   })
-      // );
-    } else {
-    }
-
-    handleClose();
-  };
 
   return (
     <Modal
@@ -65,7 +50,7 @@ const ProductDetail: React.FC<IProductDetail> = ({
           <div className="modal-content">
             <div className="modal-header no-border">
               <i>
-                <CloseIcon onClick={makeTransfer} />
+                <CloseIcon onClick={handleCloseMethod} />
               </i>
             </div>
             <div className="card no-shadow">
@@ -119,50 +104,3 @@ const ProductDetail: React.FC<IProductDetail> = ({
 };
 
 export default ProductDetail;
-
-// {/* <div className="modal-dialog modal-dialog modal-lg modal-dialog-centered" role="document">
-//           <div className="modal-content">
-//             <div className="modal-header">
-//               <div className="col-lg-6">
-//                 <img src="/viho/static/media/01.1c4b908d3e7e83a875ed.jpg" alt="" className="img-fluid media"></img>
-
-//                 </div>
-//                 <div className="product-details text-start col-lg-6">
-//                   <h4>Man</h4>
-//                   <ul className="simple-list rating-pro d-flex flex-row list-group">
-//                     <li className="list-group-item"> <i className="fa fa-star font-warning"></i></li>
-//                     <li className="list-group-item"> <i className="fa fa-star font-warning"></i></li>
-//                     <li className="list-group-item"> <i className="fa fa-star font-warning"></i></li>
-//                     <li className="list-group-item"> <i className="fa fa-star font-warning"></i></li>
-//                     <li className="list-group-item"> <i className="fa fa-star font-warning"></i></li>
-//                     </ul>
-//                     <div className="product-price">$206<del>$350.00</del></div>
-//                     <div className="product-view"><h6 className="f-w-600">Product Details</h6><p className="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-//                     </p>
-//                     </div>
-//                     <div className="product-size">
-//                       <ul className="list-group">
-//                         <li className="list-group-item"> <button type="button"  title="" className="btn btn-outline-light">M</button></li>
-//                         <li className="list-group-item"> <button type="button"  title="" className="btn btn-outline-light">L</button></li>
-//                         <li className="list-group-item"> <button type="button"  title="" className="btn btn-outline-light">Xl</button></li>
-//                         </ul>
-//                         </div>
-//                         <div className="product-qnty">
-//                           <h6 className="f-w-600">Quantity</h6>
-//                         <div className="input-group w-50" >
-// 							<button type="button" className="bootstrap-touchspin-down btn btn-primary"><i className="fa fa-minus"></i></button>
-// 							<span className="bootstrap-touchspin-prefix input-group-text"></span>
-// 							<input name="quantity" type="text" className="touchspin text-center form-control" value="1"></input>
-// 							<button type="button" className="bootstrap-touchspin-up btn btn-primary"><i className="fa fa-plus"></i></button>
-// 							</div>
-// 								<div className="addcart-btn">
-// 									<a className="btn btn-primary me-3" href="/viho/app/ecommerce/cart">Add to Cart</a><a className="btn btn-primary" href="/viho/app/ecommerce/product-page/5">View Details</a>
-// 								</div>
-// 								</div>
-// 								</div>
-// 								</div>
-// 								<button type="button" className="btn-close btn btn-transprant"></button>
-// 								</div>
-// 								</div>
-
-// 								style="padding-right: 17px; display: block;"*/}
