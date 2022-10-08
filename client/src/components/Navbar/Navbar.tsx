@@ -58,23 +58,7 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -122,13 +106,6 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
       sx={{ display: "flex" }}
     >
       <CssBaseline />
-      {/* <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Нозвание страницы
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           {open ? (
@@ -151,7 +128,6 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
             </IconButton>
           )}
         </DrawerHeader>
-        {/* <Divider /> */}
         <div
           style={{
             display: "flex",
