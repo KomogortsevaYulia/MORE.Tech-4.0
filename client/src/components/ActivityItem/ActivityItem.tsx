@@ -7,6 +7,9 @@ import {
   AvatarGroup,
   Avatar,
   Chip,
+  Modal,
+  Box,
+  TextField,
 } from "@mui/material";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -16,6 +19,7 @@ import { styled } from "@mui/material/styles";
 
 import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 interface IActivityItemProps {
   row: IActivities;
@@ -34,8 +38,68 @@ const Accordion = styled((props: AccordionProps) => (
 }));
 
 const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
+  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+
+  const [open, setOpen] = React.useState(false);
+  const [currentActivity, setCurrentActivity] = React.useState(row);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  //const isRec = () => ()
   return (
     <div className={styles.activity}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute" as "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 450,
+            bgcolor: "background.paper",
+            borderRadius: 5,
+            boxShadow: 24,
+            p: 4,
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+          >
+            
+            {currentActivity?.typeId === 2 ? (
+              <div className="d-flex flex-row ">
+                <TextField
+                  id="standard-number"
+                  label="Ставка на челлендж"
+                  type="number"
+                  className="me-4"
+                  variant="standard"
+                />
+                <Button
+                      className={styles.enrollButton}
+                      variant="contained"
+                      onClick={(e) => {
+                        handleClose();
+                        console.log(row);
+                        e.stopPropagation();
+                      }}
+                    > 
+                      Сделать ставку!
+                  </Button>
+              </div>
+            ):(
+              null
+            )}
+          </Box>
+      </Modal>
+
+
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -67,6 +131,8 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
                     className={styles.enrollButton}
                     variant="contained"
                     onClick={(e) => {
+                      handleOpen();
+                      setCurrentActivity(row);
                       e.stopPropagation();
                     }}
                   >
@@ -89,11 +155,13 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
             <div className={styles.allMembers}>
               <AvatarGroup max={row.users.length}>
                 {row.users.map((user) => (
-                  <Avatar
-                    alt={user.user.FIO}
-                    src={user.user.image}
-                    className={styles.memberAvatar}
-                  />
+                  <Tooltip title={user.user.FIO}>
+                    <Avatar
+                      alt={user.user.FIO}
+                      src={user.user.image}
+                      className={styles.memberAvatar}
+                    />
+                  </Tooltip>
                 ))}
               </AvatarGroup>
             </div>

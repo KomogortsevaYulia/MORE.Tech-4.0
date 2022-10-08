@@ -236,6 +236,12 @@ export class MainApi {
       .then((response) => response.data);
   }
 
+  static async addActi(data: ICreateTransaction) {
+    return axios
+      .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })
+      .then((response) => response.data);
+  }
+
   static async fetchActivitiesWithUser(id: number) {
     const activities = await axios
       .get<IActivities[]>(`${apiUrl}/activities`)
