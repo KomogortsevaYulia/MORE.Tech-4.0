@@ -23,6 +23,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 interface IActivityItemProps {
   row: IActivities;
+  withoutButton: boolean;
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -37,7 +38,7 @@ const Accordion = styled((props: AccordionProps) => (
   },
 }));
 
-const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
+const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
@@ -121,42 +122,47 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
                   />
                 </div>
                 <Typography sx={{ color: "var(--purple)" }}>
-                  c {row.dateStart} до {row.dateEnd}
+                  c {row.dateStart} до {row.dateEnd} {withoutButton}
                 </Typography>
               </div>
               <div className={styles.activityButtons}>
-
                 
-                {user?.roleId === 1 ? 
-                  <Tooltip title="Завершить активность">
-                    <Button
-                      style={{background: "rgb(221, 76, 76)", margin: "0 10px"}}
-                      variant="contained"
-                      onClick={(e) => {
-                        handleOpen();
-                        setCurrentActivity(row);
-                        e.stopPropagation();
-                      }}
-                    >
-                      Завершить 
-                    </Button>
-
-                  </Tooltip>
+                {withoutButton ? 
+                  null
                 :
-                  <Tooltip title="Записаться на мероприятие">
-                    <Button
-                      disabled={isRec}
-                      className={styles.enrollButton}
-                      variant="contained"
-                      onClick={(e) => {
-                        handleOpen();
-                        setCurrentActivity(row);
-                        e.stopPropagation();
-                      }}
-                    >
-                      {isRec ? "Вы уже записаны": "Записаться"}
-                    </Button>
-                  </Tooltip>
+                  <div>
+                    {user?.roleId === 1 ? 
+                      <Tooltip title="Завершить активность">
+                        <Button
+                          style={{background: "rgb(221, 76, 76)", margin: "0 10px"}}
+                          variant="contained"
+                          onClick={(e) => {
+                            handleOpen();
+                            setCurrentActivity(row);
+                            e.stopPropagation();
+                          }}
+                        >
+                          Завершить 
+                        </Button>
+
+                      </Tooltip>
+                    :
+                      <Tooltip title="Записаться на мероприятие">
+                        <Button
+                          disabled={isRec}
+                          className={styles.enrollButton}
+                          variant="contained"
+                          onClick={(e) => {
+                            handleOpen();
+                            setCurrentActivity(row);
+                            e.stopPropagation();
+                          }}
+                        >
+                          {isRec ? "Вы уже записаны": "Записаться"}
+                        </Button>
+                      </Tooltip>
+                    }
+                  </div>
                 }
               </div>
             </div>

@@ -125,7 +125,7 @@ const PersonalPage = () => {
       <TabPanel value={value} index={0}>
         <div>
           {ActivitiesRecords &&
-            ActivitiesRecords?.map((row) => <ActivityItem key={row.id} row={row} />)}
+            ActivitiesRecords?.map((row) => <ActivityItem key={row.id} row={row} withoutButton={true}/>)}
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>

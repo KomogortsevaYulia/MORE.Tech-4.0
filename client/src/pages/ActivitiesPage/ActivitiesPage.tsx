@@ -208,7 +208,7 @@ const ActivitiesPage = () => {
       <div className={styles.content}>
         <div className="card card-body">
           <div className={styles.activities}>
-            {Activities && Activities?.map((row) => <ActivityItem key={row.id} row={row} />)}
+            {Activities && Activities?.map((row) => <ActivityItem key={row.id} row={row} withoutButton={false}/>)}
           </div>
         </div>
       </div>
