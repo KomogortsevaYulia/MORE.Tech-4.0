@@ -13,6 +13,7 @@ export default function Shop() {
 	const dispatch = useAppDispatch();
 
 	const { cart } = useAppSelector((state) => state.market);
+	const cartCount = cart.reduce((count, product) => count += product.count, 0)
 	const { products } = useAppSelector((state) => state.market);
 
 	const [filteredProducts, setFilteredProducts] = React.useState(products);
@@ -175,7 +176,7 @@ export default function Shop() {
 
 					<div className="dropdown ">
 						<Dropdown overlay={menu}>
-							<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина</button>
+							<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина {cartCount > 0 && cartCount}</button>
 						</Dropdown>
 					</div>
 				</div>
