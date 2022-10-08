@@ -30,6 +30,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
+import ActivityItem from "../../components/ActivityItem/ActivityItem";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -132,23 +133,7 @@ const PersonalPage = () => {
       <TabPanel value={value} index={0}>
         <div>
           {ActivitiesRecords &&
-            ActivitiesRecords?.map((row) => (
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography> {row.activities.title}</Typography>
-                  <Typography sx={{ color: "text.secondary" }}>
-                    {row.activities.dateStart}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>{row.activities.description}</Typography>
-                </AccordionDetails>
-              </Accordion>
-            ))}
+            ActivitiesRecords?.map((row) => <ActivityItem row={row} />)}
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>

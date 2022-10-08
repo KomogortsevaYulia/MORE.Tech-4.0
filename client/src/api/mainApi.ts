@@ -214,15 +214,25 @@ export class MainApi {
   }
 
   static async fetchActivitiesWithUser(id: number) {
-    return axios
+    const activities = await axios
+      .get<IActivities[]>(`${apiUrl}/activities`)
+      .then((response) => response.data);
+
+    const usersActivities = await axios
       .get<IActivityRecords[]>(
-        `${apiUrl}/activity_records?userId=${id}&_expand=user&_expand=activities`
+        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
       )
-      .then((response) => response.data)
-      .catch((err) => {
-        console.log(err);
-        return err;
-      });
+      .then((response) => response.data);
+
+    for (let activity of activities) {
+      activity.users = usersActivities.filter(
+        (userActivity) => userActivity.activitiesId === activity.id
+      );
+    }
+
+    console.log(activities);
+
+    return activities.filter((a) => a.users.some((u) => u.userId === id));
   }
   static async fetchAllTransactions() {
     const transactions = axios
