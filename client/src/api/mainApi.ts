@@ -44,6 +44,7 @@ export interface ITransferRuble {
   toPublicKey: string;
   amount: number;
   why: string;
+  date: string;
 }
 
 export interface ITransferRubleWithUsers {
@@ -54,6 +55,7 @@ export interface ITransferRubleWithUsers {
   toPublicKey: string;
   amount: number;
   why: string;
+  date: string;
   user: IUser;
   users2: IUser;
 }
@@ -181,7 +183,7 @@ export class MainApi {
 
   static async addTransaction(data: ICreateTransaction) {
     return axios
-      .post(`${apiUrl}/transferRuble`, data)
+      .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })
       .then((response) => response.data);
   }
 

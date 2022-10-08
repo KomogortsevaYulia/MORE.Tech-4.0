@@ -157,6 +157,7 @@ const PersonalPage = () => {
                 <TableCell align="right">ФИО кто</TableCell>
                 <TableCell align="right">ФИО</TableCell>
                 <TableCell align="right">Сколько</TableCell>
+                <TableCell align="right">Дата</TableCell>
                 <TableCell align="right">Причина</TableCell>
               </TableRow>
             </TableHead>
@@ -170,6 +171,9 @@ const PersonalPage = () => {
                     <TableCell align="right">{row.user.FIO}</TableCell>
                     <TableCell align="right">{row.users2.FIO}</TableCell>
                     <TableCell align="right">{row.amount}</TableCell>
+                    <TableCell align="right">
+                      {row.date.split("T")[0]}
+                    </TableCell>
                     <TableCell align="right">{row.why}</TableCell>
                   </TableRow>
                 ))}
