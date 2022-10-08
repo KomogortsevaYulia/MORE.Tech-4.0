@@ -1,5 +1,4 @@
 import React from "react";
-import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
@@ -9,6 +8,31 @@ import { fetchActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
+import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
+import { styled } from '@mui/material/styles';
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import styles from './ActivitiesPage.module.css'
+import Grid from '@mui/material/Grid';
+import Chip from '@mui/material/Chip';
+import { Divider, Paper } from "@mui/material";
+
+import Button from '@mui/material/Button';
+
+const Accordion = styled((props: AccordionProps) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  '&:not(:last-child)': {
+    borderBottom: 0,
+  },
+  '&:before': {
+    display: 'none',
+  },
+}));
 
 const ActivitiesPage = () => {
 
@@ -26,7 +50,9 @@ const ActivitiesPage = () => {
   const [value, setValue] = React.useState(0);
 
   const dispatch = useAppDispatch();
-
+  const handleDelete = () => {
+    console.info('You clicked the delete icon.');
+  };
   const { Activities } = useAppSelector((state) => state.activities);
   React.useEffect(() => {
 
@@ -36,7 +62,8 @@ const ActivitiesPage = () => {
     dispatch(fetchActivities());
   }, []);
 
-
+  const [value11, setValue11] = React.useState<Date | null>(null);
+  const [value2, setValue2] = React.useState<Date | null>(null);
   return <div>
     <div>
       <Stack spacing={2} sx={{ width: 300 }}>
@@ -49,26 +76,140 @@ const ActivitiesPage = () => {
       </Stack>
 
     </div>
-    <div>
-      {Activities && Activities?.map((row) => (
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography> {row.title}</Typography>
-            <Typography sx={{ color: 'text.secondary' }}>{row.date}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-            {row.description}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+    <div className={styles.content}>
+      <aside>
+        <Paper elevation={1}>
+          <div className={styles.filters}>
+            <div className={styles.filtersItem}>
+
+              <Typography sx={{ color: 'text.secondary' }}>Даты начала до</Typography>
+
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Basic example"
+                  value={value11}
+                  onChange={(newValue) => {
+                    setValue11(newValue);
+                  }}
+                  renderInput={(params: any) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className={styles.filtersItem}>
+              <Typography sx={{ color: 'text.secondary' }}>Даты начала после</Typography>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+
+                <DatePicker
+                  label="Basic example"
+                  value={value2}
+                  onChange={(newValue) => {
+                    setValue2(newValue);
+                  }}
+                  renderInput={(params: any) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <Button variant="contained">Применить фильтры</Button>
+          </div>
+        </Paper>
+      </aside>
+      <div>
+        <div className={styles.applyFilters}>
+          {
+            [1, 2, 3, 3].map(() => (
+              <Chip label="Даты начала после 2022-10-07" variant="outlined" onDelete={handleDelete} />
+            ))
+          }
+
+        </div>
+        <div className={styles.activities}>
+          {Activities && Activities?.map((row) => (
+            <div className={styles.activity}>
+              <Accordion >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <div className={styles.header}>
+                    <div className={styles.meta}>
+                      <Typography>{row.title}</Typography>
+                      <Typography sx={{ color: 'text.secondary' }}>c {row.date} до {row.date}</Typography>
+
+
+                    </div>
+
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails>
+
+                  <div className={styles.details}>
+                    <div className={styles.flexColumn}>
+                      <Typography sx={{ color: 'text.secondary' }}>Описание</Typography>
+                      <Typography>
+                        {row.description}
+                      </Typography>
+                    </div>
+                    <div className={styles.members}>
+                      <div className={styles.flexColumn}>
+                        <Typography sx={{ color: 'text.secondary' }}>
+                          Участники
+                        </Typography>
+                        <AvatarGroup total={24}>
+                          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+                          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
+                          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
+                        </AvatarGroup>
+                      </div>
+                    </div>
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                      >
+                        <Typography>Посмотреть всех участников</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <div className={styles.allMembers}>
+
+                          <Paper elevation={0} >
+                            <Avatar sx={{ width: 56, height: 56 }} className={styles.memberAvatar} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Typography className={styles.memberName} sx={{ color: 'text.secondary' }}>Олег Лукаш</Typography>
+                          </Paper>
+                          <Paper elevation={0} >
+                            <Avatar sx={{ width: 56, height: 56 }} className={styles.memberAvatar} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Typography className={styles.memberName} sx={{ color: 'text.secondary' }}>Олег Лукаш</Typography>
+                          </Paper>
+                          <Paper elevation={0} >
+                            <Avatar sx={{ width: 56, height: 56 }} className={styles.memberAvatar} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Typography className={styles.memberName} sx={{ color: 'text.secondary' }}>Олег Лукаш</Typography>
+                          </Paper>
+                          <Paper elevation={0} >
+                            <Avatar sx={{ width: 56, height: 56 }} className={styles.memberAvatar} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Typography className={styles.memberName} sx={{ color: 'text.secondary' }}>Олег Лукаш</Typography>
+                          </Paper>
+                          <Paper elevation={0} >
+                            <Avatar sx={{ width: 56, height: 56 }} className={styles.memberAvatar} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Typography className={styles.memberName} sx={{ color: 'text.secondary' }}>Олег Лукаш</Typography>
+                          </Paper>
+                          <Paper elevation={0} >
+                            <Avatar sx={{ width: 56, height: 56 }} className={styles.memberAvatar} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Typography className={styles.memberName} sx={{ color: 'text.secondary' }}>Олег Лукаш</Typography>
+                          </Paper>
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>;
+  </div>
 };
 
 export default ActivitiesPage;
