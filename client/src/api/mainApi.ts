@@ -208,9 +208,25 @@ export class MainApi {
   }
 
   static async fetchActivitiesForHome() {
-    return  axios
-      .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart&_order=asc&_limit=5`)
+    const activities = await axios
+      .get<IActivities[]>(
+        `${apiUrl}/activities?_sort=dateStart&_order=asc&_limit=5`
+      )
       .then((response) => response.data);
+
+    const usersActivities = await axios
+      .get<IActivityRecords[]>(
+        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
+      )
+      .then((response) => response.data);
+
+    for (let activity of activities) {
+      activity.users = usersActivities.filter(
+        (userActivity) => userActivity.activitiesId === activity.id
+      );
+    }
+
+    return activities;
   }
 
   static async addTransaction(data: ICreateTransaction) {

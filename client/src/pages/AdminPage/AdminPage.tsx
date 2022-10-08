@@ -9,10 +9,18 @@ import { fetchNFTBalance, fetchUsers } from "../../store/adminSlice/adminSlice";
 import UsersTable from "./UsersTable/UsersTable";
 import AddModal from "./AddModal/AddModal";
 import { IUser } from "../../api/mainApi";
-import { Card, CardContent, CardHeader, CardMedia } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  IconButton,
+} from "@mui/material";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { GridRowId } from "@mui/x-data-grid";
 import { setUseProxies } from "immer";
+import NftCard from "./NftCard/NftCard";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -126,23 +134,13 @@ const AdminPage = () => {
           Заказы
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {nftCollections &&
-            nftCollections.balance.map((nft) => (
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  component="img"
-                  height="194"
-                  image={nft.uri}
-                  style={{ objectFit: "fill" }}
-                  alt="Paella dish"
-                />
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    Осталось: {nft.tokens.length}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
+          <Box style={{ display: "flex", gap: "16px" }}>
+            {nftCollections &&
+              nftCollections.balance.map((nft) => <NftCard nft={nft} />)}
+            <IconButton sx={{ width: 256 }}>
+              <AddAPhotoIcon sx={{ fontSize: 128 }} />
+            </IconButton>
+          </Box>
         </TabPanel>
       </div>
       <AddModal
