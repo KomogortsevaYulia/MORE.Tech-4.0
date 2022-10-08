@@ -56,7 +56,7 @@ const ShopItem: React.FC<IShopItemProps> = ({
     };
     return (
         <div className="col-sm-6 col-lg-4">
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
                     Товар добавлен в корзину
                 </Alert>
