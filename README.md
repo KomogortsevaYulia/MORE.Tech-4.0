@@ -51,7 +51,7 @@
 
 ### Открыть клиент
 
-1. Заходите на порт 3000 [Вот сюда](http://localhost:3001/login)
+1. Заходите на порт 3000 [Вот сюда](http://localhost:3000/login)
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
