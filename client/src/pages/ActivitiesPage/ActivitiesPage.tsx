@@ -17,7 +17,7 @@ import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 
 const ActivitiesPage = () => {
-  // const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
 
@@ -37,133 +37,143 @@ const ActivitiesPage = () => {
   const [addStartDate, setAddStartDate] = React.useState<Date | null>(null);
   const [addEndDate, setAddEndDate] = React.useState<Date | null>(null);
 
-  const handleAddActivity = useCallback(() => { }, []);
+  const handleAddActivity = useCallback(() => {}, []);
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        flexDirection: "column",
+        flexDirection: "column"
       }}
     >
       <header className={styles.filters}>
-        <Button variant="contained" onClick={handleOpen}>
-          Создать активность
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
-            sx={{
-              position: "absolute" as "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "background.paper",
-              borderRadius: 5,
-              boxShadow: 24,
-              p: 4,
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Добавление активности
-            </Typography>
-            <TextField label="Название активности" variant="outlined" />
-            <TextField label="Описание активности" variant="outlined" />
+        <div className="card card-body">
 
-            <Typography sx={{ color: "text.secondary" }}>
-              Даты начала
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Даты начала"
-                value={addStartDate}
-                onChange={(newValue) => {
-                  setAddStartDate(newValue);
+          <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                sx={{
+                  position: "absolute" as "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 400,
+                  bgcolor: "background.paper",
+                  borderRadius: 5,
+                  boxShadow: 24,
+                  p: 4,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
                 }}
-                renderInput={(params: any) => <TextField {...params} />}
+              >
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Добавление активности
+                </Typography>
+                <TextField label="Название активности" variant="outlined" />
+                <TextField label="Описание активности" variant="outlined" />
+          
+                <Typography sx={{ color: "text.secondary" }}>
+                  Даты начала
+                </Typography>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Даты начала"
+                    value={addStartDate}
+                    onChange={(newValue) => {
+                      setAddStartDate(newValue);
+                    }}
+                    renderInput={(params: any) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+          
+                <Typography sx={{ color: "text.secondary" }}>
+                  Даты окончания
+                </Typography>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Даты окончания"
+                    value={addEndDate}
+                    onChange={(newValue) => {
+                      setAddEndDate(newValue);
+                    }}
+                    renderInput={(params: any) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+                <Button onClick={handleAddActivity} variant="contained">
+                  Добавить
+                </Button>
+                <Button onClick={handleClose}>Отмена</Button>
+              </Box>
+          </Modal>
+        
+          <Stack spacing={2} direction="row" style={{ margin: "auto" }}>
+            <div className={styles.filtersItem}>
+              {user?.roleId === 1 ? (
+                <Button variant="contained" className="mt-4" onClick={handleOpen}>
+                Создать активность
+                </Button>
+              ) : (
+                null
+              )}
+            </div>
+            <div className={styles.filtersItem}>
+              <Typography sx={{ color: "text.secondary" }}>Название</Typography>
+              <Autocomplete
+                id="free-solo-demo"
+                freeSolo
+                options={
+                  (Activities && Activities?.map((option) => option.title)) || []
+                }
+                renderInput={(params) => <TextField {...params} />}
+                sx={{ width: 300 }}
               />
-            </LocalizationProvider>
+            </div>
+            <div className={styles.filtersItem}>
+              <Typography sx={{ color: "text.secondary" }}>
+                Даты начала до
+              </Typography>
 
-            <Typography sx={{ color: "text.secondary" }}>
-              Даты окончания
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Даты окончания"
-                value={addEndDate}
-                onChange={(newValue) => {
-                  setAddEndDate(newValue);
-                }}
-                renderInput={(params: any) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-            <Button onClick={handleAddActivity} variant="contained">
-              Добавить
-            </Button>
-            <Button onClick={handleClose}>Отмена</Button>
-          </Box>
-        </Modal>
-        <Stack spacing={2} direction="row" style={{ margin: "auto" }}>
-          <div className={styles.filtersItem}>
-            <Typography sx={{ color: "text.secondary" }}>Название</Typography>
-            <Autocomplete
-              id="free-solo-demo"
-              freeSolo
-              options={
-                (Activities && Activities?.map((option) => option.title)) || []
-              }
-              renderInput={(params) => <TextField {...params} />}
-              sx={{ width: 300 }}
-            />
-          </div>
-          <div className={styles.filtersItem}>
-            <Typography sx={{ color: "text.secondary" }}>
-              Даты начала до
-            </Typography>
-
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Даты начала до"
-                value={value11}
-                onChange={(newValue) => {
-                  setValue11(newValue);
-                }}
-                renderInput={(params: any) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </div>
-          <div className={styles.filtersItem}>
-            <Typography sx={{ color: "text.secondary" }}>
-              Даты начала после
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Даты начала после"
-                value={value2}
-                onChange={(newValue) => {
-                  setValue2(newValue);
-                }}
-                renderInput={(params: any) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </div>
-          <div className={styles.filtersItem}>
-            <Typography sx={{ color: "text.secondary" }}>
-              Применить фильтры
-            </Typography>
-            <Tooltip title="Применить фильтры">
-              <Button variant="contained">Применить</Button>
-            </Tooltip>
-          </div>
-        </Stack>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Даты начала до"
+                  value={value11}
+                  onChange={(newValue) => {
+                    setValue11(newValue);
+                  }}
+                  renderInput={(params: any) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className={styles.filtersItem}>
+              <Typography sx={{ color: "text.secondary" }}>
+                Даты начала после
+              </Typography>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Даты начала после"
+                  value={value2}
+                  onChange={(newValue) => {
+                    setValue2(newValue);
+                  }}
+                  renderInput={(params: any) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className={styles.filtersItem}>
+              <Typography sx={{ color: "text.secondary" }}>
+                Применить фильтры
+              </Typography>
+              <Tooltip title="Применить фильтры">
+                <Button variant="contained">Применить</Button>
+              </Tooltip>
+            </div>
+          </Stack>
+        </div>
       </header>
       <div className={styles.content}>
         <div>
