@@ -259,17 +259,5 @@ export class MainApi {
     });
 
     return productsMap;
-
-    // let res:{[key:string]:number} = {};
-
-    // return orders.map((item: any) => ({
-
-    //   if (res.hasOwnProperty(item.product.title)) {
-    //     res[item.product.title]=res[item.product.title]+item.count
-    //   }
-    //   else{
-    //     res[item.product.title]=item.count
-    //   }
-    // }));
   }
 }

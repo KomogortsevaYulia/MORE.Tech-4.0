@@ -45,7 +45,16 @@
   --red: #F08182;
   --darkGrey: #696D71;
   --caloryCard: #656565;
-  --planCard: linear-gradient(210.41deg, #fa5042 1.14%, #ffa739 100.75%);
+  --gradientOrange: linear-gradient(0, 0, 0, 1, [
+    {
+      offset: 0,
+      color: 'rgb(255, 191, 0)'
+    },
+    {
+      offset: 1,
+      color: 'rgb(224, 62, 76)'
+    }
+  ]);
   --appColor:  #3c3f45;
   --adCard: #363d42;
 }
