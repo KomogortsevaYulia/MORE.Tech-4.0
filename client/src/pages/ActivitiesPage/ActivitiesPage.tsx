@@ -26,18 +26,6 @@ import Button from "@mui/material/Button";
 import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 
-const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
-
 const ActivitiesPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
@@ -46,7 +34,6 @@ const ActivitiesPage = () => {
     console.info("You clicked the delete icon.");
   };
   const { Activities } = useAppSelector((state) => state.activities);
-  React.useEffect(() => {}, [Activities]);
 
   React.useEffect(() => {
     dispatch(fetchActivities());
