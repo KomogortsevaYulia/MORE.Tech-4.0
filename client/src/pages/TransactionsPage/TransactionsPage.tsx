@@ -1,7 +1,8 @@
 import React from "react";
-
+import styles from "./TransactionPage.module.css";
 import Paper from "@mui/material/Paper";
 import { styled } from '@mui/material/styles';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   fetchTransactions,
@@ -106,13 +107,13 @@ const TransactionsPage = () => {
       backgroundColor: "#8e47e4",
       color: "#FFFFFF",
       fontSize: 16,
-      
+
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
   }));
-  
+
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
@@ -134,22 +135,17 @@ const TransactionsPage = () => {
             alignItems: "flex-start",
           }}
         >
-          <div style={{ maxWidth: "12vw" }}>
-            <Stack direction="row" spacing={1}>
-              <Chip
-                label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`}
-                variant="outlined"
-                sx={{
-                  background:
-                    user?.balance.coinsAmount !== "0"
-                      ? "var(--purple)"
-                      : "var(--red)",
-                }}
-              />
-            </Stack>
-            <Typography variant="h6" component="h6">
-              Текущий курс: {currentCourse} Digital Rubles = 1 Цифровой рублес
-            </Typography>
+          <div style={{ maxWidth: "12vw" }} className="col ">
+            <div className="row d-flex justify-content-center">
+              <div className={`${styles.coin} `}>
+                <div className={`${styles.side} ${styles.head}`}>1</div>
+                <div className={`${styles.side} ${styles.tail}`}>1</div>
+                <div className={`${styles.edge}`}></div>
+              </div>
+            </div>
+            <div className="row d-flex justify-content-center">
+              <h2 className="fw-normal">{user?.balance.coinsAmount.toLocaleString()}</h2>
+            </div>
           </div>
         </Box>
         <div
@@ -179,6 +175,16 @@ const TransactionsPage = () => {
                 onChange={handleRublesChange}
               />{" "}
               Digital Rubles
+            </div>
+            <div className="row d-flex justify-content-center">
+              <div className="col-2">
+                <ArrowDownwardIcon color="success" />
+              </div>
+              <div className="col-auto">
+                <Typography sx={{ color: "#1F9D57", fontSize: 12 }} component="p">
+                  {currentCourse} Digital Rubles = 1 Цифровой рубль
+                </Typography>
+              </div>
             </div>
             <div
               style={{
