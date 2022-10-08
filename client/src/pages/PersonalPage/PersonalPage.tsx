@@ -23,6 +23,7 @@ import {
 } from "../../store/ActivitiesSlice/activitiesSlice";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,7 +60,6 @@ function a11yProps(index: number) {
 
 const PersonalPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-
   React.useEffect(() => {}, [user]);
 
   const [value, setValue] = React.useState(0);
@@ -70,21 +70,16 @@ const PersonalPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { transferRuble } = useAppSelector((state) => state.transferRuble);
-  React.useEffect(() => {
-    console.log(transferRuble);
-  }, [transferRuble]);
-
   React.useEffect(() => {
     dispatch(fetchTransferRubleByUsers(user!.id));
     dispatch(fetchActivitiesWithUser(user!.id));
+    dispatch(fetchOrderWithUser(user!.id));
   }, []);
 
+  const { transferRuble } = useAppSelector((state) => state.transferRuble);
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
-  React.useEffect(() => {
-    console.log(ActivitiesRecords);
-  }, [ActivitiesRecords]);
-
+  const { order } = useAppSelector((state) => state.orders);
+ 
   return (
     <div>
       <Grid container spacing={2}>
@@ -148,7 +143,34 @@ const PersonalPage = () => {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Заказы
+      <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="right">Товар</TableCell>
+                <TableCell align="right">Количество</TableCell>
+                <TableCell align="right">Сумма</TableCell>
+                <TableCell align="right">Дата</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {order &&
+                order?.map((row:any) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{row.product.title}</TableCell>
+                    <TableCell align="right">{row.sum}</TableCell>
+                    <TableCell align="right">{row.count}</TableCell>
+                    <TableCell align="right">
+                      {row.date.split("T")[0]}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <TableContainer component={Paper}>
@@ -182,8 +204,8 @@ const PersonalPage = () => {
           </Table>
         </TableContainer>
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        Заказы
+      <TabPanel value={value} index={3}>
+        NFT
       </TabPanel>
     </div>
   );

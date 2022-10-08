@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BalanceFiat, BlockchainApi } from "./blockchainApi";
+import { BalanceFiat, BalanceNFT, BlockchainApi } from "./blockchainApi";
 
 export interface IUser {
   id: number;
@@ -18,6 +18,7 @@ export interface IUserWithBalance {
   FIO: string;
   image: string;
   balance: BalanceFiat;
+  balanceNFT: BalanceNFT;
 }
 
 export interface IProduct {
@@ -70,8 +71,13 @@ export interface IActivityRecords {
 
 export interface IOrder {
   id: number;
-  userId: IUser;
-  productId: IProduct;
+  userId: number;
+  productId: number;
+  user: IUser;
+  product: IProduct;
+  count: number;
+  sum: number;
+  date: string;
 }
 
 export interface ICreateTransaction {
@@ -96,6 +102,7 @@ export class MainApi {
       });
 
     user.balance = await BlockchainApi.balanceFiat(user.publicKey);
+    user.balanceNFT = await BlockchainApi.balanceNFT(user.publicKey);
 
     return user as IUserWithBalance;
   }
@@ -229,5 +236,4 @@ export class MainApi {
         return err;
       });
   }
-  
 }
