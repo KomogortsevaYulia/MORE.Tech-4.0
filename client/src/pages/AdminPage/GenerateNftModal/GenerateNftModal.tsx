@@ -2,19 +2,10 @@ import {
   Box,
   Modal,
   Typography,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   TextField,
   Button,
 } from "@mui/material";
 import React from "react";
-import { IUser } from "../../../api/mainApi";
-import FileUpload from "../../../components/FileUpload/FileUpload";
-import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { transferRubles } from "../../../store/transactionsSlice/transactionsSlice";
 
 interface IGenerateNftModal {
   open: boolean;
