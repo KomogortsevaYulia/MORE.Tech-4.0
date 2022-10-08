@@ -29,8 +29,11 @@ export const marketSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<IProductWithCustomer>) {
+      console.log(state.cart)
+      console.log(state.cart.find((i) => i.product.id === action.payload.product.id));
+
       state.cart.push(action.payload);
-    },
+    }
   },
   extraReducers: (builder) => {
     builder

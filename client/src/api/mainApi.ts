@@ -31,13 +31,9 @@ export interface IProduct {
 }
 
 export interface IProductWithCustomer {
-  id: number;
-  priceRuble: number;
-  count: number;
-  image: string;
-  description: string;
-  title: string;
-  user: IUser;
+  product: IProduct;
+  count?: number;
+  user?: IUser;
 }
 
 export interface IActivities {
