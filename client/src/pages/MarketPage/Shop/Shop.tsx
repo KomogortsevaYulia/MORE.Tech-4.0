@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styles from "../Market.module.scss";
 import { Dropdown } from "antd";
 import { deleteFromCart } from "../../../store/marketSlice/marketSlice";
+import { IconButton } from "@mui/material";
 
 export default function Shop() {
 	const dispatch = useAppDispatch();
@@ -46,19 +47,7 @@ export default function Shop() {
 		dispatch(fetchProducts());
 	}, [dispatch]);
 
-	const filterProducts = () => {
-		if (products) {
-			if (priceMax === 0) {
-				setPriceMax(maxPrice);
-			}
 
-			setFilteredProducts(
-				products!.filter(function (el: IProduct) {
-					return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
-				})
-			);
-		}
-	};
 
 	const [priceMin, setPriceMin] = React.useState(0);
 	const handleChangePriceMin = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,11 +65,23 @@ export default function Shop() {
 		}
 	}, [maxPrice]);
 
+	const filterProducts = React.useCallback(() => {
+		if (products) {
+			if (priceMax === 0) {
+				setPriceMax(maxPrice);
+			}
+
+			setFilteredProducts(
+				products!.filter(function (el: IProduct) {
+					return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
+				})
+			);
+		}
+	}, [maxPrice, priceMax, priceMin, products]);
+
 	React.useEffect(() => {
 		filterProducts();
 	}, [priceMin, priceMax, filterProducts]);
-
-
 	const menu = (
 		<div className={`card bg-primary text-white rounded-3`}>
 			<div className="card-body">
@@ -116,9 +117,9 @@ export default function Shop() {
 									</div>
 
 									<div className="deleteBtn d-flex ms-2 flex-row align-items-center">
-										<a onClick={() => (deleteClick(item.product))} style={{ color: "#2e2e2e", }} >
+										<IconButton onClick={() => (deleteClick(item.product))} aria-label="delete" style={{ color: "#2e2e2e", }}>
 											<DeleteIcon className={styles.deleteBtn} />
-										</a>
+										</IconButton>
 									</div>
 								</div>
 							</div>
@@ -174,9 +175,7 @@ export default function Shop() {
 
 					<div className="dropdown ">
 						<Dropdown overlay={menu}>
-							<a onClick={e => e.preventDefault()}>
-								<button className="btn btn-info">Корзина</button>
-							</a>
+							<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина</button>
 						</Dropdown>
 					</div>
 				</div>

@@ -59,7 +59,7 @@ function a11yProps(index: number) {
 }
 
 const PersonalPage = () => {
-  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
   React.useEffect(() => { }, [user]);
 
   const [value, setValue] = React.useState(0);

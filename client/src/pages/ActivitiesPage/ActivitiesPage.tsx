@@ -17,12 +17,10 @@ import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 
 const ActivitiesPage = () => {
-  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  // const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
+
   const { Activities } = useAppSelector((state) => state.activities);
 
   React.useEffect(() => {
