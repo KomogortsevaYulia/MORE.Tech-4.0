@@ -84,7 +84,7 @@ const AdminPage = () => {
           >
             <Tab label="Пользователи и зачисления" {...a11yProps(0)} />
             <Tab label="Заказы" {...a11yProps(1)} />
-            <Tab label="Начисления/списания" {...a11yProps(2)} />
+            <Tab label="Генерация NFT" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -97,7 +97,9 @@ const AdminPage = () => {
             data={
               users?.map((user) => ({
                 ...user,
-                balance: 0,
+                balance:
+                  user.balance?.coinsAmount?.toLocaleString() ||
+                  "Не удалось получить данные кошелька",
                 add: (
                   <Button
                     variant="outlined"
@@ -114,10 +116,14 @@ const AdminPage = () => {
           Заказы
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Начисления/списания
+          Генерация NFT
         </TabPanel>
       </div>
-      <AddModal open={openModal} handleClose={closeModal} user={currentUser} />
+      <AddModal
+        open={openModal}
+        handleClose={closeModal}
+        currentUser={currentUser}
+      />
     </>
   );
 };

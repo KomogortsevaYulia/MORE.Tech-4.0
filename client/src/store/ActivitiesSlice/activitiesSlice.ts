@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
-import { MainApi, ITransferRuble, ITransferRubleWithUsers, IActivities } from "../../api/mainApi";
+import { MainApi, ITransferRuble, ITransferRubleWithUsers, IActivities, IActivityRecords } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
 
 export interface ActivitiesStateState {
   Activities: IActivities[] | null;
+  ActivitiesRecords:IActivityRecords[]| null;
   fethcActivitiesStatus: LoadingStatus | null;
   fetchActivitiesError: string | null;
 }
 
 const initialState: ActivitiesStateState = {
   Activities: null,
+  ActivitiesRecords:null,
   fethcActivitiesStatus: null,
   fetchActivitiesError: null,
 };
@@ -19,6 +21,13 @@ export const fetchActivities = createAsyncThunk(
   "Activities/fetchActivities",
   async () => {
     return MainApi.fetchActivities();
+  }
+);
+
+export const fetchActivitiesWithUser = createAsyncThunk(
+  "Activities/fetchActivitiesWithUser",
+  async (id: number) => {
+    return MainApi.fetchActivitiesWithUser(id);
   }
 );
 
@@ -37,7 +46,12 @@ export const ActivitiesSlice = createSlice({
       })
       .addCase(fetchActivities.rejected, (state) => {
         state.fethcActivitiesStatus = "failed";
-      });
+      })
+      .addCase(fetchActivitiesWithUser.fulfilled, (state, action) => {
+        state.fethcActivitiesStatus = "success";
+        state.ActivitiesRecords = action.payload;
+      })
+    
   },
 });
 

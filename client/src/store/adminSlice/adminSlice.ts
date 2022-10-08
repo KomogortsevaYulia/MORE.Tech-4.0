@@ -1,12 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
-import { MainApi, IProduct, IUser } from "../../api/mainApi";
+import { MainApi, IProduct, IUser, IUserWithBalance } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
+import { BlockchainApi } from "../../api/blockchainApi";
 
 export interface AdminState {
-  users: IUser[] | null;
+  users: IUserWithBalance[] | null;
   fetchUsersStatus: LoadingStatus | null;
   fetchUsersError: string | null;
+}
+
+export interface TransferData {
+  userId: number;
+  toId: number;
+  fromPrivateKey: string;
+  toPublicKey: string;
+  amount: number;
 }
 
 const initialState: AdminState = {
@@ -18,6 +27,24 @@ const initialState: AdminState = {
 export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
   return MainApi.fetchUsers();
 });
+
+export const transferRubles = createAsyncThunk(
+  "admin/transferRubles",
+  async (data: TransferData) => {
+    const transaction = await MainApi.addTransaction({
+      ...data,
+      why: "Начисление от администратора",
+    });
+
+    console.log(transaction);
+
+    return BlockchainApi.rubleTransfer(
+      data.fromPrivateKey,
+      data.toPublicKey,
+      data.amount
+    );
+  }
+);
 
 export const adminSlice = createSlice({
   name: "admin",
@@ -34,7 +61,8 @@ export const adminSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state) => {
         state.fetchUsersError = "failed";
-      });
+      })
+      .addCase(transferRubles.fulfilled, (state, action) => {});
   },
 });
 

@@ -5,28 +5,32 @@
       "roleId": 4,
       "privateKey": "4e29114ac856f75adbe44fd20bc52c39780b3328856dfeeb4aff2271637b8b27",
       "publicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
-      "FIO": "Работяга (Бунтует)"
+      "FIO": "Работяга (Бунтует)",
+      "image": "https://robohash.org/stefan-two"
     },
     {
       "id": 3,
       "roleId": 3,
       "publicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
       "privateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
-      "FIO": "Первых Алексей"
+      "FIO": "Первых Алексей",
+      "image": "https://robohash.org/stefan-one"
     },
     {
       "id": 2,
       "roleId": 2,
       "publicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
       "privateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
-      "FIO": "Лукаш Олег"
+      "FIO": "Лукаш Олег",
+      "image": "https://robohash.org/stefan-three"
     },
     {
       "id": 1,
       "roleId": 1,
       "privateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
       "publicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
-      "FIO": "Админ Админович"
+      "FIO": "Админ Админович",
+      "image": "https://avatars.dicebear.com/api/bottts/stefan.svg"
     }
   ],
   "role": [
@@ -50,10 +54,24 @@
   "activities": [
     {
       "id": 1,
+      "typeId": 1,
+      "title": "Битва 11",
+      "description": "ЛАЛАЛА",
+      "date": "2022-10-07"
+    },
+    {
+      "id": 2,
       "typeId": 2,
       "title": "Конкурс мемов",
       "description": "ЛАЛАЛА",
-      "date": "2022-10-07"
+      "date": "2022-15-07"
+    },
+    {
+      "id": 3,
+      "typeId": 3,
+      "title": "Обучение ораторскому мастерству",
+      "description": "ЛАЛАЛА",
+      "date": "2022-12-07"
     }
   ],
   "typeActivity": [
@@ -78,6 +96,7 @@
       "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
       "toPublicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "amount": 0.9,
+      "date": "2022-10-08T02:35:42.510Z",
       "why": "За кофе"
     },
     {
@@ -87,6 +106,7 @@
       "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
       "toPublicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "amount": 0.9,
+      "date": "2022-10-08T02:35:42.510Z",
       "why": "За кофе"
     },
     {
@@ -96,7 +116,38 @@
       "fromPrivateKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
       "toPublicKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "amount": 0.9,
+      "date": "2022-10-08T02:35:42.510Z",
       "why": "За кофе"
+    },
+    {
+      "amount": 11,
+      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "userId": 1,
+      "toId": 4,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T02:35:42.510Z",
+      "id": 4
+    },
+    {
+      "amount": 335,
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "userId": 1,
+      "toId": 3,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T02:35:42.510Z",
+      "id": 5
+    },
+    {
+      "amount": 112,
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "userId": 1,
+      "toId": 2,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T02:35:42.510Z",
+      "id": 6
     }
   ],
   "products": [
@@ -144,15 +195,45 @@
   "basket": [
     {
       "id": 1,
-      "usersId": 2,
-      "productsId": 1,
+      "userId": 2,
+      "productId": 1,
       "count": 1
     },
     {
       "id": 1,
-      "usersId": 2,
-      "productsId": 2,
+      "userId": 2,
+      "productId": 2,
       "count": 2
+    }
+  ],
+  "activity_records": [
+    {
+      "id": 1,
+      "userId": 2,
+      "activitiesId": 1
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "activitiesId": 2
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "userId": 2,
+      "productId": 1,
+      "count": 1,
+      "sum": 10,
+      "date": "2022-10-08T02:35:42.510Z"
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "productId": 2,
+      "count": 1,
+      "sum": 3,
+      "date": "2022-10-08T02:35:42.510Z"
     }
   ]
 }

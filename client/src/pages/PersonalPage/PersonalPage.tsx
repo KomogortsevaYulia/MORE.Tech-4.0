@@ -1,8 +1,6 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+
 import Grid from "@mui/material/Grid";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -10,14 +8,21 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchTransferRubleByUsers } from "../../store/transferRubleSlice/transferRubleSlice";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import styles from './PersonalPage.module.css'
+import {
+  fetchActivities,
+  fetchActivitiesWithUser,
+} from "../../store/ActivitiesSlice/activitiesSlice";
+import { Accordion, AccordionSummary, AccordionDetails, Stack, Chip, Button } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -54,8 +59,7 @@ function a11yProps(index: number) {
 
 const PersonalPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-
-  React.useEffect(() => {}, [user]);
+  React.useEffect(() => { }, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -65,39 +69,37 @@ const PersonalPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { transferRuble } = useAppSelector((state) => state.transferRuble);
-  React.useEffect(() => {
-    console.log(transferRuble);
-  }, [transferRuble]);
-
   React.useEffect(() => {
     dispatch(fetchTransferRubleByUsers(user!.id));
+    dispatch(fetchActivitiesWithUser(user!.id));
+    dispatch(fetchOrderWithUser(user!.id));
   }, []);
+
+  const { transferRuble } = useAppSelector((state) => state.transferRuble);
+  const { ActivitiesRecords } = useAppSelector((state) => state.activities);
+  const { order } = useAppSelector((state) => state.orders);
 
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={2}>
           <Avatar
             alt="ФИО"
-            src="/static/images/avatar/1.jpg"
-            sx={{ width: 150, height: 150 }}
+            src={user!.image}
+            sx={{ width: "100%", height: "100%", border: "1px solid black" }}
           />
         </Grid>
-        <Grid item xs={2}>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          >
-            <ListItem>
-              <ListItemText primary={user?.FIO} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Статус" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Баланс" />
-            </ListItem>
-          </List>
+        <Grid item xs={10}>
+          <Typography variant="h3" gutterBottom>
+            {user?.FIO}
+          </Typography>
+          {/* <Typography variant="h4" gutterBottom>
+            Статус
+          </Typography> */}
+          <Stack direction="row" spacing={1} >
+            <Chip label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`} variant="outlined" sx={{background: user?.balance.coinsAmount!='0' ? 'var(--purple)': 'var(--red)' ,}} />
+          </Stack> 
+              
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -109,43 +111,96 @@ const PersonalPage = () => {
           <Tab label="Активности" {...a11yProps(0)} />
           <Tab label="Заказы" {...a11yProps(1)} />
           <Tab label="Начисления/списания" {...a11yProps(2)} />
+          <Tab label="NFT" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Активности
+        <div>
+          {ActivitiesRecords &&
+            ActivitiesRecords?.map((row) => (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography> {row.activities.title}</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    {row.activities.date}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{row.activities.description}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Заказы
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">Товар</TableCell>
+                <TableCell align="left">Количество</TableCell>
+                <TableCell align="left">Сумма</TableCell>
+                <TableCell align="left">Дата</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {order &&
+                order?.map((row: any) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="left">{row.product.title}</TableCell>
+
+                    <TableCell align="left">{row.count}</TableCell>
+                    <TableCell align="left">{row.sum}</TableCell>
+                    <TableCell align="left">
+                      {row.date.split("T")[0]}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">ФИО кто</TableCell>
-                <TableCell align="right">ФИО</TableCell>
-                <TableCell align="right">Сколько</TableCell>
-                <TableCell align="right">Причина</TableCell>
+                <TableCell align="left">ФИО кто</TableCell>
+                <TableCell align="left">ФИО</TableCell>
+                <TableCell align="left">Сколько</TableCell>
+                <TableCell align="left">Дата</TableCell>
+                <TableCell align="left">Причина</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {transferRuble && transferRuble?.map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.users.FIO}
-                  </TableCell>
-                  <TableCell align="right">{row.users2.FIO}</TableCell>
-                  <TableCell align="right">{row.amount}</TableCell>
-                  <TableCell align="right">{row.why}</TableCell>
-                </TableRow>
-              ))}
+              {transferRuble &&
+                transferRuble?.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="left">{row.user.FIO}</TableCell>
+                    <TableCell align="left">{row.users2.FIO}</TableCell>
+                    <TableCell align="left">{row.amount}</TableCell>
+                    <TableCell align="left">
+                      {row.date.split("T")[0]}
+                    </TableCell>
+                    <TableCell align="left">{row.why}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        NFT
       </TabPanel>
     </div>
   );

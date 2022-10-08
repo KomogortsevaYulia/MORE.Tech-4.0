@@ -1,0 +1,81 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.heaerDates {
+  display: flex;
+  gap: 5px;
+}
+
+.members {
+  display: flex;
+}
+
+.allMembers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.memberName {
+  margin-top: 5px;
+  text-align: center;
+  cursor: default;
+}
+
+.memberAvatar {
+  margin: 0 auto;
+}
+
+.activities,
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.activity {
+  margin-top: 5px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+}
+.filtersItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+}
+
+.applyFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
