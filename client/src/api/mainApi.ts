@@ -12,6 +12,7 @@ export interface IProduct {
   id: number;
   priceRuble: number;
   count: number;
+  image: string;
   description: string;
   title: string;
 }

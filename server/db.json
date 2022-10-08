@@ -104,6 +104,7 @@
       "id": 1,
       "priceRuble": 25,
       "count": 10,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/534/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B06.jpg?1624535144",
       "description": "ЛАЛАЛА",
       "title": "Футболка ВТБ"
     },
@@ -111,8 +112,33 @@
       "id": 2,
       "priceRuble": 5,
       "count": 19,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/542/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B07.jpg?1624535145",
       "description": "ЛАЛАЛА",
-      "title": "Ручка ВТБ"
+      "title": "Шопер"
+    },
+    {
+      "id": 3,
+      "priceRuble": 34,
+      "count": 8,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/494/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B01.jpg?1624535136",
+      "description": "ЛАЛАЛА",
+      "title": "Термос"
+    },
+    {
+      "id": 4,
+      "priceRuble": 56,
+      "count": 45,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/518/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B04.jpg?1624535141",
+      "description": "ЛАЛАЛА",
+      "title": "Чехол"
+    },
+    {
+      "id": 5,
+      "priceRuble": 768,
+      "count": 23,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/510/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B03.jpg?1624535139",
+      "description": "ЛАЛАЛА",
+      "title": "Носки"
     }
   ],
   "basket": [
