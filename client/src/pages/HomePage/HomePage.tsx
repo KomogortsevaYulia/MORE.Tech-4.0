@@ -1,98 +1,69 @@
 import React from "react";
 import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import HotelIcon from '@mui/icons-material/Hotel';
-import RepeatIcon from '@mui/icons-material/Repeat';
-import Typography from '@mui/material/Typography';
 
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { Typography } from "@mui/material";
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 const HomePage = () => {
   return (
-    
-    <Timeline position="alternate">
-      <TimelineItem>
-        <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          align="right"
-          variant="body2"
-          color="text.secondary"
-        >
-          9:30 am
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot>
-            <FastfoodIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Eat
+    <Grid container spacing={2}>
+      <Grid item xs={8}>
+        <Item>
+          <Typography variant="h5" component="h5">
+            Достижения
           </Typography>
-          <Typography>Because you need strength</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          variant="body2"
-          color="text.secondary"
-        >
-          10:00 am
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary">
-            <LaptopMacIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Code
+
+          Достижения – какие либо достижения в рабочей области, в рамках коммандного взаимодействия,мероприятиях от компании и тд.
+          Прохождение обучений – успешное окончание курса, назнаяенного компанией, или согласовонного с ней
+          Благодарности – персональные благодарности от коллег, начальства
+          Челлендж - испытание, в котором пользователь делает ставку монетами «Digital Ruble» и выбираеn задание. Если задание выполнено он получает монеты, иначе теряет.
+          Битвы (соревнования/конкурсы/рейтинги) – мероприятия с одним победителем, который определяется жюри или общим голосованием.
+          Ачивки - достижения, связанные с прогрессом.
+          Администратор ежемесячн
+        </Item>
+      </Grid>
+      <Grid item xs={4}>
+        <Item>
+          <Typography variant="h5" component="h5">
+            Цель
           </Typography>
-          <Typography>Because it&apos;s awesome!</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary" variant="outlined">
-            <HotelIcon />
-          </TimelineDot>
-          <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Sleep
+          повысить мотивацию и вовлеченность в комьюнити компании для формирования дружественной атмосферы и профессионального роста. Помимо материальной мотивации, используется спортивный интерес
+        </Item>
+      </Grid>
+      <Grid item xs={4}>
+        <Item>
+          <Typography variant="h5" component="h5">
+            Мотивация
           </Typography>
-          <Typography>Because you need rest</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-          <TimelineDot color="secondary">
-            <RepeatIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Repeat
+          Повысить мотивацию и вовлеченность сотрудников компании для формирования дружественной атмосферы, а так-же профессионального роста за счет дополнительной мотивации участия в образовательных и общественных мероприятиях
+        </Item>
+      </Grid>
+      <Grid item xs={8}>
+        <Item>
+          <Typography variant="h5" component="h5">
+            Ачивки
           </Typography>
-          <Typography>Because this is the life you love!</Typography>
-        </TimelineContent>
-      </TimelineItem>
-    </Timeline>);
+
+          Количество дней без опоздания (10, 30, 90, 270 и тд)
+          Победы в челленждах
+          Стрики в челленждах
+          Победы в битвах
+          Покупка мерча
+          Прохождение обучений
+
+        </Item>
+      </Grid>
+    </Grid>);
 };
 
 export default HomePage;
