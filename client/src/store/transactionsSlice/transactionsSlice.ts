@@ -26,23 +26,48 @@ export const fetchTransactions = createAsyncThunk(
 
 export const transferRubles = createAsyncThunk(
   "admin/transferRubles",
-  async (data: TransferData) => {
-    const transaction = await MainApi.addTransaction({
-      ...data,
-    });
+  async (data: TransferData | TransferData[]) => {
+    let transaction;
 
-    console.log(transaction);
+    if (!Array.isArray(data)) {
+      transaction = await MainApi.addTransaction({
+        ...data,
+      });
+      console.log(transaction);
 
-    await BlockchainApi.rubleTransfer(
-      data.fromPrivateKey,
-      data.toPublicKey,
-      data.amount
-    );
+      await BlockchainApi.rubleTransfer(
+        data.fromPrivateKey,
+        data.toPublicKey,
+        data.amount
+      );
 
-    transaction.user = await MainApi.fetchUserById(transaction.userId);
-    transaction.users2 = await MainApi.fetchUserById(transaction.toId);
+      transaction.user = await MainApi.fetchUserById(transaction.userId);
+      transaction.users2 = await MainApi.fetchUserById(transaction.toId);
 
-    return transaction;
+      return transaction;
+    } else {
+      transaction = data.map((t) =>
+        MainApi.addTransaction({
+          ...t,
+        })
+      );
+      console.log(transaction);
+
+      const performs = data.map((t) =>
+        BlockchainApi.rubleTransfer(t.fromPrivateKey, t.toPublicKey, t.amount)
+      );
+
+      transaction = await Promise.all(transaction).then((data) => data);
+      const performs2 = await Promise.all(performs).then((data) => data);
+
+      return await Promise.all(
+        transaction.map(async (t) => ({
+          ...t,
+          user: await MainApi.fetchUserById(t.userId),
+          users2: await MainApi.fetchUserById(t.toId),
+        }))
+      );
+    }
   }
 );
 
@@ -63,7 +88,11 @@ export const transactionsSlice = createSlice({
         state.fetchTransactionsStatus = "failed";
       })
       .addCase(transferRubles.fulfilled, (state, action) => {
-        state.transactions?.push(action.payload);
+        if (Array.isArray(action.payload)) {
+          state.transactions?.push(...action.payload);
+        } else {
+          state.transactions?.push(action.payload);
+        }
       });
   },
 });

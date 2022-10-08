@@ -14,7 +14,6 @@ export interface ActivitiesStateState {
   ActivitiesRecords: IActivityRecords[] | null;
   fethcActivitiesStatus: LoadingStatus | null;
   fetchActivitiesError: string | null;
-  allActivities: any[];
 }
 
 const initialState: ActivitiesStateState = {
@@ -22,7 +21,6 @@ const initialState: ActivitiesStateState = {
   ActivitiesRecords: null,
   fethcActivitiesStatus: null,
   fetchActivitiesError: null,
-  allActivities: [],
 };
 
 export const fetchActivities = createAsyncThunk(
@@ -36,13 +34,6 @@ export const fetchActivitiesWithUser = createAsyncThunk(
   "Activities/fetchActivitiesWithUser",
   async (id: number) => {
     return MainApi.fetchActivitiesWithUser(id);
-  }
-);
-
-export const fetchAllActivities = createAsyncThunk(
-  "Activities/fetchAllActivitiesWithUsers",
-  async () => {
-    return MainApi.fetchActivitiesWithUsers();
   }
 );
 
@@ -65,9 +56,6 @@ export const ActivitiesSlice = createSlice({
       .addCase(fetchActivitiesWithUser.fulfilled, (state, action) => {
         state.fethcActivitiesStatus = "success";
         state.ActivitiesRecords = action.payload;
-      })
-      .addCase(fetchAllActivities.fulfilled, (state, action) => {
-        state.allActivities = action.payload;
       });
   },
 });

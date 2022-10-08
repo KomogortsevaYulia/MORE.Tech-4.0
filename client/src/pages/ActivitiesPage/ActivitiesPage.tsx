@@ -4,10 +4,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  fetchActivities,
-  fetchAllActivities,
-} from "../../store/ActivitiesSlice/activitiesSlice";
+import { fetchActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -42,7 +39,6 @@ const Accordion = styled((props: AccordionProps) => (
 
 const ActivitiesPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-  const {} = useAppSelector((state) => state.activities);
 
   const dispatch = useAppDispatch();
   const handleDelete = () => {
@@ -53,7 +49,6 @@ const ActivitiesPage = () => {
 
   React.useEffect(() => {
     dispatch(fetchActivities());
-    dispatch(fetchAllActivities());
   }, []);
 
   const [value11, setValue11] = React.useState<Date | null>(null);
@@ -243,32 +238,14 @@ const ActivitiesPage = () => {
                           <div className={styles.flexColumn}></div>
                         </div>
                         <div className={styles.allMembers}>
-                          <AvatarGroup max={4}>
-                            <Avatar
-                              alt="Remy Sharp"
-                              src="/static/images/avatar/1.jpg"
-                              className={styles.memberAvatar}
-                            />
-                            <Avatar
-                              alt="Travis Howard"
-                              src="/static/images/avatar/1.jpg"
-                              className={styles.memberAvatar}
-                            />
-                            <Avatar
-                              alt="Cindy Baker"
-                              src="/static/images/avatar/1.jpg"
-                              className={styles.memberAvatar}
-                            />
-                            <Avatar
-                              alt="Agnes Walker"
-                              src="/static/images/avatar/1.jpg"
-                              className={styles.memberAvatar}
-                            />
-                            <Avatar
-                              alt="Trevor Henderson"
-                              src="/static/images/avatar/1.jpg"
-                              className={styles.memberAvatar}
-                            />
+                          <AvatarGroup max={row.users.length}>
+                            {row.users.map((user) => (
+                              <Avatar
+                                alt={user.user.FIO}
+                                src={user.user.image}
+                                className={styles.memberAvatar}
+                              />
+                            ))}
                           </AvatarGroup>
                         </div>
                       </div>
