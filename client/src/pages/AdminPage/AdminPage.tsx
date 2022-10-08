@@ -10,6 +10,9 @@ import UsersTable from "./UsersTable/UsersTable";
 import AddModal from "./AddModal/AddModal";
 import { IUser } from "../../api/mainApi";
 import { Card, CardContent, CardHeader, CardMedia } from "@mui/material";
+import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
+import { GridRowId } from "@mui/x-data-grid";
+import { setUseProxies } from "immer";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -60,21 +63,36 @@ const AdminPage = () => {
     setValue(newValue);
   };
 
-  const [currentUser, setCurrentUser] = React.useState<IUser | null>(null);
-
   const [openModal, setOpenModal] = React.useState(false);
-
-  const openModalClick = React.useCallback(
-    (user: IUser) => {
-      setOpenModal(true);
-      setCurrentUser(user);
-    },
-    [setOpenModal]
-  );
 
   const closeModal = React.useCallback(() => {
     setOpenModal(false);
   }, [setOpenModal]);
+
+  const [usersToGetMoney, setUsersToGetMoney] = React.useState<any[]>([]);
+
+  const addClick = (ids: GridRowId[]) => {
+    if (users) {
+      setUsersToGetMoney(users!.filter((u) => ids.includes(u.id)));
+    }
+    setOpenModal(true);
+  };
+
+  const accrueClick = (amount: number) => {
+    dispatch(
+      transferRubles(
+        usersToGetMoney.map((u) => ({
+          amount,
+          fromPrivateKey: user!.privateKey,
+          toPublicKey: u.publicKey,
+          toId: u.id,
+          userId: user!.id,
+          why: "Начисление от администратора",
+        }))
+      )
+    );
+    closeModal();
+  };
 
   return (
     <>
@@ -92,22 +110,16 @@ const AdminPage = () => {
         </Box>
         <TabPanel value={value} index={0}>
           <UsersTable
-            data={
+            rows={
               users?.map((user) => ({
                 ...user,
                 balance:
                   user.balance?.coinsAmount?.toLocaleString() ||
                   "Не удалось получить данные кошелька",
-                add: (
-                  <Button
-                    variant="outlined"
-                    onClick={() => openModalClick(user)}
-                  >
-                    Начислить
-                  </Button>
-                ),
+                name: user.FIO,
               })) || []
             }
+            onAddClick={addClick}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -129,22 +141,6 @@ const AdminPage = () => {
                     Осталось: {nft.tokens.length}
                   </Typography>
                 </CardContent>
-                {/* <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-              <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </ExpandMore>
-            </CardActions> */}
               </Card>
             ))}
         </TabPanel>
@@ -152,7 +148,7 @@ const AdminPage = () => {
       <AddModal
         open={openModal}
         handleClose={closeModal}
-        currentUser={currentUser}
+        onAccrueClick={accrueClick}
       />
     </>
   );

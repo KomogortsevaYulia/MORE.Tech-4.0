@@ -29,7 +29,16 @@ export const marketSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<IProductWithCustomer>) {
-      state.cart.push(action.payload);
+      const cartItem = action.payload;
+
+      const index = state.cart.findIndex(
+        (item) => item.product.id === cartItem.product.id
+      );
+      if (index !== -1) {
+        state.cart[index].count! += 1;
+      } else {
+        state.cart.push({ ...action.payload, count: 1 });
+      }
     },
   },
   extraReducers: (builder) => {
