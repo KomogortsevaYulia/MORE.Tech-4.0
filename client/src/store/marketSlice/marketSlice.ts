@@ -39,7 +39,7 @@ export const marketSlice = createSlice({
       const index = state.cart.findIndex((item) => item.product.id === action.payload.id);
 
       if (index !== -1) {
-        state.cart.splice(index, index);
+        state.cart.splice(index, 1);
       }
     },
   },

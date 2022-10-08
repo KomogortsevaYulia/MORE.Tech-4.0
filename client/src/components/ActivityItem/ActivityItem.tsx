@@ -19,6 +19,7 @@ import { styled } from "@mui/material/styles";
 
 import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 interface IActivityItemProps {
   row: IActivities;
@@ -37,11 +38,13 @@ const Accordion = styled((props: AccordionProps) => (
 }));
 
 const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
-  // const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-  // const dispatch = useAppDispatch();
-
+  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
+  const [isRec, setIsRec] = React.useState(
+    row.users.findIndex((item) => item.userId === user?.id) !== -1 ? true : false
+  );
   const [currentActivity, setCurrentActivity] = React.useState(row);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -68,36 +71,35 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
             flexDirection: "column",
             gap: "10px",
           }}
-        >
-
-          {currentActivity?.typeId === 2 ? (
-            <div className="d-flex flex-row ">
-              <TextField
-                id="standard-number"
-                label="Ставка на челлендж"
-                type="number"
-                className="me-4"
-                variant="standard"
-              />
-              <Button
-                className={styles.enrollButton}
-                variant="contained"
-                onClick={(e) => {
-                  handleClose();
-                  console.log(row);
-                  e.stopPropagation();
-                }}
-              >
-                Сделать ставку!
-              </Button>
-            </div>
-          ) : (
-            null
-          )}
-        </Box>
+          >
+            
+            {currentActivity?.typeId === 2 ? (
+              <div className="d-flex flex-row ">
+                <TextField
+                  id="standard-number"
+                  label="Ставка на челлендж"
+                  type="number"
+                  className="me-4"
+                  variant="standard"
+                />
+                <Button
+                      className={styles.enrollButton}
+                      variant="contained"
+                      onClick={(e) => {
+                        handleClose();
+                        console.log(row);
+                        e.stopPropagation();
+                      }}
+                    > 
+                      Сделать ставку!
+                  </Button>
+              </div>
+            ):(
+              null
+            )}
+          </Box>
       </Modal>
-
-
+      
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -125,7 +127,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
               <div className={styles.activityButtons}>
                 <Tooltip title="Записаться на мероприятие">
                   <Button
-                    // sx={{ background: "var(--green)" }}
+                    disabled={isRec}
                     className={styles.enrollButton}
                     variant="contained"
                     onClick={(e) => {
@@ -134,8 +136,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
                       e.stopPropagation();
                     }}
                   >
-                    Записаться
+                    {isRec ? "Вы уже записаны": "Записаться"}
                   </Button>
+
                 </Tooltip>
               </div>
             </div>
@@ -153,7 +156,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
             <div className={styles.allMembers}>
               <AvatarGroup max={row.users.length}>
                 {row.users.map((user) => (
-                  <Tooltip title={user.user.FIO}>
+                  <Tooltip key={user.id} title={user.user.FIO}>
                     <Avatar
                       alt={user.user.FIO}
                       src={user.user.image}

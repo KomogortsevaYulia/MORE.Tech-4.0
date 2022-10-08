@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { IProduct, IProductWithCustomer } from '../../../api/mainApi';
 import ProductDetail from '../ProductDetail/ProductDetail';
 import styles from "../Market.module.scss";
@@ -46,6 +46,12 @@ const ShopItem: React.FC<IShopItemProps> = ({
     }, [setOpenModal]);
     const [open, setOpen] = React.useState(false);
 
+    const canBuyByNFT = user && shopItem.nftUri && user.balanceNFT.balance.some((nft) => nft.uri === shopItem.nftUri)
+
+    const buyByNFT = useCallback(() => {
+        //TODO Алек напиши логику пж
+    }, [])
+
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
@@ -79,6 +85,17 @@ const ShopItem: React.FC<IShopItemProps> = ({
                     >
                         <span>Добавить в корзину </span>
                     </button>
+                    {
+                        canBuyByNFT && (
+                            <button
+                                type="button"
+                                className="btn btn-info btn-rounded mx-4 mb-2"
+                                onClick={buyByNFT}
+                            >
+                                <span>Купить за NFT </span>
+                            </button>
+                        )
+                    }
                 </div>
             </div>
             <ProductDetail

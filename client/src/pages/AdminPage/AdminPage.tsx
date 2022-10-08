@@ -146,7 +146,7 @@ const AdminPage = () => {
         <TabPanel value={value} index={1}>
           <Grid style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             {nftCollections &&
-              nftCollections.balance.map((nft) => <NftCard nft={nft} />)}
+              nftCollections.balance.map((nft) => <NftCard key={nft.uri} nft={nft} />)}
             <IconButton sx={{ width: 256 }} onClick={openNftGenerateModal}>
               <AddAPhotoIcon sx={{ fontSize: 128 }} />
             </IconButton>
