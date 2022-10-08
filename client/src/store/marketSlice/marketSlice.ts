@@ -30,7 +30,7 @@ export const marketSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<IProductWithCustomer>) {
       const cartItem = action.payload;
-
+      
       const index = state.cart.findIndex(
         (item) => item.product.id === cartItem.product.id
       );
@@ -38,6 +38,16 @@ export const marketSlice = createSlice({
         state.cart[index].count! += 1;
       } else {
         state.cart.push({ ...action.payload, count: 1 });
+      }
+    },
+
+    deleteFromCart(state, action: PayloadAction<IProduct>) {
+      const index = state.cart.findIndex(
+        (item) => item.product.id === action.payload.id
+      );
+
+      if (index !== -1) {
+        state.cart.splice(index,index);
       }
     },
   },
@@ -57,5 +67,6 @@ export const marketSlice = createSlice({
 });
 
 export const { addToCart } = marketSlice.actions;
+export const { deleteFromCart } = marketSlice.actions;
 
 export default marketSlice.reducer;

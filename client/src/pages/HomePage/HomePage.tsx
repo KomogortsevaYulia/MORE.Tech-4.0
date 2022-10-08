@@ -64,8 +64,8 @@ const HomePage = () => {
             </p>
           </div>
           <div className="row d-flex justify-content-center">
-            <div className="col-lg-5 p-2 m-2">
-              <div className=" p-2 bg-light border rounded-3">
+            <div className=" col-lg-5 p-2 m-2">
+              <div className="h-100 p-2 bg-light border rounded-3">
                 <Timeline
                   sx={{
                     [`& .${timelineItemClasses.root}:before`]: {
@@ -151,18 +151,22 @@ const HomePage = () => {
                 </Timeline>
               </div>
             </div>
-            <div className="col-lg-5  p-2 m-2">
-              <div className=" p-2 bg-light border rounded-3 row d-flex justify-content-center">
-                <div className={`${styles.coin}`}>
-                  <div className={`${styles.side} ${styles.head}`}>$</div>
+
+            <div className=" col-lg-2 p-2 m-2 align-items-center">
+              <div className="h-100 p-2 bg-light border rounded-3 ">
+              <div className={`${styles.coin}`}>
+                  <div className={`${styles.side} ${styles.head}`}>1</div>
                   <div className={`${styles.side} ${styles.tail}`}>1</div>
                   <div className={`${styles.edge}`}></div>
                 </div>
-                <h2 className="fw-normal">Double Ruble</h2>
+                <h2 className="fw-normal">Digital Ruble</h2>
                 <p>Собственная цифровая валюта (монеты)</p>
               </div>
-              <div className="row  bg-light border rounded-3">
-                <img
+            </div>
+
+            <div className=" col-lg-2 p-2 m-2">
+              <div className="h-100 p-2 bg-light border rounded-3">
+              <img
                   src={nft}
                   className={`"img-fluid" ${styles.nftImage}`}
                   alt="..."
