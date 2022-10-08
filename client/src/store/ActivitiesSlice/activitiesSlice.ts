@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { MainApi, IActivities } from '../../api/mainApi';
+import { MainApi, IActivities, ITypeActivities } from '../../api/mainApi';
 import { LoadingStatus } from '../../types/types';
 
 export interface ActivitiesStateState {
   Activities: IActivities[] | null;
+  TypeActivities: ITypeActivities[] | null;
   ActivitiesRecords: IActivities[] | null;
   fethcActivitiesStatus: LoadingStatus | null;
   fetchActivitiesError: string | null;
@@ -11,6 +12,7 @@ export interface ActivitiesStateState {
 
 const initialState: ActivitiesStateState = {
   Activities: null,
+  TypeActivities: null,
   ActivitiesRecords: null,
   fethcActivitiesStatus: null,
   fetchActivitiesError: null,
@@ -33,6 +35,12 @@ export const fetchActivitiesForHome = createAsyncThunk(
     return MainApi.fetchActivitiesForHome();
   }
 );
+export const fetchTypeActivities = createAsyncThunk(
+  "Activities/fetchTypeActivities",
+  async () => {
+    return MainApi.fetchTypeActivities();
+  }
+);
 
 export const ActivitiesSlice = createSlice({
   name: 'Activities',
@@ -51,6 +59,10 @@ export const ActivitiesSlice = createSlice({
         state.fethcActivitiesStatus = 'failed';
       })
       .addCase(fetchActivitiesWithUser.fulfilled, (state, action) => {
+        state.fethcActivitiesStatus = 'success';
+        state.ActivitiesRecords = action.payload;
+      })
+      .addCase(fetchTypeActivities.fulfilled, (state, action) => {
         state.fethcActivitiesStatus = 'success';
         state.ActivitiesRecords = action.payload;
       })
