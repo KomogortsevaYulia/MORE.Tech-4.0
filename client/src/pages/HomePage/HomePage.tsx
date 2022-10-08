@@ -193,7 +193,7 @@ const HomePage = () => {
             <div>
               <div className={styles.activities}>
                 {ActivitiesRecords &&
-                  ActivitiesRecords?.map((row) => <ActivityItem row={row} />)}
+                  ActivitiesRecords?.map((row) => <ActivityItem key={row.id} row={row} />)}
               </div>
             </div>
           </div>
