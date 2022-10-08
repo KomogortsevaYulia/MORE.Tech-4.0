@@ -74,7 +74,7 @@ const PersonalPage = () => {
     dispatch(fetchTransferRubleByUsers(user!.id));
     dispatch(fetchActivitiesWithUser(user!.id));
     dispatch(fetchOrderWithUser(user!.id));
-  }, []);
+  }, [dispatch, user]);
 
   const { transferRuble } = useAppSelector((state) => state.transferRuble);
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
@@ -103,7 +103,7 @@ const PersonalPage = () => {
               variant="outlined"
               sx={{
                 background:
-                  user?.balance.coinsAmount != "0"
+                  user?.balance.coinsAmount !== "0"
                     ? "var(--purple)"
                     : "var(--red)",
               }}
