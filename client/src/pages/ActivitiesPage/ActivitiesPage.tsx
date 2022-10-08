@@ -24,6 +24,7 @@ import Modal from "@mui/material/Modal";
 
 import Button from "@mui/material/Button";
 import styles from "./ActivitiesPage.module.css";
+import ActivityItem from "../../components/ActivityItem/ActivityItem";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -192,67 +193,7 @@ const ActivitiesPage = () => {
       <div className={styles.content}>
         <div>
           <div className={styles.activities}>
-            {Activities &&
-              Activities?.map((row) => (
-                <div className={styles.activity}>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <div className={styles.header}>
-                        <div className={styles.meta}>
-                          <div>
-                            <Typography>{row.title}</Typography>
-                            <Typography sx={{ color: "var(--purple)" }}>
-                              c {row.dateStart} до {row.dateEnd}
-                            </Typography>
-                          </div>
-                          <div className={styles.activityButtons}>
-                            <Tooltip title="Записаться на мероприятие">
-                              <Button
-                                // sx={{ background: "var(--green)" }}
-                                className={styles.enrollButton}
-                                variant="contained"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                }}
-                              >
-                                Записаться
-                              </Button>
-                            </Tooltip>
-                          </div>
-                        </div>
-                      </div>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <div className={styles.details}>
-                        <div className={styles.flexColumn}>
-                          <Typography sx={{ color: "text.secondary" }}>
-                            Описание
-                          </Typography>
-                          <Typography>{row.description}</Typography>
-                        </div>
-                        <div className={styles.members}>
-                          <div className={styles.flexColumn}></div>
-                        </div>
-                        <div className={styles.allMembers}>
-                          <AvatarGroup max={row.users.length}>
-                            {row.users.map((user) => (
-                              <Avatar
-                                alt={user.user.FIO}
-                                src={user.user.image}
-                                className={styles.memberAvatar}
-                              />
-                            ))}
-                          </AvatarGroup>
-                        </div>
-                      </div>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-              ))}
+            {Activities && Activities?.map((row) => <ActivityItem row={row} />)}
           </div>
         </div>
       </div>

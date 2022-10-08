@@ -1,89 +1,125 @@
-.myStyle {
-  background: rgb(82,0,235);
-  background: linear-gradient(90deg, rgba(82,0,235,1) 0%, rgba(25,118,210,1) 30%, rgba(142,71,228,1) 63%, rgba(214,0,116,1) 100%);
+/* .myStyle {
+  background: rgb(82, 0, 235);
+  background: linear-gradient(
+    90deg,
+    rgba(82, 0, 235, 1) 0%,
+    rgba(25, 118, 210, 1) 30%,
+    rgba(142, 71, 228, 1) 63%,
+    rgba(214, 0, 116, 1) 100%
+  );
+} */
+
+.nftImage {
+  width: 256px;
+  height: 256px;
 }
 
 /* Ellipse 16 */
 
 .Ellipse15 {
-position: absolute;
-width: 408px;
-height: 399px;
-left: 1429px;
-top: 48px;
-border-radius: 50%;
-background: linear-gradient(160.98deg, rgba(82, 0, 235, 0.41) 12.36%, rgba(214, 0, 116, 0.3) 87.18%);
+  position: absolute;
+  width: 408px;
+  height: 399px;
+  left: 1429px;
+  top: 48px;
+  border-radius: 50%;
+  background: linear-gradient(
+    160.98deg,
+    rgba(82, 0, 235, 0.41) 12.36%,
+    rgba(214, 0, 116, 0.3) 87.18%
+  );
 }
 
 /* Ellipse 18 */
 
 .Ellipse16 {
-position: absolute;
-width: 290px;
-height: 283px;
-left: 1253px;
-top: -93px;
-border-radius: 50%;
-background: linear-gradient(160.98deg, rgba(82, 0, 235, 0.41) 12.36%, rgba(214, 0, 116, 0.3) 87.18%);
+  position: absolute;
+  width: 290px;
+  height: 283px;
+  left: 1253px;
+  top: -93px;
+  border-radius: 50%;
+  background: linear-gradient(
+    160.98deg,
+    rgba(82, 0, 235, 0.41) 12.36%,
+    rgba(214, 0, 116, 0.3) 87.18%
+  );
 }
 
 /* Ellipse 17 */
 
 .Ellipse17 {
-position: absolute;
-width: 315px;
-height: 319px;
-left: 1234px;
-top: 477px;
-border-radius: 50%;
-background: linear-gradient(215.87deg, rgba(82, 0, 235, 0.67) 23.17%, rgba(214, 0, 116, 0.3) 79.02%);
+  position: absolute;
+  width: 315px;
+  height: 319px;
+  left: 1234px;
+  top: 477px;
+  border-radius: 50%;
+  background: linear-gradient(
+    215.87deg,
+    rgba(82, 0, 235, 0.67) 23.17%,
+    rgba(214, 0, 116, 0.3) 79.02%
+  );
 }
 
 /* Ellipse 19 */
 
-
-
 /* Ellipse 19 */
 
 .Ellipse19 {
-position: absolute;
-width: 229px;
-height: 232px;
-left: 183px;
-top: 405px;
-border-radius: 50%;
-background: radial-gradient(191.68% 79.2% at 66.3% 20.8%, rgba(82, 0, 235, 0.63) 0%, rgba(214, 0, 116, 0.76) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  position: absolute;
+  width: 229px;
+  height: 232px;
+  left: 183px;
+  top: 405px;
+  border-radius: 50%;
+  background: radial-gradient(
+      191.68% 79.2% at 66.3% 20.8%,
+      rgba(82, 0, 235, 0.63) 0%,
+      rgba(214, 0, 116, 0.76) 100%
+    )
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
 }
 
 /* Ellipse 20 */
 
 .Ellipse20 {
-position: absolute;
-width: 408px;
-height: 399px;
-left: -78px;
-top: -31px;
-border-radius: 50%;
-background: radial-gradient(56.71% 59.23% at 65.56% 26.44%, rgba(82, 0, 235, 0.48) 0%, rgba(214, 0, 116, 0.76) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  position: absolute;
+  width: 408px;
+  height: 399px;
+  left: -78px;
+  top: -31px;
+  border-radius: 50%;
+  background: radial-gradient(
+      56.71% 59.23% at 65.56% 26.44%,
+      rgba(82, 0, 235, 0.48) 0%,
+      rgba(214, 0, 116, 0.76) 100%
+    )
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
 }
 
 /* Ellipse 21 */
 
 .Ellipse21 {
-position: absolute;
-width: 121px;
-height: 124px;
-left: 488px;
-top: -31px;
-border-radius: 50%;
-background: radial-gradient(56.71% 59.23% at 65.56% 26.44%, rgba(82, 0, 235, 0.48) 0%, rgba(214, 0, 116, 0.76) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  position: absolute;
+  width: 121px;
+  height: 124px;
+  left: 488px;
+  top: -31px;
+  border-radius: 50%;
+  background: radial-gradient(
+      56.71% 59.23% at 65.56% 26.44%,
+      rgba(82, 0, 235, 0.48) 0%,
+      rgba(214, 0, 116, 0.76) 100%
+    )
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
 }
 
 .geoArrow {
   fill: none;
-stroke: #fff;
-stroke-width: 2;
-stroke-miterlimit: 10
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
 }
 
 .coin {
@@ -119,8 +155,7 @@ stroke-miterlimit: 10
 }
 
 .tail {
-  transform:
-    translateZ(calc(0px - var(--thickness) / 2)) rotateY(180deg);
+  transform: translateZ(calc(0px - var(--thickness) / 2)) rotateY(180deg);
   animation: flip-tail var(--period) linear infinite;
 }
 
@@ -128,8 +163,8 @@ stroke-miterlimit: 10
   position: absolute;
   width: var(--thickness);
   height: 100%;
-  transform:
-    translateX(calc(var(--diameter) / 2)) translateZ(calc(var(--thickness) / 2)) rotateY(90deg);
+  transform: translateX(calc(var(--diameter) / 2))
+    translateZ(calc(var(--thickness) / 2)) rotateY(90deg);
   transform-origin: 0 0;
   background-color: gold;
   background-image: var(--gradient);
