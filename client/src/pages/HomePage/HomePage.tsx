@@ -195,16 +195,18 @@ const HomePage = () => {
           <div className="col-md-6 p-lg-6 mx-auto my-6 ">
             <h2 className="display-4 fw-normal">Предстоящие активности</h2>
           </div>
-        </div>
-
-        <div className={styles.content}>
-          <div>
-            <div className={styles.activities}>
-              {ActivitiesRecords &&
-                ActivitiesRecords?.map((row) => <ActivityItem row={row} />)}
+          <div className={styles.content}>
+            <div>
+              <div className={styles.activities}>
+                {ActivitiesRecords &&
+                  ActivitiesRecords?.map((row) => <ActivityItem row={row} />)}
+              </div>
             </div>
           </div>
+
         </div>
+
+
       </div>
     </>
   );
