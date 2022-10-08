@@ -1,35 +1,33 @@
 import React, { useState } from "react";
-import ReactECharts from "echarts-for-react";
 import { Wheel } from "react-custom-roulette";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { Alert, Avatar, Box, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
 import { fetchProducts } from "../../store/marketSlice/marketSlice";
 
 const WheelPage = () => {
-  const data = [
-    { option: '0' },
-    { option: '1' },
-    { option: '2' },
-  ]
+
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.market);
-
+  const [data, setData] = React.useState<{ option: string }[]>([{ option: 'loading' }])
+  console.log(data)
   React.useEffect(() => {
-
+    if (products) {
+      setData(products.map((p, index) => ({ option: `${index + 1} ${p.title}` })))
+    }
   }, [products]);
 
   React.useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
+  }, [dispatch]);
 
   const [mustSpin, setMustSpin] = useState(false);
-  const [prizeNumber, setPrizeNumber] = useState(0);
+  const [prizeIndex, setPrizeIndex] = useState(0);
 
   const handleSpinClick = () => {
-    const newPrizeNumber = Math.floor(Math.random() * data.length)
-    setPrizeNumber(newPrizeNumber)
+    const newPrizeIndex = Math.floor(Math.random() * data.length)
+    console.log(newPrizeIndex)
+    setPrizeIndex(newPrizeIndex)
     setMustSpin(true)
   }
 
@@ -41,7 +39,7 @@ const WheelPage = () => {
       <Grid item xs={4}>
         <Wheel
           mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
+          prizeNumber={prizeIndex}
           data={data}
           innerBorderColor={"#ffffff"}
           innerBorderWidth={5}
@@ -49,8 +47,7 @@ const WheelPage = () => {
           radiusLineColor={"#FFFFFF"}
           radiusLineWidth={5}
           textColors={["#666666"]}
-          fontSize={50}
-          perpendicularText={true}
+          fontSize={10}
           backgroundColors={[
             '#9E95F5',
             "#E0FFDF",
@@ -71,11 +68,11 @@ const WheelPage = () => {
           <nav aria-label="main mailbox folders">
             <List>
               {products &&
-                products?.map((row) => (
+                products?.map((row, index) => (
                   <ListItem disablePadding>
                     <ListItemButton>
                       <Typography variant="h5" gutterBottom>
-                        1
+                        {index + 1}
                       </Typography>
                       <ListItemIcon>
                         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -91,7 +88,7 @@ const WheelPage = () => {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        {!mustSpin ? <Alert severity="success">Вы получили приз - {data[prizeNumber].option} !</Alert> :
+        {!mustSpin ? <Alert severity="success">Вы получили приз - {data[prizeIndex].option} !</Alert> :
           <Alert severity="info">Крутите колесо фортуны!</Alert>}
       </Grid>
     </Grid>
