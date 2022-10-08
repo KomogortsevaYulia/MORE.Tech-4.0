@@ -207,6 +207,12 @@ export class MainApi {
     return activities;
   }
 
+  static async fetchActivitiesForHome() {
+    return  axios
+      .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart&_order=asc&_limit=5`)
+      .then((response) => response.data);
+  }
+
   static async addTransaction(data: ICreateTransaction) {
     return axios
       .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })

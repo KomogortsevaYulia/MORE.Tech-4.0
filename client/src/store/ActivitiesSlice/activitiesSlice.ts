@@ -27,6 +27,13 @@ export const fetchActivitiesWithUser = createAsyncThunk(
   },
 );
 
+export const fetchActivitiesForHome = createAsyncThunk(
+  "Activities/fetchActivitiesForHome",
+  async () => {
+    return MainApi.fetchActivitiesForHome();
+  }
+);
+
 export const ActivitiesSlice = createSlice({
   name: 'Activities',
   initialState,
@@ -45,6 +52,10 @@ export const ActivitiesSlice = createSlice({
       })
       .addCase(fetchActivitiesWithUser.fulfilled, (state, action) => {
         state.fethcActivitiesStatus = 'success';
+        state.ActivitiesRecords = action.payload;
+      })
+      .addCase(fetchActivitiesForHome.fulfilled, (state, action) => {
+        state.fethcActivitiesStatus = "success";
         state.ActivitiesRecords = action.payload;
       });
   },
