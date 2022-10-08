@@ -19,7 +19,7 @@ import { transferRubles } from "../../../store/transactionsSlice/transactionsSli
 interface IGenerateNftModal {
   open: boolean;
   handleClose: () => void;
-  onGenerateClick: () => void;
+  onGenerateClick: (uri: string, nftCount: number) => void;
 }
 
 const style = {
@@ -41,10 +41,14 @@ const GenerateNftModal: React.FC<IGenerateNftModal> = ({
   handleClose,
   onGenerateClick,
 }) => {
-  const [rublesAmount, setRublesAmount] = React.useState<number | string>("");
+  const [uri, setUri] = React.useState<string>("");
+  const [nftCount, setNftCount] = React.useState<number | string>("");
 
-  const handleRublesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRublesAmount(+event.target.value);
+  const handleNftCountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNftCount(+event.target.value);
+  };
+  const handleUriChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUri(event.target.value);
   };
 
   return (
@@ -56,23 +60,39 @@ const GenerateNftModal: React.FC<IGenerateNftModal> = ({
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h4" component="h2">
-          Начисление выбранным пользователям
+          Генерация NFT коллекции
         </Typography>
         <div>
           <Typography variant="h6" component="h3">
-            Сколько начисляем?
+            Введите ссылку на картиночку
+          </Typography>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            placeholder="Ссылка"
+            type="uri"
+            value={uri.toString()}
+            onChange={handleUriChange}
+          />
+        </div>
+        <div>
+          <Typography variant="h6" component="h3">
+            Сколько нфитишек генерим?
           </Typography>
           <TextField
             id="outlined-basic"
             variant="outlined"
             placeholder="Количество"
             type="number"
-            value={rublesAmount.toString()}
-            onChange={handleRublesChange}
+            value={nftCount.toString()}
+            onChange={handleNftCountChange}
           />
         </div>
-        <Button variant="outlined" onClick={() => onGenerateClick()}>
-          Начислить!
+        <Button
+          variant="outlined"
+          onClick={() => onGenerateClick(uri, +nftCount)}
+        >
+          Сгенерить!
         </Button>
       </Box>
     </Modal>

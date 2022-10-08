@@ -28,6 +28,12 @@ const initialState: AdminState = {
   fetchUsersError: null,
 };
 
+export interface IGenerateNftProps {
+  publicKey: string;
+  count: number;
+  uri: string;
+}
+
 export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
   return MainApi.fetchUsers();
 });
@@ -36,6 +42,13 @@ export const fetchNFTBalance = createAsyncThunk(
   "admin/fetchNFTBalance",
   async (key: string) => {
     return BlockchainApi.balanceNFT(key);
+  }
+);
+
+export const generateNft = createAsyncThunk(
+  "admin/generateNft",
+  async (data: IGenerateNftProps) => {
+    return BlockchainApi.nftGenerate(data.publicKey, data.uri, data.count);
   }
 );
 

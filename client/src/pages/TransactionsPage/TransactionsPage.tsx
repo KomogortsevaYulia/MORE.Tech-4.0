@@ -33,7 +33,7 @@ const TransactionsPage = () => {
   const dispatch = useAppDispatch();
   const { transactions } = useAppSelector((state) => state.transactions);
   const { user } = useAppSelector((state) => state.user);
-  const { users } = useAppSelector((state) => state.admin);
+  const { users, nftCollections } = useAppSelector((state) => state.admin);
 
   React.useEffect(() => {
     dispatch(fetchTransactions());
@@ -67,6 +67,26 @@ const TransactionsPage = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     setPerson(event.target.value as string);
+  };
+
+  const [personNftReciever, setPersonNftReciever] = React.useState("");
+
+  const handleNftRecieverChange = (event: SelectChangeEvent) => {
+    setPersonNftReciever(event.target.value as string);
+  };
+
+  const [nftToTransfer, setNftToTransfer] = React.useState("");
+
+  const handleNftChange = (event: SelectChangeEvent) => {
+    setNftToTransfer(event.target.value as string);
+  };
+
+  const [sendNftReason, setSendNftReason] = React.useState<string>("");
+  const handleSendNftReasonChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setSendNftReason(value);
   };
 
   const [rublesToTransfer, setRublesToTransfer] = React.useState<
@@ -255,6 +275,77 @@ const TransactionsPage = () => {
             </div>
             <Button variant="outlined" onClick={handleTransfer}>
               Перевести
+            </Button>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "16px",
+            }}
+          >
+            <Typography variant="h3" component="h5">
+              Переводы NFT
+            </Typography>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Кому</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={personNftReciever}
+                label="Кому"
+                onChange={handleNftRecieverChange}
+              >
+                {users &&
+                  users?.map((user) => (
+                    <MenuItem value={user.publicKey} key={user.id}>
+                      {user.FIO}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">NFT</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={nftToTransfer}
+                label="NFT"
+                onChange={handleNftChange}
+              >
+                {nftCollections &&
+                  nftCollections?.balance.map((nft) => (
+                    <MenuItem value={nft.uri} key={nft.uri}>
+                      <img
+                        src={nft.uri}
+                        alt={nft.uri}
+                        style={{
+                          width: "126px",
+                          height: "126px",
+                          margin: "auto",
+                        }}
+                      />
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <TextField
+                variant="outlined"
+                label="Сообщение"
+                value={sendNftReason}
+                onChange={handleSendNftReasonChange}
+              />{" "}
+            </div>
+            <Button variant="outlined" onClick={handleTransfer}>
+              Отправить
             </Button>
           </Box>
         </div>

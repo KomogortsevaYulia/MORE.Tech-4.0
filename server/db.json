@@ -503,14 +503,34 @@
       "id": 27
     },
     {
-      "amount": -80000000,
-      "userId": 1,
-      "toId": 2,
+      "amount": 10000,
       "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
-      "why": "азаза",
-      "date": "2022-10-08T16:14:54.478Z",
+      "toId": 2,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T15:35:05.764Z",
       "id": 28
+    },
+    {
+      "amount": 10000,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "toId": 4,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T15:35:05.764Z",
+      "id": 29
+    },
+    {
+      "amount": 10000,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T15:35:05.764Z",
+      "id": 30
     }
   ],
   "products": [
@@ -713,6 +733,7 @@
       "userId": 3,
       "activitiesId": 11
     },
+
     {
       "id": 14,
       "userId": 3,
@@ -723,6 +744,7 @@
       "userId": 1,
       "activitiesId": 14
     },
+
     {
       "id": 17,
       "userId": 2,
