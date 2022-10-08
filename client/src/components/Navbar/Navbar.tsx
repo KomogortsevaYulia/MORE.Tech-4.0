@@ -199,7 +199,9 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                   justifyContent: "center",
                 }}
               >
-                <LogoutIcon style={{ transform: "rotateY(180deg)" }} />
+                <Tooltip title="Выход" placement="right" disableHoverListener={open} TransitionComponent={Zoom}>
+                  <LogoutIcon style={{ transform: "rotateY(180deg)" }} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="Выйти" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
