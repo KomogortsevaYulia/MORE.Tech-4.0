@@ -126,7 +126,7 @@ const PersonalPage = () => {
                 >
                   <Typography> {row.activities.title}</Typography>
                   <Typography sx={{ color: "text.secondary" }}>
-                    {row.activities.date}
+                    {row.activities.dateStart}                  
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
