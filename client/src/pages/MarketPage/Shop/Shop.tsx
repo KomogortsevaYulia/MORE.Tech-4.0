@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styles from "../Market.module.scss";
 import { Dropdown } from "antd";
 import { deleteFromCart } from "../../../store/marketSlice/marketSlice";
-import { IconButton } from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 
 export default function Shop() {
 	const dispatch = useAppDispatch();
@@ -175,9 +175,17 @@ export default function Shop() {
 					</div>
 
 					<div className="dropdown ">
-						<Dropdown overlay={menu}>
-							<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина {cartCount > 0 && cartCount}</button>
-						</Dropdown>
+						{cartCount ? 
+							<Badge badgeContent={cartCount > 0 && cartCount} color="primary">
+								<Dropdown overlay={menu}>
+									<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина </button>
+								</Dropdown>
+							</Badge>
+						:
+							<Dropdown overlay={menu}>
+								<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина </button>
+							</Dropdown>
+					}
 					</div>
 				</div>
 
