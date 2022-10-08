@@ -5,10 +5,11 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchUsers } from "../../store/adminSlice/adminSlice";
+import { fetchNFTBalance, fetchUsers } from "../../store/adminSlice/adminSlice";
 import UsersTable from "./UsersTable/UsersTable";
 import AddModal from "./AddModal/AddModal";
 import { IUser } from "../../api/mainApi";
+import { Card, CardContent, CardHeader, CardMedia } from "@mui/material";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,10 +46,12 @@ function a11yProps(index: number) {
 
 const AdminPage = () => {
   const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.admin);
+  const { user } = useAppSelector((state) => state.user);
+  const { users, nftCollections } = useAppSelector((state) => state.admin);
 
   React.useEffect(() => {
     dispatch(fetchUsers());
+    dispatch(fetchNFTBalance(user!.publicKey));
   }, []);
 
   const [value, setValue] = React.useState(0);
@@ -88,11 +91,6 @@ const AdminPage = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          {/* <ul>
-          {users?.map((user) => (
-            <li>{user.FIO}</li>
-          ))}
-        </ul> */}
           <UsersTable
             data={
               users?.map((user) => ({
@@ -116,7 +114,39 @@ const AdminPage = () => {
           Заказы
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Генерация NFT
+          {nftCollections &&
+            nftCollections.balance.map((nft) => (
+              <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  component="img"
+                  height="194"
+                  image={nft.uri}
+                  style={{ objectFit: "fill" }}
+                  alt="Paella dish"
+                />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    Осталось: {nft.tokens.length}
+                  </Typography>
+                </CardContent>
+                {/* <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </CardActions> */}
+              </Card>
+            ))}
         </TabPanel>
       </div>
       <AddModal

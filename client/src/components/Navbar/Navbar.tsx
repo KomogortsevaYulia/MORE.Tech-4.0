@@ -20,7 +20,10 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { ROUTES } from "../../const/routes";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { Button, Grid } from "@mui/material";
+import { logout } from "../../store/userSlice/userSlice";
 
 const drawerWidth = 240;
 
@@ -98,6 +101,7 @@ interface IMiniDrawer {
 }
 
 export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -146,69 +150,82 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
           )}
         </DrawerHeader>
         {/* <Divider /> */}
-        <List>
-          {Object.values(ROUTES).map(
-            ({ name, url, roleId, icon }, index) =>
-              (roleId === 0 || roleId === user?.roleId) && (
-                <ListItem
-                  key={name}
-                  disablePadding
-                  sx={{
-                    display: "block",
-                    background: location.pathname === url ?  'var(--green)' : "",
-                  }}
-                  onClick={() => navigate(url)}
-                >
-                  <ListItemButton
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "100%",
+            paddingBottom: "12px",
+          }}
+        >
+          <List>
+            {Object.values(ROUTES).map(
+              ({ name, url, roleId, icon }, index) =>
+                (roleId === 0 || roleId === user?.roleId) && (
+                  <ListItem
+                    key={name}
+                    disablePadding
                     sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
+                      display: "block",
+                      background:
+                        location.pathname === url ? "var(--green)" : "",
                     }}
+                    onClick={() => navigate(url)}
                   >
-                    <ListItemIcon
+                    <ListItemButton
                       sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
+                        minHeight: 48,
+                        justifyContent: open ? "initial" : "center",
+                        px: 2.5,
                       }}
                     >
-                      {icon ? icon : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={name}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              )
-          )}
-        </List>
-        {/* <Divider /> */}
-        {/* <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : "auto",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {icon ? icon : <MailIcon />}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={name}
+                        sx={{ opacity: open ? 1 : 0 }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                )
+            )}
+          </List>
+          <ListItem
+            key="exit"
+            disablePadding
+            sx={{
+              display: "block",
+            }}
+            onClick={() => dispatch(logout())}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Выйти" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+        </div>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

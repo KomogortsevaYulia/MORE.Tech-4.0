@@ -19,16 +19,17 @@
     {
       "id": 2,
       "roleId": 2,
-      "publicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
-      "privateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "privateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "publicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+
       "FIO": "Лукаш Олег",
       "image": "https://robohash.org/stefan-three"
     },
     {
       "id": 1,
       "roleId": 1,
-      "privateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "publicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "publicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "privateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "FIO": "Админ Админович",
       "image": "https://avatars.dicebear.com/api/bottts/stefan.svg"
     }
@@ -155,6 +156,7 @@
       "id": 1,
       "priceRuble": 25,
       "count": 10,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/534/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B06.jpg?1624535144",
       "description": "ЛАЛАЛА",
       "title": "Футболка ВТБ"
     },
@@ -162,8 +164,33 @@
       "id": 2,
       "priceRuble": 5,
       "count": 19,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/542/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B07.jpg?1624535145",
       "description": "ЛАЛАЛА",
-      "title": "Ручка ВТБ"
+      "title": "Шопер"
+    },
+    {
+      "id": 3,
+      "priceRuble": 34,
+      "count": 8,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/494/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B01.jpg?1624535136",
+      "description": "ЛАЛАЛА",
+      "title": "Термос"
+    },
+    {
+      "id": 4,
+      "priceRuble": 56,
+      "count": 45,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/518/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B04.jpg?1624535141",
+      "description": "ЛАЛАЛА",
+      "title": "Чехол"
+    },
+    {
+      "id": 5,
+      "priceRuble": 768,
+      "count": 23,
+      "image": "https://design.hse.ru/system/widget_fields/field_attachments/000/614/510/large_80/%D0%BC%D1%83%D1%80%D0%B0%D1%88%D0%B5%D0%B2%D0%B03.jpg?1624535139",
+      "description": "ЛАЛАЛА",
+      "title": "Носки"
     }
   ],
   "basket": [

@@ -1,8 +1,6 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+
 import Grid from "@mui/material/Grid";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -22,7 +20,7 @@ import {
   fetchActivities,
   fetchActivitiesWithUser,
 } from "../../store/ActivitiesSlice/activitiesSlice";
-import { Accordion, AccordionSummary, AccordionDetails, Stack, Chip } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Stack, Chip, Button } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 
@@ -95,12 +93,13 @@ const PersonalPage = () => {
           <Typography variant="h3" gutterBottom>
             {user?.FIO}
           </Typography>
-          <Typography variant="h4" gutterBottom>
+          {/* <Typography variant="h4" gutterBottom>
             Статус
-          </Typography>
+          </Typography> */}
           <Stack direction="row" spacing={1} >
             <Chip label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`} variant="outlined" sx={{background: user?.balance.coinsAmount!='0' ? 'var(--purple)': 'var(--red)' ,}} />
-          </Stack>       
+          </Stack> 
+              
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

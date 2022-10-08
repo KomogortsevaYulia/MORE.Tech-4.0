@@ -1,202 +1,109 @@
 import * as React from "react";
-import { useAppSelector } from "../../hooks/hooks";
+import { IProduct } from "../../api/mainApi";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { fetchProducts } from "../../store/marketSlice/marketSlice";
+import ShopItem from "./ShopItem";
 
 export default function Shop() {
-    const { products } = useAppSelector((state) => (state.market));
+  const dispatch = useAppDispatch();
+  const { products } = useAppSelector((state) => state.market);
+
+  const [filteredProducts, setFilteredProducts] = React.useState(products);
+
+  const [maxPrice, setMaxPrice] = React.useState(1);
+
+  React.useEffect(() => {
+    if (products) {
+      setMaxPrice(Math.max(...products!.map((item) => item.priceRuble)));
+      setPriceMax(maxPrice);
+      setFilteredProducts(products);
+    }
+  }, [products]);
+
+  React.useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  const filterProducts = () => {
+    if (products) {
+      setFilteredProducts(
+        products!.filter(function (el: IProduct) {
+          return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
+        })
+      );
+    }
+  };
+
+  const [priceMin, setPriceMin] = React.useState(0);
+  const handleChangePriceMin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceMin(Number(event.target.value));
+    // filterProducts([priceMin, priceMax]);
+  };
+
+  const [priceMax, setPriceMax] = React.useState(maxPrice);
+  const handleChangePriceMax = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceMax(Number(event.target.value));
+    // filterProducts([priceMin, priceMax]);
+  };
+
+  React.useEffect(() => {
+    if (maxPrice) {
+      setPriceMax(maxPrice);
+    }
+  }, [maxPrice]);
+
+  React.useEffect(() => {
+    filterProducts();
+  }, [priceMin, priceMax]);
 
   return (
-        <div className="text-center container py-5">
+    <div className="container-fluid">
+      <h4 className="mb-4 text-center">Market</h4>
+      <div className="row">
+        <div className="col-lg-3">
+          <div className="card">
+            <div className="card-body">
+              <div className="mb-4 card-title">Filter</div>
+              <div>
+                <h5 className="mb-3">Price</h5>
 
+                <div className="">
+                  <label className="form-label">Price</label>
 
-
-
-
-            <h4 className="mt-4 mb-5"><strong>Bestsellers</strong></h4>
-
-            <div className="row">
-            <div className="col-lg-4 col-md-12 mb-4">
-                <div className="card">
-                <div className="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                    data-mdb-ripple-color="light">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/belt.webp"
-                    className="w-100" />
-                    <a href="#!">
-                    <div className="mask">
-                        <div className="d-flex justify-content-start align-items-end h-100">
-                        <h5><span className="badge bg-primary ms-2">New</span></h5>
-                        </div>
-                    </div>
-                    <div className="hover-overlay">
-                        <div className="mask" ></div>
-                    </div>
-                    </a>
+                  <div className="input-group">
+                    <span className="input-group-text">c</span>
+                    <input
+                      id="minPrice"
+                      type="number"
+                      className="form-control"
+                      placeholder="Min."
+                      value={priceMin.toString()}
+                      onChange={handleChangePriceMin}
+                    ></input>
+                    <span className="input-group-text">по</span>
+                    <input
+                      id="maxPrice"
+                      type="number"
+                      className="form-control"
+                      placeholder="Max."
+                      value={priceMax.toString()}
+                      onChange={handleChangePriceMax}
+                    ></input>
+                  </div>
                 </div>
-                <div className="card-body">
-                    <a href="" className="text-reset">
-                    <h5 className="card-title mb-3">Product name</h5>
-                    </a>
-                    <a href="" className="text-reset">
-                    <p>Category</p>
-                    </a>
-                    <h6 className="mb-3">$61.99</h6>
-                </div>
-                </div>
+              </div>
+              <div className="mt-4 pt-3">
+                <h5 className="mb-3">Price</h5>
+              </div>
             </div>
-
-            <div className="col-lg-4 col-md-6 mb-4">
-                <div className="card">
-                <div className="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                    data-mdb-ripple-color="light">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(4).webp"
-                    className="w-100" />
-                    <a href="#!">
-                    <div className="mask">
-                        <div className="d-flex justify-content-start align-items-end h-100">
-                        <h5><span className="badge bg-success ms-2">Eco</span></h5>
-                        </div>
-                    </div>
-                    <div className="hover-overlay">
-                        <div className="mask" ></div>
-                    </div>
-                    </a>
-                </div>
-                <div className="card-body">
-                    <a href="" className="text-reset">
-                    <h5 className="card-title mb-3">Product name</h5>
-                    </a>
-                    <a href="" className="text-reset">
-                    <p>Category</p>
-                    </a>
-                    <h6 className="mb-3">$61.99</h6>
-                </div>
-                </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-4">
-                <div className="card">
-                <div className="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/shoes%20(3).webp"
-                    className="w-100" />
-                    <a href="#!">
-                    <div className="mask">
-                        <div className="d-flex justify-content-start align-items-end h-100">
-                        <h5><span className="badge bg-danger ms-2">-10%</span></h5>
-                        </div>
-                    </div>
-                    <div className="hover-overlay">
-                        <div className="mask" ></div>
-                    </div>
-                    </a>
-                </div>
-                <div className="card-body">
-                    <a href="" className="text-reset">
-                    <h5 className="card-title mb-3">Product name</h5>
-                    </a>
-                    <a href="" className="text-reset">
-                    <p>Category</p>
-                    </a>
-                    <h6 className="mb-3">
-                    <s>$61.99</s><strong className="ms-2 text-danger">$50.99</strong>
-                    </h6>
-                </div>
-                </div>
-            </div>
-            </div>
-
-            <div className="row">
-            <div className="col-lg-4 col-md-12 mb-4">
-                <div className="card">
-                <div className="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(23).webp"
-                    className="w-100" />
-                    <a href="#!">
-                    <div className="mask">
-                        <div className="d-flex justify-content-start align-items-end h-100">
-                        <h5>
-                            <span className="badge bg-success ms-2">Eco</span><span
-                            className="badge bg-danger ms-2">-10%</span>
-                        </h5>
-                        </div>
-                    </div>
-                    <div className="hover-overlay">
-                        <div className="mask" ></div>
-                    </div>
-                    </a>
-                </div>
-                <div className="card-body">
-                    <a href="" className="text-reset">
-                    <h5 className="card-title mb-3">Product name</h5>
-                    </a>
-                    <a href="" className="text-reset">
-                    <p>Category</p>
-                    </a>
-                    <h6 className="mb-3">
-                    <s>$61.99</s><strong className="ms-2 text-danger">$50.99</strong>
-                    </h6>
-                </div>
-                </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-4">
-                <div className="card">
-                <div className="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                    data-mdb-ripple-color="light">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(17).webp"
-                    className="w-100" />
-                    <a href="#!">
-                    <div className="mask">
-                        <div className="d-flex justify-content-start align-items-end h-100"></div>
-                    </div>
-                    <div className="hover-overlay">
-                        <div className="mask" ></div>
-                    </div>
-                    </a>
-                </div>
-                <div className="card-body">
-                    <a href="" className="text-reset">
-                    <h5 className="card-title mb-3">Product name</h5>
-                    </a>
-                    <a href="" className="text-reset">
-                    <p>Category</p>
-                    </a>
-                    <h6 className="mb-3">$61.99</h6>
-                </div>
-                </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-4">
-                <div className="card">
-                <div className="bg-image hover-zoom ripple" data-mdb-ripple-color="light">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(30).webp"
-                    className="w-100" />
-                    <a href="#!">
-                    <div className="mask">
-                        <div className="d-flex justify-content-start align-items-end h-100">
-                        <h5>
-                            <span className="badge bg-primary ms-2">New</span><span
-                            className="badge bg-success ms-2">Eco</span><span className="badge bg-danger ms-2">-10%</span>
-                        </h5>
-                        </div>
-                    </div>
-                    <div className="hover-overlay">
-                        <div className="mask" ></div>
-                    </div>
-                    </a>
-                </div>
-                <div className="card-body">
-                    <a href="" className="text-reset">
-                    <h5 className="card-title mb-3">Product name</h5>
-                    </a>
-                    <a href="" className="text-reset">
-                    <p>Category</p>
-                    </a>
-                    <h6 className="mb-3">
-                    <s>$61.99</s><strong className="ms-2 text-danger">$50.99</strong>
-                    </h6>
-                </div>
-                </div>
-            </div>
-            </div>
+          </div>
         </div>
+
+        <div className="row g-2 col-lg-9 ">
+          {filteredProducts &&
+            filteredProducts?.map((item) => <ShopItem shopItem={item} />)}
+        </div>
+      </div>
+    </div>
   );
 }
