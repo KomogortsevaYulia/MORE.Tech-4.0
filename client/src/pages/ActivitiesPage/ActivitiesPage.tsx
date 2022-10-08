@@ -141,7 +141,7 @@ const ActivitiesPage = () => {
                   <div className={styles.header}>
                     <div className={styles.meta}>
                       <Typography>{row.title}</Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>c {row.date} до {row.date}</Typography>
+                      <Typography sx={{ color: 'text.secondary' }}>c {row.dateStart} до {row.dateEnd}</Typography>
                     </div>
 
                   </div>
