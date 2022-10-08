@@ -6,13 +6,12 @@ import Button from '@mui/material/Button';
 import { fetchProducts } from "../../store/marketSlice/marketSlice";
 import { IProduct } from "../../api/mainApi";
 
-
 const WheelPage = () => {
 
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.market);
   const [data, setData] = React.useState<{ option: string }[]>([{ option: 'loading' }])
-  
+
   React.useEffect(() => {
     if (products) {
       setData(products.map((p, index) => ({ option: `${index + 1} ${p.title}` })))
@@ -24,15 +23,16 @@ const WheelPage = () => {
   }, [dispatch]);
 
   const [mustSpin, setMustSpin] = useState(false);
-  const [prizeIndex, setPrizeIndex] = useState(0);
+  const [prizeIndex, setPrizeIndex] = useState(-1);
+  const [prizeNumber, setPrizeNumber] = useState(0);
+
 
   const handleSpinClick = () => {
     const newPrizeIndex = Math.floor(Math.random() * data.length)
-
-    setPrizeIndex(newPrizeIndex)
-    setMustSpin(true)
+    setMustSpin(true); 
+    setPrizeIndex(-1)
+    setPrizeNumber(newPrizeIndex)
   }
-
 
   return <div>
     <h1 >Колесо фортуны</h1>
@@ -43,7 +43,7 @@ const WheelPage = () => {
       <div className="row p-1">
         <Wheel
           mustStartSpinning={mustSpin}
-          prizeNumber={prizeIndex}
+          prizeNumber={prizeNumber}
           data={data}
           innerBorderColor={"#ffffff"}
           innerBorderWidth={5}
@@ -60,17 +60,22 @@ const WheelPage = () => {
             "#1CE7FF"
           ]}
           onStopSpinning={() => {
-            setMustSpin(false);
+            setPrizeIndex(prizeNumber);
+            setMustSpin(false)
           }}
         /></div>
         <div className="row p-1">
-          <Button variant="contained" onClick={handleSpinClick}>
+          <Button variant="contained" onClick={() => {handleSpinClick();}}>
             Крутить
           </Button >
         </div>
         <div className="row p-1">
-          {!mustSpin ? <Alert variant="filled" severity="success">Вы получили приз - {data[prizeIndex].option} !</Alert> :
+          {!mustSpin && prizeIndex !== -1 ?
+            <Alert variant="filled" severity="success">Вы получили приз - {data[prizeIndex].option} !</Alert>
+          :
             <Alert variant="filled" severity="warning">1 раз = 20 Digital Rouble <br/> Крутите колесо фортуны!</Alert>}
+          {/* // :
+          //   <Alert variant="filled" severity="warning">1 раз = 20 Digital Rouble <br/> Крутите колесо фортуны!</Alert>} */}
         </div>
       </div>
       <div className="col-4">
