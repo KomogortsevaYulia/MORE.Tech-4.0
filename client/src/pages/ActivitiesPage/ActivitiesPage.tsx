@@ -67,6 +67,9 @@ const ActivitiesPage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [addStartDate, setAddStartDate] = React.useState<Date | null>(null);
+  const [addEndDate, setAddEndDate] = React.useState<Date | null>(null);
+
   const handleAddActivity = useCallback(() => {
 
   }, [])
@@ -99,6 +102,33 @@ const ActivitiesPage = () => {
           <TextField label="Название активности" variant="outlined" />
           <TextField label="Описание активности" variant="outlined" />
 
+          <Typography sx={{ color: 'text.secondary' }}>Даты начала</Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Даты начала"
+              value={addStartDate}
+              onChange={(newValue) => {
+                setAddStartDate(newValue);
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+
+
+          </LocalizationProvider>
+
+          <Typography sx={{ color: 'text.secondary' }}>Даты окончания</Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Даты окончания"
+              value={addEndDate}
+              onChange={(newValue) => {
+                setAddEndDate(newValue);
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+
+
+          </LocalizationProvider>
           <Button onClick={handleAddActivity} variant="contained">Добавить</Button>
           <Button onClick={handleClose}>Отмена</Button>
 
