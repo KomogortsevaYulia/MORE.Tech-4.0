@@ -42,10 +42,10 @@ const HomePage = () => {
         <div className={`${styles.Ellipse20} `}></div>
         <div className={`${styles.Ellipse21} `}></div>
         <div className={`position-relative overflow-hidden text-center `}>
-          <div className="col-md-5 p-lg-5 mx-auto my-5 ">
-            <h1 className="display-4 fw-normal">Крутой проект</h1>
-            <p className="lead fw-normal">
-              Повысить мотивацию и вовлеченность сотрудников компании для
+          <div className="col-md-5 p-lg-5 mx-auto my-5 " style={{ color: "white"}}>
+            <h1 className="display-4 fw-normal" style={{ color: "white"}} >Крутой проект</h1>
+            <p className="lead fw-normal" >
+              Цель: Повысить мотивацию и вовлеченность сотрудников компании для
               формирования дружественной атмосферы, а так-же профессионального
               роста за счет дополнительной мотивации участия в образовательных и
               общественных мероприятиях.
@@ -56,9 +56,9 @@ const HomePage = () => {
         <div
           className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}
         >
-          <div className="col-md-6 p-lg-6 mx-auto my-6 ">
-            <h2 className="display-4 fw-normal">Механика</h2>
-            <p className="lead fw-normal">
+          <div className="col-md-6 p-lg-6 mx-auto my-6 " >
+            <h2 className="display-4 fw-normal" style={{ color: "white"}}>Механика</h2>
+            <p className="lead fw-normal" style={{ color: "white"}}>
               В системе существуют монеты и NFT, будь активным и они у тебя
               появятся!
             </p>
@@ -166,18 +166,18 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className=" col-3 col-md-2 p-1 m-1">
-              <div className="h-100 p-1 bg-light border rounded-3">
-                <img
-                  src={nft}
-                  className={`img-fluid ${styles.nftImage}`}
-                  alt="..."
-                />
+            <div className=" col-3 col-md-2 p-1 m-1 align-items-center ">
+              <div className="h-100 p-1 bg-light border rounded-3 ">
+                <div className="d-flex justify-content-center">
+                  <div className={`${styles.nft} `}>
+                    <div className={`${styles.sideNft} ${styles.headNft}`}>NFT</div>
+                    <div className={`${styles.sideNft} ${styles.tailNft}`}>NFT</div>
+                    <div className={`${styles.edgeNft}`}></div>
+                  </div>
+                </div>
                 <h2 className="fw-normal">NFT сертификат</h2>
-                <p>
-                  Уникальные виртуальные объекты с возможностью обменять на
-                  реальные
-                </p>
+                <p>Уникальные виртуальные объекты с возможностью обменять на
+                  реальные</p>
               </div>
             </div>
           </div>
@@ -186,8 +186,8 @@ const HomePage = () => {
         <div
           className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}
         >
-          <div className="col-md-6 p-lg-6 mx-auto my-6 ">
-            <h2 className="display-4 fw-normal">Предстоящие активности</h2>
+          <div className="col-md-6 p-lg-6 mx-auto my-6 " >
+            <h2 className="display-4 fw-normal" style={{ color: "white"}}>Предстоящие активности</h2>
           </div>
           <div className={styles.content}>
             <div>
