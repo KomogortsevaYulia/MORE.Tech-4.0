@@ -18,6 +18,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import styles from './ActivitiesPage.module.css'
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
+import Tooltip from '@mui/material/Tooltip';
 import { Divider, Paper } from "@mui/material";
 
 import Button from '@mui/material/Button';
@@ -66,58 +67,69 @@ const ActivitiesPage = () => {
   const [value2, setValue2] = React.useState<Date | null>(null);
   return <div>
     <div>
-      <Stack spacing={2} sx={{ width: 300 }}>
-        <Autocomplete
-          id="free-solo-demo"
-          freeSolo
-          options={Activities && Activities?.map((option) => option.title) || []}
-          renderInput={(params) => <TextField {...params} label="Поиск" />}
-        />
+      <Stack spacing={2} direction="row">
+        <div className={styles.filtersItem}>
+          <Typography sx={{ color: 'text.secondary' }}>Название</Typography>
+
+          <Autocomplete
+            id="free-solo-demo"
+            freeSolo
+            options={Activities && Activities?.map((option) => option.title) || []}
+            renderInput={(params) => <TextField {...params} />}
+            sx={{ width: 300 }}
+          />
+        </div>
+        <div className={styles.filtersItem}>
+
+          <Typography sx={{ color: 'text.secondary' }}>Даты начала до</Typography>
+
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Даты начала до"
+              value={value11}
+              onChange={(newValue) => {
+                setValue11(newValue);
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+        </div>
+        <div className={styles.filtersItem}>
+          <Typography sx={{ color: 'text.secondary' }}>Даты начала после</Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Даты начала после"
+              value={value2}
+              onChange={(newValue) => {
+                setValue2(newValue);
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+
+
+          </LocalizationProvider>
+        </div>
+        <div className={styles.filtersItem}>
+          <Typography sx={{ color: 'text.secondary' }}>Применить фильтры</Typography>
+          <Tooltip title="Применить фильтры">
+            <Button variant="contained">Применить</Button>
+
+          </Tooltip>
+        </div>
+
       </Stack>
 
     </div>
     <div className={styles.content}>
-      <aside>
-        <Paper elevation={1}>
-          <div className={styles.filters}>
-            <div className={styles.filtersItem}>
 
-              <Typography sx={{ color: 'text.secondary' }}>Даты начала до</Typography>
-
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  label="Basic example"
-                  value={value11}
-                  onChange={(newValue) => {
-                    setValue11(newValue);
-                  }}
-                  renderInput={(params: any) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-            </div>
-            <div className={styles.filtersItem}>
-              <Typography sx={{ color: 'text.secondary' }}>Даты начала после</Typography>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-
-                <DatePicker
-                  label="Basic example"
-                  value={value2}
-                  onChange={(newValue) => {
-                    setValue2(newValue);
-                  }}
-                  renderInput={(params: any) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-            </div>
-            <Button variant="contained">Применить фильтры</Button>
-          </div>
-        </Paper>
-      </aside>
       <div>
         <div className={styles.applyFilters}>
           {
             [1, 2, 3, 3].map(() => (
-              <Chip label="Даты начала после 2022-10-07" variant="outlined" onDelete={handleDelete} />
+              <Tooltip title="Убрать фильтр">
+
+                <Chip label="Даты начала после 2022-10-07" variant="outlined" onDelete={handleDelete} />
+              </Tooltip>
             ))
           }
 
@@ -152,15 +164,8 @@ const ActivitiesPage = () => {
                     </div>
                     <div className={styles.members}>
                       <div className={styles.flexColumn}>
-                        <Typography sx={{ color: 'text.secondary' }}>
-                          Участники
-                        </Typography>
-                        <AvatarGroup total={24}>
-                          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-                        </AvatarGroup>
+
+
                       </div>
                     </div>
                     <Accordion>
@@ -169,7 +174,8 @@ const ActivitiesPage = () => {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                       >
-                        <Typography>Посмотреть всех участников</Typography>
+
+                        <Typography>Посмотреть участников</Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <div className={styles.allMembers}>
