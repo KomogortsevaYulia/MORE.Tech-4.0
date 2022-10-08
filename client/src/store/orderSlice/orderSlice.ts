@@ -22,6 +22,13 @@ export const fetchOrderWithUser = createAsyncThunk(
   }
 );
 
+export const fetchOrderForAnalytic = createAsyncThunk(
+  "order/fetchOrderForAnalytic",
+  async () => {
+    return MainApi.fetchOrderForAnalytic();
+  }
+);
+
 export const orderSlice = createSlice({
   name: "order",
   initialState,
@@ -37,7 +44,11 @@ export const orderSlice = createSlice({
       })
       .addCase(fetchOrderWithUser.rejected, (state) => {
         state.fethcOrderStatus = "failed";
-      });
+      })
+      .addCase(fetchOrderForAnalytic.fulfilled, (state, action) => {
+        state.fethcOrderStatus = "success";
+        state.order = action.payload;
+      })
   },
 });
 
