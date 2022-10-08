@@ -1,0 +1,10 @@
+.myStyle {
+  background: rgb(82, 0, 235);
+  background: linear-gradient(
+    90deg,
+    rgba(82, 0, 235, 1) 0%,
+    rgba(25, 118, 210, 1) 30%,
+    rgba(142, 71, 228, 1) 63%,
+    rgba(214, 0, 116, 1) 100%
+  );
+}

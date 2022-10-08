@@ -25,6 +25,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Button, Grid } from "@mui/material";
 import { logout } from "../../store/userSlice/userSlice";
 
+import styles from "./Navbar.module.css";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -119,7 +121,12 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      className={`${
+        location.pathname === ROUTES.home.url ? styles.myStyle : ""
+      }`}
+      sx={{ display: "flex" }}
+    >
       <CssBaseline />
       {/* <AppBar position="fixed" open={open}>
         <Toolbar>
