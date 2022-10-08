@@ -393,6 +393,106 @@
       "why": "лёха)",
       "date": "2022-10-08T08:29:21.967Z",
       "id": 17
+    },
+    {
+      "amount": 100,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:40:56.695Z",
+      "id": 18
+    },
+    {
+      "amount": 100,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "toId": 2,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:40:56.696Z",
+      "id": 19
+    },
+    {
+      "amount": 20,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "toId": 4,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:43:08.412Z",
+      "id": 20
+    },
+    {
+      "amount": 20,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:43:08.413Z",
+      "id": 21
+    },
+    {
+      "amount": 20,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "toId": 2,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:43:08.413Z",
+      "id": 22
+    },
+    {
+      "amount": 20,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:47:00.971Z",
+      "id": 23
+    },
+    {
+      "amount": 20,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "toId": 2,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:47:00.971Z",
+      "id": 24
+    },
+    {
+      "amount": 111,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:47:52.735Z",
+      "id": 25
+    },
+    {
+      "amount": 111,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "toId": 2,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-08T12:47:52.735Z",
+      "id": 26
+    },
+    {
+      "amount": 55,
+      "userId": 1,
+      "toId": 3,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "why": "за то что ты лёха",
+      "date": "2022-10-08T12:52:57.633Z",
+      "id": 27
     }
   ],
   "products": [

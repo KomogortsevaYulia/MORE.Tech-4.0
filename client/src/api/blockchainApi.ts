@@ -69,7 +69,7 @@ export class BlockchainApi {
       })
       .then(function (response: any) {
         console.log(response.data);
-        return response;
+        return response.data;
       })
       .catch(function (error: any) {
         console.log(error);
