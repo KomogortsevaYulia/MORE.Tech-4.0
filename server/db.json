@@ -559,6 +559,46 @@
       "id": 5,
       "userId": 3,
       "activitiesId": 4
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "activitiesId": 4
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "activitiesId": 2
+    },
+    {
+      "id": 8,
+      "userId": 3,
+      "activitiesId": 16
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "activitiesId": 15
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "activitiesId": 13
+    },
+    {
+      "id": 11,
+      "userId": 3,
+      "activitiesId": 12
+    },
+    {
+      "id": 12,
+      "userId": 3,
+      "activitiesId": 11
+    },
+    {
+      "id": 13,
+      "userId": 3,
+      "activitiesId": 14
     }
   ],
   "orders": [
