@@ -17,9 +17,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { fetchActivities, fetchActivitiesWithUser } from "../../store/ActivitiesSlice/activitiesSlice";
+import {
+  fetchActivities,
+  fetchActivitiesWithUser,
+} from "../../store/ActivitiesSlice/activitiesSlice";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -57,7 +60,7 @@ function a11yProps(index: number) {
 const PersonalPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
-  React.useEffect(() => { }, [user]);
+  React.useEffect(() => {}, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -79,10 +82,8 @@ const PersonalPage = () => {
 
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
   React.useEffect(() => {
-    console.log(ActivitiesRecords)
+    console.log(ActivitiesRecords);
   }, [ActivitiesRecords]);
-
-
 
   return (
     <div>
@@ -125,23 +126,24 @@ const PersonalPage = () => {
       </Box>
       <TabPanel value={value} index={0}>
         <div>
-          {ActivitiesRecords && ActivitiesRecords?.map((row) => (
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography> {row.activitiesId.title}</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>{row.activitiesId.date}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  {row.activitiesId.description}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+          {ActivitiesRecords &&
+            ActivitiesRecords?.map((row) => (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography> {row.activities.title}</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    {row.activities.date}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{row.activities.description}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
