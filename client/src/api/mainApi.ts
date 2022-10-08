@@ -58,6 +58,13 @@ export interface ITransferRubleWithUsers {
   users2: IUser;
 }
 
+export interface IActivityRecords {
+  id: number;
+  userId: IUser;
+  activitiesId: IActivities;
+}
+
+
 export interface ICreateTransaction {
   userId: number;
   toId: number;
@@ -169,5 +176,15 @@ export class MainApi {
     return axios
       .post(`${apiUrl}/transferRuble`, data)
       .then((response) => response.data);
+  }
+
+  static async fetchActivitiesWithUser(id: number) {
+    return axios
+      .get<IActivityRecords[]>(`${apiUrl}/activity_records?userId=${id}&_expand=user&_expand=activities`)
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
   }
 }

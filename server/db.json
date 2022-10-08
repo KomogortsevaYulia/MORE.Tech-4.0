@@ -155,5 +155,17 @@
       "productsId": 2,
       "count": 2
     }
+  ],
+  "activity_records": [
+    {
+      "id": 1,
+      "userId": 2,
+      "activitiesId": 1
+    },
+    {
+      "id": 1,
+      "userId": 2,
+      "activitiesId": 2
+    }
   ]
 }
