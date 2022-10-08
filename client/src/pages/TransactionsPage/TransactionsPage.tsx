@@ -1,7 +1,7 @@
 import React from "react";
 
 import Paper from "@mui/material/Paper";
-
+import { styled } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   fetchTransactions,
@@ -26,8 +26,10 @@ import {
   FormControl,
   Stack,
   Chip,
+  tableCellClasses,
 } from "@mui/material";
 import { fetchUsers } from "../../store/adminSlice/adminSlice";
+import { Bold } from "react-feather";
 
 const TransactionsPage = () => {
   const dispatch = useAppDispatch();
@@ -98,6 +100,28 @@ const TransactionsPage = () => {
       })
     );
   };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: "#8e47e4",
+      color: "#FFFFFF",
+      fontSize: 16,
+      
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
 
   return (
     <>
@@ -248,11 +272,11 @@ const TransactionsPage = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">От кого</TableCell>
-              <TableCell align="right">Кому</TableCell>
-              <TableCell align="right">Количество</TableCell>
-              <TableCell align="right">Дата</TableCell>
-              <TableCell align="right">Причина</TableCell>
+              <StyledTableCell align="left">От кого</StyledTableCell>
+              <StyledTableCell align="left">Кому</StyledTableCell>
+              <StyledTableCell align="left">Количество</StyledTableCell>
+              <StyledTableCell align="left">Дата</StyledTableCell>
+              <StyledTableCell align="left">Причина</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -265,11 +289,11 @@ const TransactionsPage = () => {
                     background: index % 2 === 0 ? "#D9D9D9" : "",
                   }}
                 >
-                  <TableCell align="right">{row.user.FIO}</TableCell>
-                  <TableCell align="right">{row.users2.FIO}</TableCell>
-                  <TableCell align="right">{row.amount}</TableCell>
-                  <TableCell align="right">{row.date.split("T")[0]}</TableCell>
-                  <TableCell align="right">{row.why}</TableCell>
+                  <StyledTableCell align="left">{row.user.FIO}</StyledTableCell>
+                  <StyledTableCell align="left">{row.users2.FIO}</StyledTableCell>
+                  <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                  <StyledTableCell align="left">{row.date.split("T")[0]}</StyledTableCell>
+                  <StyledTableCell align="left">{row.why}</StyledTableCell>
                 </TableRow>
               ))}
           </TableBody>
