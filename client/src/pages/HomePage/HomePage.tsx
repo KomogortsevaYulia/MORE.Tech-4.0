@@ -1,15 +1,8 @@
-import React from "react";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import Timeline from "@mui/lab/Timeline";
 import styles from "./HomePage.module.css";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import {
   TimelineItem,
-  TimelineOppositeContent,
   TimelineSeparator,
   TimelineConnector,
   TimelineDot,
@@ -21,16 +14,29 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import nft from "../../assets/nft.png";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import CelebrationIcon from "@mui/icons-material/Celebration";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { fetchActivitiesForHome } from "../../store/ActivitiesSlice/activitiesSlice";
+import ActivityItem from "../../components/ActivityItem/ActivityItem";
+import React from "react";
 
 const HomePage = () => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchActivitiesForHome());
+  }, []);
+
+  const { ActivitiesRecords } = useAppSelector((state) => state.activities);
+  React.useEffect(() => {
+    console.log(ActivitiesRecords);
+  }, [ActivitiesRecords]);
+
   return (
     <>
       <div className={` ${styles.myStyle} `}>
@@ -64,8 +70,8 @@ const HomePage = () => {
             </p>
           </div>
           <div className="row d-flex justify-content-center">
-            <div className=" col-lg-5 p-2 m-2">
-              <div className="h-100 p-2 bg-light border rounded-3">
+            <div className=" col-5 p-1 m-1">
+              <div className="h-100 p-1 bg-light border rounded-3">
                 <Timeline
                   sx={{
                     [`& .${timelineItemClasses.root}:before`]: {
@@ -152,23 +158,25 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className=" col-lg-2 p-2 m-2 align-items-center">
-              <div className="h-100 p-2 bg-light border rounded-3 ">
-              <div className={`${styles.coin}`}>
-                  <div className={`${styles.side} ${styles.head}`}>1</div>
-                  <div className={`${styles.side} ${styles.tail}`}>1</div>
-                  <div className={`${styles.edge}`}></div>
+            <div className=" col-3 col-md-2 p-1 m-1 align-items-center ">
+              <div className="h-100 p-1 bg-light border rounded-3 ">
+                <div className="d-flex justify-content-center">
+                  <div className={`${styles.coin} `}>
+                    <div className={`${styles.side} ${styles.head}`}>1</div>
+                    <div className={`${styles.side} ${styles.tail}`}>1</div>
+                    <div className={`${styles.edge}`}></div>
+                  </div>
                 </div>
                 <h2 className="fw-normal">Digital Ruble</h2>
                 <p>Собственная цифровая валюта (монеты)</p>
               </div>
             </div>
 
-            <div className=" col-lg-2 p-2 m-2">
-              <div className="h-100 p-2 bg-light border rounded-3">
-              <img
+            <div className=" col-3 col-md-2 p-1 m-1">
+              <div className="h-100 p-1 bg-light border rounded-3">
+                <img
                   src={nft}
-                  className={`"img-fluid" ${styles.nftImage}`}
+                  className={`img-fluid ${styles.nftImage}`}
                   alt="..."
                 />
                 <h2 className="fw-normal">NFT сертификат</h2>
@@ -186,6 +194,15 @@ const HomePage = () => {
         >
           <div className="col-md-6 p-lg-6 mx-auto my-6 ">
             <h2 className="display-4 fw-normal">Предстоящие активности</h2>
+          </div>
+        </div>
+
+        <div className={styles.content}>
+          <div>
+            <div className={styles.activities}>
+              {ActivitiesRecords &&
+                ActivitiesRecords?.map((row) => <ActivityItem row={row} />)}
+            </div>
           </div>
         </div>
       </div>

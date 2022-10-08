@@ -15,20 +15,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import styles from "./PersonalPage.module.css";
 import {
-  fetchActivities,
   fetchActivitiesWithUser,
 } from "../../store/ActivitiesSlice/activitiesSlice";
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Stack,
   Chip,
-  Button,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 
@@ -66,8 +59,8 @@ function a11yProps(index: number) {
 }
 
 const PersonalPage = () => {
-  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-  React.useEffect(() => {}, [user]);
+  const { user } = useAppSelector((state) => state.user);
+  React.useEffect(() => { }, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -81,7 +74,7 @@ const PersonalPage = () => {
     dispatch(fetchTransferRubleByUsers(user!.id));
     dispatch(fetchActivitiesWithUser(user!.id));
     dispatch(fetchOrderWithUser(user!.id));
-  }, []);
+  }, [dispatch, user]);
 
   const { transferRuble } = useAppSelector((state) => state.transferRuble);
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
@@ -110,7 +103,7 @@ const PersonalPage = () => {
               variant="outlined"
               sx={{
                 background:
-                  user?.balance.coinsAmount != "0"
+                  user?.balance.coinsAmount !== "0"
                     ? "var(--purple)"
                     : "var(--red)",
               }}

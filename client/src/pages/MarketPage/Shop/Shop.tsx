@@ -5,27 +5,28 @@ import { fetchProducts } from "../../../store/marketSlice/marketSlice";
 import ShopItem from "./ShopItem";
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from "../Market.module.scss";
-import {  Dropdown } from "antd";
+import { Dropdown } from "antd";
 import { deleteFromCart } from "../../../store/marketSlice/marketSlice";
+import { IconButton } from "@mui/material";
 
 export default function Shop() {
-  const dispatch = useAppDispatch();
+	const dispatch = useAppDispatch();
 
-  const { cart } = useAppSelector((state) => state.market);
-  const { products } = useAppSelector((state) => state.market);
+	const { cart } = useAppSelector((state) => state.market);
+	const { products } = useAppSelector((state) => state.market);
 
-  const [filteredProducts, setFilteredProducts] = React.useState(products);
+	const [filteredProducts, setFilteredProducts] = React.useState(products);
 
-  const [maxPrice, setMaxPrice] = React.useState(1);
+	const [maxPrice, setMaxPrice] = React.useState(1);
 
-  const [totalPay, setTotalPay] = React.useState(1);
+	const [totalPay, setTotalPay] = React.useState(1);
 
 	const deleteClick = (product: IProduct) => {
 		dispatch(deleteFromCart(product));
 	};
 
 	React.useEffect(() => {
-		if(cart){
+		if (cart) {
 			setTotalPay(
 				[...cart.map((item) => (
 					item.product.priceRuble * item.count
@@ -33,32 +34,20 @@ export default function Shop() {
 			)
 		}
 	}, [cart]);
-	
+
 	React.useEffect(() => {
 		if (products) {
-		setMaxPrice(Math.max(...products!.map((item) => item.priceRuble)));
-		setPriceMax(maxPrice);
-		setFilteredProducts(products);
+			setMaxPrice(Math.max(...products!.map((item) => item.priceRuble)));
+			setPriceMax(maxPrice);
+			setFilteredProducts(products);
 		}
-	}, [products]);
+	}, [products, maxPrice]);
 
 	React.useEffect(() => {
 		dispatch(fetchProducts());
-	}, []);
+	}, [dispatch]);
 
-	const filterProducts = () => {
-		if (products) {
-			if (priceMax === 0){
-				setPriceMax(maxPrice);
-			}
 
-			setFilteredProducts(
-				products!.filter(function (el: IProduct) {
-				return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
-				})
-			);
-		}
-	};
 
 	const [priceMin, setPriceMin] = React.useState(0);
 	const handleChangePriceMin = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,22 +61,34 @@ export default function Shop() {
 
 	React.useEffect(() => {
 		if (maxPrice) {
-		setPriceMax(maxPrice);
+			setPriceMax(maxPrice);
 		}
 	}, [maxPrice]);
 
+	const filterProducts = React.useCallback(() => {
+		if (products) {
+			if (priceMax === 0) {
+				setPriceMax(maxPrice);
+			}
+
+			setFilteredProducts(
+				products!.filter(function (el: IProduct) {
+					return el.priceRuble >= priceMin && el.priceRuble <= priceMax;
+				})
+			);
+		}
+	}, [maxPrice, priceMax, priceMin, products]);
+
 	React.useEffect(() => {
 		filterProducts();
-	}, [priceMin, priceMax]);
-
-
-  const menu = (
+	}, [priceMin, priceMax, filterProducts]);
+	const menu = (
 		<div className={`card bg-primary text-white rounded-3`}>
 			<div className="card-body">
 
 				<div className={` ${styles.cartCard} overflow-auto block`}>
-					{cart && cart?.map((item) =>(
-						<div className={`${styles.cartItem} mb-3 p-2 rounded `} > 
+					{cart && cart?.map((item) => (
+						<div className={`${styles.cartItem} mb-3 p-2 rounded `} >
 							<div className="d-flex justify-content-between">
 								<div className="d-flex flex-row align-items-center justify-content-between w-100">
 									<div>
@@ -109,16 +110,16 @@ export default function Shop() {
 										</div>
 										<div>
 											<p className="small mb-0 text-dark">Цена:</p>
-											<h5  className="fw-semibold">
+											<h5 className="fw-semibold">
 												₽ {item.product.priceRuble}
 											</h5>
 										</div>
 									</div>
 
-									<div className="deleteBtn d-flex ms-2 flex-row align-items-center"> 
-										<a onClick={()=>(deleteClick(item.product)) } style={{ color: "#2e2e2e",  }} >
+									<div className="deleteBtn d-flex ms-2 flex-row align-items-center">
+										<IconButton onClick={() => (deleteClick(item.product))} aria-label="delete" style={{ color: "#2e2e2e", }}>
 											<DeleteIcon className={styles.deleteBtn} />
-										</a>
+										</IconButton>
 									</div>
 								</div>
 							</div>
@@ -126,7 +127,7 @@ export default function Shop() {
 					))}
 				</div>
 
-				<hr className="my-2"/>
+				<hr className="my-2" />
 
 				<div className="d-flex justify-content-center ">
 					<h4 className="fw-semibold text-white">Всего: </h4>
@@ -137,60 +138,58 @@ export default function Shop() {
 				</button>
 			</div>
 		</div>
-  );
+	);
 
-  return (
-    
-      <div className="container-fluid" >
-		
-    
-		<div >
+	return (
 
-		<div className="flex-row d-flex justify-content-between mb-0 card-title card card-body mb-4">
-			<div className="flex-row d-flex w-25">
-				<h5 className="mt-2 me-2">Цена </h5>
-				<div className="input-group">
-					<span className="input-group-text">c</span>
-					<input
-						id="minPrice"
-						type="number"
-						className="form-control"
-						placeholder="Min."
-						value={priceMin.toString()}
-						onChange={handleChangePriceMin}
-					></input>
-					<span className="input-group-text">по</span>
-					<input
-						id="maxPrice"
-						type="number"
-						className="form-control w-25"
-						placeholder="Max."
-						value={priceMax.toString()}
-						onChange={handleChangePriceMax}
-					></input>
+		<div className="container-fluid" >
+
+
+			<div >
+
+				<div className="flex-row d-flex justify-content-between mb-0 card-title card card-body mb-4">
+					<div className="flex-row d-flex w-25">
+						<h5 className="mt-2 me-2">Цена </h5>
+						<div className="input-group">
+							<span className="input-group-text">c</span>
+							<input
+								id="minPrice"
+								type="number"
+								className="form-control"
+								placeholder="Min."
+								value={priceMin.toString()}
+								onChange={handleChangePriceMin}
+							></input>
+							<span className="input-group-text">по</span>
+							<input
+								id="maxPrice"
+								type="number"
+								className="form-control w-25"
+								placeholder="Max."
+								value={priceMax.toString()}
+								onChange={handleChangePriceMax}
+							></input>
+						</div>
+
+					</div>
+
+					<div className="dropdown ">
+						<Dropdown overlay={menu}>
+							<button onClick={e => e.preventDefault()} className="btn btn-info">Корзина</button>
+						</Dropdown>
+					</div>
 				</div>
 
-			</div>
+				<div className="col-full card card-body">
 
-			<div className="dropdown ">
-				<Dropdown overlay={menu}>
-					<a onClick={e => e.preventDefault()}>
-						<button className="btn btn-info">Корзина</button> 
-					</a>
-				</Dropdown>
-			</div>	
-		</div>
-
-		<div className="col-full card card-body">
-			
-			<div className="g-2 row">
-				{filteredProducts &&
-				filteredProducts?.map((item) => <ShopItem shopItem={item} />)}
+					<div className="g-2 row">
+						{filteredProducts &&
+							filteredProducts?.map((item) => <ShopItem shopItem={item} />)}
+					</div>
+				</div>
 			</div>
 		</div>
-        </div>
-      </div>
 
-    
-  );
+
+	);
 }

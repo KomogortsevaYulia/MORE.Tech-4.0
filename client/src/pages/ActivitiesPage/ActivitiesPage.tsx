@@ -1,24 +1,14 @@
 import React, { useCallback } from "react";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
-import { styled } from "@mui/material/styles";
-import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
 import Tooltip from "@mui/material/Tooltip";
-import { Divider, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
@@ -30,9 +20,7 @@ const ActivitiesPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
+
   const { Activities } = useAppSelector((state) => state.activities);
 
   React.useEffect(() => {
@@ -50,8 +38,6 @@ const ActivitiesPage = () => {
   const [addEndDate, setAddEndDate] = React.useState<Date | null>(null);
 
   const handleAddActivity = useCallback(() => {}, []);
-
-
   return (
     <div
       style={{
