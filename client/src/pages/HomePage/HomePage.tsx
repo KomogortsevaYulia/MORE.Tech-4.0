@@ -1,4 +1,3 @@
-
 import RepeatIcon from "@mui/icons-material/Repeat";
 import Timeline from "@mui/lab/Timeline";
 import styles from "./HomePage.module.css";
@@ -20,10 +19,7 @@ import { fetchActivitiesForHome } from "../../store/ActivitiesSlice/activitiesSl
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 import React from "react";
 
-
-
 const HomePage = () => {
-
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -36,10 +32,10 @@ const HomePage = () => {
     dispatch(fetchActivitiesForHome());
   }, []);
 
-  const { Activities } = useAppSelector((state) => state.activities);
+  const { ActivitiesRecords } = useAppSelector((state) => state.activities);
   React.useEffect(() => {
-    console.log(Activities)
-  }, [Activities]);
+    console.log(ActivitiesRecords);
+  }, [ActivitiesRecords]);
 
   return (
     <>
@@ -164,13 +160,13 @@ const HomePage = () => {
 
             <div className=" col-3 col-md-2 p-1 m-1 align-items-center ">
               <div className="h-100 p-1 bg-light border rounded-3 ">
-              <div className="d-flex justify-content-center">
-              <div className={`${styles.coin} `}>
-                  <div className={`${styles.side} ${styles.head}`}>1</div>
-                  <div className={`${styles.side} ${styles.tail}`}>1</div>
-                  <div className={`${styles.edge}`}></div>
+                <div className="d-flex justify-content-center">
+                  <div className={`${styles.coin} `}>
+                    <div className={`${styles.side} ${styles.head}`}>1</div>
+                    <div className={`${styles.side} ${styles.tail}`}>1</div>
+                    <div className={`${styles.edge}`}></div>
+                  </div>
                 </div>
-              </div>
                 <h2 className="fw-normal">Digital Ruble</h2>
                 <p>Собственная цифровая валюта (монеты)</p>
               </div>
@@ -178,7 +174,7 @@ const HomePage = () => {
 
             <div className=" col-3 col-md-2 p-1 m-1">
               <div className="h-100 p-1 bg-light border rounded-3">
-              <img
+                <img
                   src={nft}
                   className={`img-fluid ${styles.nftImage}`}
                   alt="..."
@@ -194,19 +190,21 @@ const HomePage = () => {
         </div>
 
         <div
-          className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}>
+          className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}
+        >
           <div className="col-md-6 p-lg-6 mx-auto my-6 ">
             <h2 className="display-4 fw-normal">Предстоящие активности</h2>
           </div>
         </div>
 
         <div className={styles.content}>
-        <div>
-          <div className={styles.activities}>
-            {Activities && Activities?.map((row) => <ActivityItem row={row} />)}
+          <div>
+            <div className={styles.activities}>
+              {ActivitiesRecords &&
+                ActivitiesRecords?.map((row) => <ActivityItem row={row} />)}
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   );
