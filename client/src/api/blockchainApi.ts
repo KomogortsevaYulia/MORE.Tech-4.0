@@ -4,11 +4,13 @@ export interface TransactionResponse {
   transactionHash: string;
 }
 
+export interface NFT {
+  uri: string; // унифицированный (единообразный) идентификатор ресурса, сопряженный с NFT-коллекцией
+  tokens: []; // массив NFT. Т.е. 5,3,4,6 - уникальные идентификаторы отдельного NFT в NFT-коллекции
+}
+
 export interface BalanceNFT {
-  balance: Array<{
-    URI: string; // унифицированный (единообразный) идентификатор ресурса, сопряженный с NFT-коллекцией
-    tokens: []; // массив NFT. Т.е. 5,3,4,6 - уникальные идентификаторы отдельного NFT в NFT-коллекции
-  }>;
+  balance: Array<NFT>;
 }
 
 export interface BalanceFiat {

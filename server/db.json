@@ -19,16 +19,17 @@
     {
       "id": 2,
       "roleId": 2,
-      "publicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
-      "privateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "privateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "publicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+
       "FIO": "Лукаш Олег",
       "image": "https://robohash.org/stefan-three"
     },
     {
       "id": 1,
       "roleId": 1,
-      "privateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "publicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "publicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "privateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "FIO": "Админ Админович",
       "image": "https://avatars.dicebear.com/api/bottts/stefan.svg"
     }

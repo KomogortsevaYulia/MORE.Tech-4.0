@@ -7,18 +7,27 @@ export interface OrderState {
   order: IOrder[] | null;
   fethcOrderStatus: LoadingStatus | null;
   fetchOrderError: string | null;
+  orderAnalytics: any;
 }
 
 const initialState: OrderState = {
   order: null,
   fethcOrderStatus: null,
   fetchOrderError: null,
+  orderAnalytics: null,
 };
 
 export const fetchOrderWithUser = createAsyncThunk(
   "order/fetchOrderWithUser",
   async (id: number) => {
     return MainApi.fetchOrderWithUser(id);
+  }
+);
+
+export const fetchOrderForAnalytic = createAsyncThunk(
+  "order/fetchOrderForAnalytic",
+  async () => {
+    return MainApi.fetchOrderForAnalytic();
   }
 );
 
@@ -37,6 +46,10 @@ export const orderSlice = createSlice({
       })
       .addCase(fetchOrderWithUser.rejected, (state) => {
         state.fethcOrderStatus = "failed";
+      })
+      .addCase(fetchOrderForAnalytic.fulfilled, (state, action) => {
+        state.fethcOrderStatus = "success";
+        state.orderAnalytics = action.payload;
       });
   },
 });
