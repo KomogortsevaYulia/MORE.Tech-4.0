@@ -20,17 +20,11 @@ import ActivityItem from "../../components/ActivityItem/ActivityItem";
 import React from "react";
 
 const HomePage = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(fetchActivitiesForHome());
-  }, []);
+  }, [dispatch]);
 
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
   React.useEffect(() => {
