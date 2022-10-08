@@ -21,6 +21,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import { ROUTES } from "../../const/routes";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../hooks/hooks";
+import LogoutIcon from '@mui/icons-material/Logout';
+import {  Button, Grid } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -184,6 +186,10 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
               )
           )}
         </List>
+
+        <Button  variant="contained" sx={{background: 'var(--darkGrey)',borderColor: '#005cbf'}} startIcon={<LogoutIcon />}>
+          Выход
+        </Button>  
         {/* <Divider /> */}
         {/* <List>
           {["All mail", "Trash", "Spam"].map((text, index) => (
@@ -214,6 +220,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
         <DrawerHeader />
         {children || <Outlet />}
       </Box>
+      
     </Box>
   );
 };
