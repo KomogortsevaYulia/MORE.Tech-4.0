@@ -70,7 +70,6 @@ const ActivitiesPage = () => {
       <Stack spacing={2} direction="row">
         <div className={styles.filtersItem}>
           <Typography sx={{ color: 'text.secondary' }}>Название</Typography>
-
           <Autocomplete
             id="free-solo-demo"
             freeSolo
@@ -147,8 +146,6 @@ const ActivitiesPage = () => {
                     <div className={styles.meta}>
                       <Typography>{row.title}</Typography>
                       <Typography sx={{ color: 'text.secondary' }}>c {row.date} до {row.date}</Typography>
-
-
                     </div>
 
                   </div>
@@ -156,6 +153,12 @@ const ActivitiesPage = () => {
                 <AccordionDetails>
 
                   <div className={styles.details}>
+                    <div className={styles.activityButtons}>
+                      <Tooltip title="Записаться на мероприятие">
+                        <Button variant="contained">Записаться</Button>
+                      </Tooltip>
+
+                    </div>
                     <div className={styles.flexColumn}>
                       <Typography sx={{ color: 'text.secondary' }}>Описание</Typography>
                       <Typography>
@@ -164,8 +167,6 @@ const ActivitiesPage = () => {
                     </div>
                     <div className={styles.members}>
                       <div className={styles.flexColumn}>
-
-
                       </div>
                     </div>
                     <Accordion>
@@ -207,6 +208,7 @@ const ActivitiesPage = () => {
                         </div>
                       </AccordionDetails>
                     </Accordion>
+
                   </div>
                 </AccordionDetails>
               </Accordion>
