@@ -118,7 +118,7 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, currentUser }) => {
                 variant="outlined"
                 placeholder="Количество"
                 type="number"
-                value={rublesAmount}
+                value={rublesAmount.toString()}
                 onChange={handleRublesChange}
               />
             </>

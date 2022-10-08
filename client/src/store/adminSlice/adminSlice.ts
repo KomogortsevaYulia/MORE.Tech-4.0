@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
 import { MainApi, IProduct, IUser, IUserWithBalance } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
-import { BlockchainApi } from "../../api/blockchainApi";
+import { BalanceNFT, BlockchainApi } from "../../api/blockchainApi";
 
 export interface AdminState {
   users: IUserWithBalance[] | null;
+  nftCollections: BalanceNFT | null;
   fetchUsersStatus: LoadingStatus | null;
   fetchUsersError: string | null;
 }
@@ -20,6 +21,7 @@ export interface TransferData {
 
 const initialState: AdminState = {
   users: null,
+  nftCollections: null,
   fetchUsersStatus: null,
   fetchUsersError: null,
 };
@@ -27,6 +29,13 @@ const initialState: AdminState = {
 export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
   return MainApi.fetchUsers();
 });
+
+export const fetchNFTBalance = createAsyncThunk(
+  "admin/fetchNFTBalance",
+  async (key: string) => {
+    return BlockchainApi.balanceNFT(key);
+  }
+);
 
 export const transferRubles = createAsyncThunk(
   "admin/transferRubles",
@@ -62,7 +71,10 @@ export const adminSlice = createSlice({
       .addCase(fetchUsers.rejected, (state) => {
         state.fetchUsersError = "failed";
       })
-      .addCase(transferRubles.fulfilled, (state, action) => {});
+      .addCase(transferRubles.fulfilled, (state, action) => {})
+      .addCase(fetchNFTBalance.fulfilled, (state, action) => {
+        state.nftCollections = action.payload;
+      });
   },
 });
 
