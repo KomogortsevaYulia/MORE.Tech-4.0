@@ -153,7 +153,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row }) => {
             <div className={styles.allMembers}>
               <AvatarGroup max={row.users.length}>
                 {row.users.map((user) => (
-                  <Tooltip title={user.user.FIO}>
+                  <Tooltip key={user.id} title={user.user.FIO}>
                     <Avatar
                       alt={user.user.FIO}
                       src={user.user.image}
