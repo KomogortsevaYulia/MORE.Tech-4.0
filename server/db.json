@@ -626,7 +626,6 @@
       "userId": 3,
       "activitiesId": 12
     },
-
     {
       "id": 14,
       "userId": 3,
@@ -637,11 +636,22 @@
       "userId": 1,
       "activitiesId": 14
     },
-
     {
       "id": 17,
       "userId": 2,
       "activitiesId": 11
+    },
+    {
+      "userId": 2,
+      "activitiesId": 6,
+      "bet": 100,
+      "id": 18
+    },
+    {
+      "userId": 2,
+      "activitiesId": 14,
+      "bet": 100,
+      "id": 19
     }
   ],
   "orders": [
