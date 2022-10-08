@@ -42,6 +42,7 @@ export interface IActivities {
   title: string;
   description: string;
   dateStart: string;
+  bet?:number;
   dateEnd: string;
   users: IActivityRecords[];
 }

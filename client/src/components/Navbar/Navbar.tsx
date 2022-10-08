@@ -97,7 +97,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
 
   return (
     <Box
-      className={`${location.pathname === ROUTES.home.url ? styles.myStyle : ""
+      className={`${location.pathname === ROUTES.home.url ? styles.myStyle : styles.backgroundWrapper
         }`}
       sx={{ display: "flex" }}
     >
