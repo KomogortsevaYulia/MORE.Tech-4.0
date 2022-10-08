@@ -1,15 +1,9 @@
-import React from "react";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
+
 import RepeatIcon from "@mui/icons-material/Repeat";
 import Timeline from "@mui/lab/Timeline";
 import styles from "./HomePage.module.css";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import {
   TimelineItem,
-  TimelineOppositeContent,
   TimelineSeparator,
   TimelineConnector,
   TimelineDot,
@@ -22,13 +16,6 @@ import nft from "../../assets/nft.png";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const HomePage = () => {
   return (
@@ -154,7 +141,7 @@ const HomePage = () => {
 
             <div className=" col-lg-2 p-2 m-2 align-items-center">
               <div className="h-100 p-2 bg-light border rounded-3 ">
-              <div className={`${styles.coin}`}>
+                <div className={`${styles.coin}`}>
                   <div className={`${styles.side} ${styles.head}`}>1</div>
                   <div className={`${styles.side} ${styles.tail}`}>1</div>
                   <div className={`${styles.edge}`}></div>
@@ -166,7 +153,7 @@ const HomePage = () => {
 
             <div className=" col-lg-2 p-2 m-2">
               <div className="h-100 p-2 bg-light border rounded-3">
-              <img
+                <img
                   src={nft}
                   className={`"img-fluid" ${styles.nftImage}`}
                   alt="..."

@@ -38,7 +38,7 @@ const TransactionsPage = () => {
   React.useEffect(() => {
     dispatch(fetchTransactions());
     dispatch(fetchUsers());
-  }, []);
+  }, [dispatch]);
 
   const currentCourse = 10;
 
@@ -117,7 +117,7 @@ const TransactionsPage = () => {
                 variant="outlined"
                 sx={{
                   background:
-                    user?.balance.coinsAmount != "0"
+                    user?.balance.coinsAmount !== "0"
                       ? "var(--purple)"
                       : "var(--red)",
                 }}
