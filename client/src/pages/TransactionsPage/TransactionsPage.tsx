@@ -173,7 +173,7 @@ const TransactionsPage = () => {
                 <div className={`${styles.edge}`}></div>
               </div>
             </div>
-            <div className="row d-flex justify-content-center">
+            <div className="row d-flex justify-content-center text-center">
               <h2 className="fw-normal">
                 {user?.balance.coinsAmount.toLocaleString()}
               </h2>
@@ -187,60 +187,7 @@ const TransactionsPage = () => {
             width: "100%",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: "8px",
-            }}
-          >
-            <Typography variant="h3" component="h5">
-              Вывод в рубли
-            </Typography>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <TextField
-                variant="outlined"
-                label="Я отдам"
-                type="number"
-                value={rublesAmount.toString()}
-                onChange={handleRublesChange}
-              />{" "}
-              Digital Rubles
-            </div>
-            <div className="row d-flex justify-content-center">
-              <div className="col-2">
-                <ArrowDownwardIcon color="success" />
-              </div>
-              <div className="col-auto">
-                <Typography
-                  sx={{ color: "#1F9D57", fontSize: 12 }}
-                  component="p"
-                >
-                  {currentCourse} Digital Rubles = 1 Цифровой рубль
-                </Typography>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <TextField
-                variant="outlined"
-                label="Я получу"
-                type="number"
-                value={realRublesAmount.toString()}
-                onChange={handleRealRublesChange}
-              />{" "}
-              <span style={{ maxWidth: "6vw" }}>
-                Цифровых рублей банка России
-              </span>
-            </div>
-            <Button variant="outlined">Вывести</Button>
-          </div>
+          
           <Box
             style={{
               display: "flex",
