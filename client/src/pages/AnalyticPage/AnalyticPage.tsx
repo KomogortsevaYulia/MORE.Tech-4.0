@@ -5,27 +5,11 @@ import {
   fetchOrderForAnalytic,
   fetchOrderWithUser,
 } from "../../store/orderSlice/orderSlice";
-import { Grid } from "antd";
-import echarts from "echarts/types/dist/echarts";
+
 import { Wheel } from "react-custom-roulette";
+import { Grid } from "@mui/material";
 
 const AnalyticPage = () => {
-  
-  const data = [
-    { option: '0' },
-    { option: '1' },
-    { option: '2' },
-  ]
-  
-  const [mustSpin, setMustSpin] = useState(false);
-  const [prizeNumber, setPrizeNumber] = useState(0);
-
-  const handleSpinClick = () => {
-    const newPrizeNumber = Math.floor(Math.random() * data.length)
-    setPrizeNumber(newPrizeNumber)
-    setMustSpin(true)
-  }
-  
   
   const dispatch = useAppDispatch();
 
@@ -49,7 +33,7 @@ const AnalyticPage = () => {
     },
     series: [
       {
-        name: "Access From",
+        name: "Товар",
         type: "pie",
         radius: "50%",
         data: orderAnalytics
@@ -136,44 +120,14 @@ const AnalyticPage = () => {
   };
 
   return (
-    <div>
+    <Grid container spacing={3}>
+      <Grid item xs={4}>
       <ReactECharts option={options} />
-      <div>
-        <h1 >Roulette Game</h1>
-        <hr />
-        <Wheel
-          mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
-          data={data}
-          innerBorderColor={"#f2f2f2"}
-          innerBorderWidth={25}
-          outerBorderColor={"#f2f2f2"}
-          radiusLineColor={"#dedede"}
-          radiusLineWidth={10}
-          textColors={["#ffffff"]}
-          fontSize={50}
-          perpendicularText={true}
-          backgroundColors={[
-            "#F22B35",
-            "#F99533",
-            "#24CA69",
-            "#514E50",
-            "#46AEFF",
-            "#9145B7"
-          ]}
-          onStopSpinning={() => {
-            setMustSpin(false);
-          }}
-        />
-        <button className="button2" onClick={handleSpinClick}>
-          SPIN
-        </button>
-        <br />
-        {!mustSpin ? data[prizeNumber].option : "0"}
-        <hr />
-      </div>
-       <ReactECharts option={option2} /> 
-    </div>
+      </Grid>
+      <Grid item xs={8}>
+      <ReactECharts option={option2} /> 
+      </Grid>
+    </Grid>
   );
 };
 

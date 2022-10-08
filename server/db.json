@@ -77,12 +77,36 @@
       "dateEnd": "2022-12-07"
     },
     {
-      "id": 4,
+      "id": 5,
       "typeId": 1,
-      "title": "Внутриофисный чемпионат по CS:GO",
-      "description": "Карта AWP LEGO 2. Победитель получит выходной.",
-      "dateStart": "2022-12-11",
-      "dateEnd": "2022-12-11"
+      "title": "Игра в войлебол",
+      "description": "Игра в выходные",
+      "dateStart": "2022-16-10",
+      "dateEnd": "2022-16-10"
+    },
+    {
+      "id": 6,
+      "typeId": 2,
+      "title": "Кто переработает больше всех",
+      "description": "Соревнование по преработке. Победитель получит выходной",
+      "dateStart": "2022-18-12",
+      "dateEnd": "2022-19-12"
+    },
+    {
+      "id": 7,
+      "typeId": 3,
+      "title": "Мастер класс по Microsoft Office",
+      "description": "Мастер класс от лучших.",
+      "dateStart": "2022-10-12",
+      "dateEnd": "2022-12-12"
+    },
+    {
+      "id": 8,
+      "typeId": 4,
+      "title": "Субботник",
+      "description": "На уборку!",
+      "dateStart": "2022-29-10",
+      "dateEnd": "2022-29-10"
     }
   ],
   "typeActivity": [
@@ -241,6 +265,16 @@
       "id": 1,
       "userId": 2,
       "activitiesId": 2
+    },
+    {
+      "id": 6,
+      "userId": 4,
+      "activitiesId": 3
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "activitiesId": 4
     }
   ],
   "orders": [

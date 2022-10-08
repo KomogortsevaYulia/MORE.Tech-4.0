@@ -270,4 +270,6 @@ export class MainApi {
 
     return productsMap;
   }
+
+  
 }

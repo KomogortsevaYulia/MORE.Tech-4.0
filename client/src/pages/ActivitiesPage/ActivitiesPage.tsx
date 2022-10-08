@@ -214,7 +214,12 @@ const ActivitiesPage = () => {
                   <div className={styles.header}>
                     <div className={styles.meta}>
                       <Typography>{row.title}</Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>c {row.dateStart} до {row.dateEnd}</Typography>
+                      <Typography sx={{ color: 'var(--purple)' }}>c {row.dateStart} до {row.dateEnd}</Typography>
+                      <div className={styles.activityButtons}>
+                      <Tooltip title="Записаться на мероприятие">
+                        <Button sx={{ background: 'var(--green)' }} variant="contained">Записаться</Button>
+                      </Tooltip>
+                    </div>
                     </div>
 
                   </div>
@@ -222,12 +227,7 @@ const ActivitiesPage = () => {
                 <AccordionDetails>
 
                   <div className={styles.details}>
-                    <div className={styles.activityButtons}>
-                      <Tooltip title="Записаться на мероприятие">
-                        <Button variant="contained">Записаться</Button>
-                      </Tooltip>
-
-                    </div>
+                    
                     <div className={styles.flexColumn}>
                       <Typography sx={{ color: 'text.secondary' }}>Описание</Typography>
                       <Typography>
