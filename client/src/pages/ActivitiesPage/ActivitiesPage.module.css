@@ -66,10 +66,12 @@
   padding: 10px;
   gap: 10px;
 }
+
 .filtersItem {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  
 }
 
 .content {
