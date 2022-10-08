@@ -11,6 +11,8 @@ export interface AdminState {
 }
 
 export interface TransferData {
+  userId: number;
+  toId: number;
   fromPrivateKey: string;
   toPublicKey: string;
   amount: number;
@@ -29,6 +31,13 @@ export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
 export const transferRubles = createAsyncThunk(
   "admin/transferRubles",
   async (data: TransferData) => {
+    const transaction = await MainApi.addTransaction({
+      ...data,
+      why: "Начисление от администратора",
+    });
+
+    console.log(transaction);
+
     return BlockchainApi.rubleTransfer(
       data.fromPrivateKey,
       data.toPublicKey,

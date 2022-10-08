@@ -6,6 +6,7 @@ export interface IUser {
   roleId: number;
   privateKey: string;
   publicKey: string;
+  image: string;
   FIO: string;
 }
 
@@ -15,6 +16,7 @@ export interface IUserWithBalance {
   privateKey: string;
   publicKey: string;
   FIO: string;
+  image: string;
   balance: BalanceFiat;
 }
 
@@ -56,17 +58,30 @@ export interface ITransferRubleWithUsers {
   users2: IUser;
 }
 
+export interface ICreateTransaction {
+  userId: number;
+  toId: number;
+  fromPrivateKey: string;
+  toPublicKey: string;
+  amount: number;
+  why: string;
+}
+
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3004";
 
 export class MainApi {
   static async fetchUserById(id: number) {
-    return axios
+    const user = await axios
       .get<IUser[]>(`${apiUrl}/users?id=${id}`)
       .then((response) => response.data[0])
       .catch((err) => {
         console.log(err);
         return err;
       });
+
+    user.balance = await BlockchainApi.balanceFiat(user.publicKey);
+
+    return user as IUserWithBalance;
   }
 
   static async fetchUsers() {
@@ -148,5 +163,11 @@ export class MainApi {
         console.log(err);
         return err;
       });
+  }
+
+  static async addTransaction(data: ICreateTransaction) {
+    return axios
+      .post(`${apiUrl}/transferRuble`, data)
+      .then((response) => response.data);
   }
 }

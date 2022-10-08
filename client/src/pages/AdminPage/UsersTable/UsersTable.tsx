@@ -6,7 +6,7 @@ import React from "react";
 export interface IUsersDataType {
   id: number;
   FIO: string;
-  balance: number;
+  balance: string;
   add: React.ReactNode;
 }
 

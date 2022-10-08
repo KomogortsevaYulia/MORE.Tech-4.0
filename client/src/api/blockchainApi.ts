@@ -160,7 +160,7 @@ export class BlockchainApi {
         return response.data as BalanceFiat;
       })
       .catch(function (error: any) {
-        return error;
+        console.log(error);
       });
   }
 

@@ -64,6 +64,8 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, currentUser }) => {
           amount: +rublesAmount,
           toPublicKey: currentUser!.publicKey,
           fromPrivateKey: user!.privateKey,
+          userId: user!.id,
+          toId: currentUser!.id,
         })
       );
     } else {

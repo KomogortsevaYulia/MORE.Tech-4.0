@@ -79,8 +79,8 @@ const PersonalPage = () => {
         <Grid item xs={4}>
           <Avatar
             alt="ФИО"
-            src="/static/images/avatar/1.jpg"
-            sx={{ width: 150, height: 150 }}
+            src={user!.image}
+            sx={{ width: 150, height: 150, border: "1px solid black" }}
           />
         </Grid>
         <Grid item xs={2}>
@@ -94,7 +94,9 @@ const PersonalPage = () => {
               <ListItemText primary="Статус" />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Баланс" />
+              <ListItemText
+                primary={`Баланс: ${user?.balance.coinsAmount.toLocaleString()}`}
+              />
             </ListItem>
           </List>
         </Grid>
@@ -121,7 +123,6 @@ const PersonalPage = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
                 <TableCell align="right">ФИО кто</TableCell>
                 <TableCell align="right">ФИО</TableCell>
                 <TableCell align="right">Сколько</TableCell>
@@ -135,9 +136,7 @@ const PersonalPage = () => {
                     key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      {row.user.FIO}
-                    </TableCell>
+                    <TableCell align="right">{row.user.FIO}</TableCell>
                     <TableCell align="right">{row.users2.FIO}</TableCell>
                     <TableCell align="right">{row.amount}</TableCell>
                     <TableCell align="right">{row.why}</TableCell>

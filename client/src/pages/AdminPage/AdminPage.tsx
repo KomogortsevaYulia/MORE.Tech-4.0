@@ -97,7 +97,9 @@ const AdminPage = () => {
             data={
               users?.map((user) => ({
                 ...user,
-                balance: +user.balance.coinsAmount,
+                balance:
+                  user.balance.coinsAmount.toLocaleString() ||
+                  "Не удалось получить данные кошелька",
                 add: (
                   <Button
                     variant="outlined"
