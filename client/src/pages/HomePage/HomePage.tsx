@@ -25,16 +25,16 @@ const Item = styled(Paper)(({ theme }) => ({
 const HomePage = () => {
   return (
     <>
-    
-          
+
+
       <div className={` ${styles.myStyle} `}>
-      <div className={`${styles.Ellipse15} `}></div>
+        <div className={`${styles.Ellipse15} `}></div>
         <div className={`${styles.Ellipse16} `}></div>
-          <div className={`${styles.Ellipse17} `}></div>
-          <div className={`${styles.Ellipse18} `}></div>
-          <div className={`${styles.Ellipse19} `}></div>
-          <div className={`${styles.Ellipse20} `}></div>
-          <div className={`${styles.Ellipse21} `}></div>
+        <div className={`${styles.Ellipse17} `}></div>
+        <div className={`${styles.Ellipse18} `}></div>
+        <div className={`${styles.Ellipse19} `}></div>
+        <div className={`${styles.Ellipse20} `}></div>
+        <div className={`${styles.Ellipse21} `}></div>
         <div className={`position-relative overflow-hidden text-center `}>
           <div className="col-md-5 p-lg-5 mx-auto my-5 ">
             <h1 className="display-4 fw-normal">Крутой проект</h1>
@@ -42,7 +42,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        
+
         <div className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}>
           <div className="col-md-6 p-lg-6 mx-auto my-6 ">
             <h2 className="display-4 fw-normal">Механика</h2>
@@ -143,9 +143,9 @@ const HomePage = () => {
         <div className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}>
           <div className="col-md-6 p-lg-6 mx-auto my-6 ">
             <h2 className="display-4 fw-normal">Предстоящие активности</h2>
-            
+
           </div>
-          </div>
+        </div>
       </div>
 
     </>

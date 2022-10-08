@@ -144,7 +144,7 @@ const TransactionsPage = () => {
             }}
           >
             <Typography variant="h3" component="h5">
-              Вывод в рублесы
+              Вывод в рубли
             </Typography>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <TextField
@@ -171,7 +171,7 @@ const TransactionsPage = () => {
                 onChange={handleRealRublesChange}
               />{" "}
               <span style={{ maxWidth: "6vw" }}>
-                Цифровых рублесов банка России
+                Цифровых рублей банка России
               </span>
             </div>
             <Button variant="outlined">Вывести</Button>
