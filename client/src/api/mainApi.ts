@@ -1,5 +1,4 @@
 import axios from "axios";
-import { number } from "echarts";
 import { BalanceFiat, BalanceNFT, BlockchainApi } from "./blockchainApi";
 
 export interface IUser {
@@ -240,27 +239,36 @@ export class MainApi {
   }
 
   static async fetchOrderForAnalytic() {
-    
     const orders = await axios
-      .get<IOrder[]>(
-        `${apiUrl}/orders?&_expand=user&_expand=product`
-      )
+      .get<IOrder[]>(`${apiUrl}/orders?&_expand=user&_expand=product`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
       });
-      
-      let res:{[key:string]:number} = {};
 
-      return orders.map((item: any) => ({
+    const productsMap: any = {};
 
-        if (res.hasOwnProperty(item.product.title)) {
-          res[item.product.title]=res[item.product.title]+item.count
-        }
-        else{
-          res[item.product.title]=item.count
-        }
-      }));
+    orders.forEach((order: any) => {
+      if (productsMap[order.product.title]) {
+        productsMap[order.product.title] += order.count;
+      } else {
+        productsMap[order.product.title] = order.count;
+      }
+    });
+
+    return productsMap;
+
+    // let res:{[key:string]:number} = {};
+
+    // return orders.map((item: any) => ({
+
+    //   if (res.hasOwnProperty(item.product.title)) {
+    //     res[item.product.title]=res[item.product.title]+item.count
+    //   }
+    //   else{
+    //     res[item.product.title]=item.count
+    //   }
+    // }));
   }
 }

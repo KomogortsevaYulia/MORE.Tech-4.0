@@ -1,7 +1,10 @@
 import React from "react";
-import ReactECharts from 'echarts-for-react';
+import ReactECharts from "echarts-for-react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchOrderForAnalytic, fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
+import {
+  fetchOrderForAnalytic,
+  fetchOrderWithUser,
+} from "../../store/orderSlice/orderSlice";
 import { Grid } from "antd";
 import echarts from "echarts/types/dist/echarts";
 
@@ -12,42 +15,40 @@ const AnalyticPage = () => {
     dispatch(fetchOrderForAnalytic());
   }, []);
 
-  const { order } = useAppSelector((state) => state.orders);
-
+  const { orderAnalytics } = useAppSelector((state) => state.orders);
 
   const options = {
     title: {
-      text: 'Соотношение купленных товаров',
-      left: 'center'
+      text: "Соотношение купленных товаров",
+      left: "center",
     },
     tooltip: {
-      trigger: 'item'
+      trigger: "item",
     },
     legend: {
-      orient: 'vertical',
-      left: 'left'
+      orient: "vertical",
+      left: "left",
     },
     series: [
       {
-        name: 'Access From',
-        type: 'pie',
-        radius: '50%',
-        data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
-        ],
+        name: "Access From",
+        type: "pie",
+        radius: "50%",
+        data: orderAnalytics
+          ? Object.entries(orderAnalytics).map(([key, value]) => ({
+              name: key,
+              value,
+            }))
+          : [],
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
             shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
-        }
-      }
-    ]
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
+        },
+      },
+    ],
   };
 
   // const option2 = {
@@ -233,14 +234,13 @@ const AnalyticPage = () => {
   //   ]
   // };
 
-  return (<div>
-    
-        <ReactECharts option={options} />
-      
-        {/* <ReactECharts option={option2} /> */}
-      
-  </div>)
-    ;
+  return (
+    <div>
+      <ReactECharts option={options} />
+
+      {/* <ReactECharts option={option2} /> */}
+    </div>
+  );
 };
 
 export default AnalyticPage;

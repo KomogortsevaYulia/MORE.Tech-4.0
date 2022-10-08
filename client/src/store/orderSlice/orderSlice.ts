@@ -7,12 +7,14 @@ export interface OrderState {
   order: IOrder[] | null;
   fethcOrderStatus: LoadingStatus | null;
   fetchOrderError: string | null;
+  orderAnalytics: any;
 }
 
 const initialState: OrderState = {
   order: null,
   fethcOrderStatus: null,
   fetchOrderError: null,
+  orderAnalytics: null,
 };
 
 export const fetchOrderWithUser = createAsyncThunk(
@@ -47,8 +49,8 @@ export const orderSlice = createSlice({
       })
       .addCase(fetchOrderForAnalytic.fulfilled, (state, action) => {
         state.fethcOrderStatus = "success";
-        state.order = action.payload;
-      })
+        state.orderAnalytics = action.payload;
+      });
   },
 });
 
