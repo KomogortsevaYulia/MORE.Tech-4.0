@@ -25,7 +25,7 @@ const ActivitiesPage = () => {
 
   React.useEffect(() => {
     dispatch(fetchActivities());
-  }, []);
+  }, [dispatch]);
 
   const [value11, setValue11] = React.useState<Date | null>(null);
   const [value2, setValue2] = React.useState<Date | null>(null);
