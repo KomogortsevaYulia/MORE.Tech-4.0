@@ -107,23 +107,30 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           {open ? (
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
+            <Tooltip title="Свернуть меню" placement="right" TransitionComponent={Zoom}>
+
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </Tooltip>
+
           ) : (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              style={{ width: "100%" }}
-            >
-              <MenuIcon />
-            </IconButton>
+            <Tooltip title="Раскрыть меню" placement="right" TransitionComponent={Zoom}>
+
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                style={{ width: "100%" }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </DrawerHeader>
         <div
