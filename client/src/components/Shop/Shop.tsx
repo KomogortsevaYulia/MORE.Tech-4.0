@@ -41,6 +41,7 @@ export default function Shop() {
 				el.priceRuble <= query[1]  
 			})
 		)
+		console.log(filteredProducts)
 	}
 
 	const [priceMin, setPriceMin] = React.useState(0);
@@ -55,9 +56,6 @@ export default function Shop() {
 		filterProducts([priceMin,priceMax])
 	};
 
-	
-
-    
 
   return (
     <div className="container-fluid">
@@ -74,8 +72,9 @@ export default function Shop() {
 							<label className="form-label">Price</label>
 
 							<div className="input-group">
+								<span className="input-group-text">c</span>
 								<input id="minPrice" type="number" className="form-control" placeholder="Min." value={priceMin} onChange={handleChangePriceMin}></input>
-								<span className="input-group-text">to</span>
+								<span className="input-group-text">по</span>
 								<input id="maxPrice" type="number" className="form-control" placeholder="Max." value={priceMax} onChange={handleChangePriceMax}></input>
 							</div>
 						</div>
