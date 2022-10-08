@@ -14,6 +14,7 @@ const PageWrapper: React.FC<IPageWrapperProps> = ({ children }) => {
         height: "100vh",
         alignItems: "center",
         gap: "16px",
+
       }}
     >
       {children}
