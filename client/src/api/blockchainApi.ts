@@ -72,7 +72,8 @@ export class BlockchainApi {
         return response;
       })
       .catch(function (error: any) {
-        return error;
+        console.log(error);
+        throw error;
       });
   }
 

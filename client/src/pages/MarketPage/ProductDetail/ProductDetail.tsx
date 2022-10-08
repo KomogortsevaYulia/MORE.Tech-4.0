@@ -3,7 +3,6 @@ import React from "react";
 import { IProduct, IProductWithCustomer, IUser } from "../../../api/mainApi";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { transferRubles } from "../../../store/adminSlice/adminSlice";
 import { addToCart } from "../../../store/marketSlice/marketSlice";
 
 interface IProductDetail {

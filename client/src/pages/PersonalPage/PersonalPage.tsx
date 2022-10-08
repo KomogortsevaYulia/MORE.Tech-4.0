@@ -15,12 +15,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import styles from './PersonalPage.module.css'
+import styles from "./PersonalPage.module.css";
 import {
   fetchActivities,
   fetchActivitiesWithUser,
 } from "../../store/ActivitiesSlice/activitiesSlice";
-import { Accordion, AccordionSummary, AccordionDetails, Stack, Chip, Button } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Stack,
+  Chip,
+  Button,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 
@@ -59,7 +66,7 @@ function a11yProps(index: number) {
 
 const PersonalPage = () => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
-  React.useEffect(() => { }, [user]);
+  React.useEffect(() => {}, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -96,10 +103,18 @@ const PersonalPage = () => {
           {/* <Typography variant="h4" gutterBottom>
             Статус
           </Typography> */}
-          <Stack direction="row" spacing={1} >
-            <Chip label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`} variant="outlined" sx={{background: user?.balance.coinsAmount!='0' ? 'var(--purple)': 'var(--red)' ,}} />
-          </Stack> 
-              
+          <Stack direction="row" spacing={1}>
+            <Chip
+              label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`}
+              variant="outlined"
+              sx={{
+                background:
+                  user?.balance.coinsAmount != "0"
+                    ? "var(--purple)"
+                    : "var(--red)",
+              }}
+            />
+          </Stack>
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -126,7 +141,7 @@ const PersonalPage = () => {
                 >
                   <Typography> {row.activities.title}</Typography>
                   <Typography sx={{ color: "text.secondary" }}>
-                    {row.activities.dateStart}                  
+                    {row.activities.dateStart}
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -158,9 +173,7 @@ const PersonalPage = () => {
 
                     <TableCell align="left">{row.count}</TableCell>
                     <TableCell align="left">{row.sum}</TableCell>
-                    <TableCell align="left">
-                      {row.date.split("T")[0]}
-                    </TableCell>
+                    <TableCell align="left">{row.date.split("T")[0]}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -172,8 +185,8 @@ const PersonalPage = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">ФИО кто</TableCell>
-                <TableCell align="left">ФИО</TableCell>
+                <TableCell align="left">Кто</TableCell>
+                <TableCell align="left">Кому</TableCell>
                 <TableCell align="left">Сколько</TableCell>
                 <TableCell align="left">Дата</TableCell>
                 <TableCell align="left">Причина</TableCell>
@@ -189,9 +202,7 @@ const PersonalPage = () => {
                     <TableCell align="left">{row.user.FIO}</TableCell>
                     <TableCell align="left">{row.users2.FIO}</TableCell>
                     <TableCell align="left">{row.amount}</TableCell>
-                    <TableCell align="left">
-                      {row.date.split("T")[0]}
-                    </TableCell>
+                    <TableCell align="left">{row.date.split("T")[0]}</TableCell>
                     <TableCell align="left">{row.why}</TableCell>
                   </TableRow>
                 ))}

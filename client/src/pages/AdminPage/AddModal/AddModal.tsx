@@ -14,7 +14,7 @@ import React from "react";
 import { IUser } from "../../../api/mainApi";
 import FileUpload from "../../../components/FileUpload/FileUpload";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { transferRubles } from "../../../store/adminSlice/adminSlice";
+import { transferRubles } from "../../../store/transactionsSlice/transactionsSlice";
 
 interface IAddModal {
   open: boolean;
@@ -65,6 +65,7 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, currentUser }) => {
           fromPrivateKey: user!.privateKey,
           userId: user!.id,
           toId: currentUser!.id,
+          why: "Начисление от администратора",
         })
       );
     } else {

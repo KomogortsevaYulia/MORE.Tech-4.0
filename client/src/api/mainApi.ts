@@ -271,5 +271,23 @@ export class MainApi {
     return productsMap;
   }
 
-  
+  static async fetchActivitiesWithUsers() {
+    const usersActivities = await axios
+      .get<Array<any>>(
+        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
+      )
+      .then((response) => response.data);
+
+    const activitiesWithUsers = {} as any;
+
+    usersActivities.forEach((userActivity) => {
+      if (activitiesWithUsers[userActivity.activitiesId]) {
+        activitiesWithUsers[userActivity.activitiesId].push(userActivity);
+      } else {
+        activitiesWithUsers[userActivity.activitiesId] = [userActivity];
+      }
+    });
+
+    return activitiesWithUsers;
+  }
 }

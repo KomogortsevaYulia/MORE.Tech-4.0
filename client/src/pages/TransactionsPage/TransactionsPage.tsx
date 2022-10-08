@@ -3,7 +3,10 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchTransactions } from "../../store/transactionsSlice/transactionsSlice";
+import {
+  fetchTransactions,
+  transferRubles,
+} from "../../store/transactionsSlice/transactionsSlice";
 import {
   Table,
   TableBody,
@@ -21,6 +24,8 @@ import {
   SelectChangeEvent,
   InputLabel,
   FormControl,
+  Stack,
+  Chip,
 } from "@mui/material";
 import { fetchUsers } from "../../store/adminSlice/adminSlice";
 
@@ -58,10 +63,40 @@ const TransactionsPage = () => {
     setRublesAmount(rublesRequired);
   };
 
-  const [age, setAge] = React.useState("");
+  const [person, setPerson] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setPerson(event.target.value as string);
+  };
+
+  const [rublesToTransfer, setRublesToTransfer] = React.useState<
+    string | number
+  >("");
+  const handleRublesToTransferChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = +event.target.value;
+    if (value > +user!.balance.coinsAmount) return;
+    setRublesToTransfer(value);
+  };
+
+  const [reason, setReason] = React.useState<string>("");
+  const handleReasonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setReason(value);
+  };
+
+  const handleTransfer = () => {
+    dispatch(
+      transferRubles({
+        amount: +rublesToTransfer,
+        userId: user!.id,
+        toId: users!.find((user) => user.publicKey === person)!.id,
+        fromPrivateKey: user!.privateKey,
+        toPublicKey: person,
+        why: reason || "По доброте душевной",
+      })
+    );
   };
 
   return (
@@ -76,9 +111,18 @@ const TransactionsPage = () => {
           }}
         >
           <div style={{ maxWidth: "12vw" }}>
-            <Typography variant="h6" component="h6">
-              Мой баланс: {user!.balance.coinsAmount.toLocaleString()}
-            </Typography>
+            <Stack direction="row" spacing={1}>
+              <Chip
+                label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`}
+                variant="outlined"
+                sx={{
+                  background:
+                    user?.balance.coinsAmount != "0"
+                      ? "var(--purple)"
+                      : "var(--red)",
+                }}
+              />
+            </Stack>
             <Typography variant="h6" component="h6">
               Текущий курс: {currentCourse} Digital Rubles = 1 Цифровой рублес
             </Typography>
@@ -148,7 +192,7 @@ const TransactionsPage = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
+                value={person}
                 label="Кому"
                 onChange={handleChange}
               >
@@ -171,12 +215,28 @@ const TransactionsPage = () => {
                 variant="outlined"
                 label="Количество"
                 type="number"
-                value={realRublesAmount.toString()}
-                onChange={handleRealRublesChange}
+                value={rublesToTransfer.toString()}
+                onChange={handleRublesToTransferChange}
               />{" "}
               <span style={{ maxWidth: "6vw" }}>Digital Rubles</span>
             </div>
-            <Button variant="outlined">Перевести</Button>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <TextField
+                variant="outlined"
+                label="Сообщение"
+                value={reason}
+                onChange={handleReasonChange}
+              />{" "}
+            </div>
+            <Button variant="outlined" onClick={handleTransfer}>
+              Перевести
+            </Button>
           </Box>
         </div>
       </Box>
