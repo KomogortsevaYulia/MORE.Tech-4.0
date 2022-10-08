@@ -175,14 +175,16 @@ const ActivitiesPage = () => {
           </Stack>
         </div>
       </header>
+
       <div className={styles.content}>
-        <div>
+        <div className="card card-body">
           <div className={styles.activities}>
             {Activities && Activities?.map((row) => <ActivityItem row={row} />)}
           </div>
         </div>
       </div>
     </div>
+    
   );
 };
 

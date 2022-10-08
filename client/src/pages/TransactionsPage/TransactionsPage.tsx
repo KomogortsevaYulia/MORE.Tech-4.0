@@ -125,7 +125,7 @@ const TransactionsPage = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "24px" }}>
+      <Box className="card card-body" sx={{ display: "flex", justifyContent: "flex-start", gap: "12px" }}>
         <Box
           sx={{
             display: "flex",
