@@ -20,7 +20,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../../store/userSlice/userSlice";
 
 import styles from "./Navbar.module.css";
+import { Tooltip } from "@mui/material";
 
+import Zoom from '@mui/material/Zoom';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -154,15 +156,18 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                         px: 2.5,
                       }}
                     >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {icon ? icon : <MailIcon />}
-                      </ListItemIcon>
+                      <Tooltip title={name} placement="right" disableHoverListener={open} TransitionComponent={Zoom}>
+
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 0,
+                            mr: open ? 3 : "auto",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {icon ? icon : <MailIcon />}
+                        </ListItemIcon>
+                      </Tooltip>
                       <ListItemText
                         primary={name}
                         sx={{ opacity: open ? 1 : 0 }}
