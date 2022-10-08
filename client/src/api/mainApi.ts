@@ -30,6 +30,16 @@ export interface IProduct {
   title: string;
 }
 
+export interface IProductWithCustomer {
+  id: number;
+  priceRuble: number;
+  count: number;
+  image: string;
+  description: string;
+  title: string;
+  user: IUser;
+}
+
 export interface IActivities {
   id: number;
   typeId: number;

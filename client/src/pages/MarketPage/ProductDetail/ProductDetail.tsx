@@ -1,35 +1,40 @@
-import {
-  Box,
-  Modal,
-  Button,
-} from "@mui/material";
+import { Box, Modal, Button } from "@mui/material";
 import React from "react";
-import { IProduct, IUser } from "../../../api/mainApi";
-import CloseIcon from '@mui/icons-material/Close';
+import { IProduct, IProductWithCustomer, IUser } from "../../../api/mainApi";
+import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { transferRubles } from "../../../store/adminSlice/adminSlice";
+import { addToCart } from "../../../store/marketSlice/marketSlice";
 
 interface IProductDetail {
   open: boolean;
   handleClose: () => void;
-  shopItem: IProduct | null;
+  shopItem: IProduct;
 }
 
 const style = {
-	position: "absolute" as "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 };
 
-const ProductDetail: React.FC<IProductDetail> = ({ open, handleClose, shopItem }) => {
+const ProductDetail: React.FC<IProductDetail> = ({
+  open,
+  handleClose,
+  shopItem,
+}) => {
   const dispatch = useAppDispatch();
 
   const { products } = useAppSelector((state) => state.market);
+  const { user } = useAppSelector((state) => state.user);
 
   const [transferType, setTransferType] = React.useState("rubles");
 
+  const addClick = () => {
+    const product = { ...shopItem, user: { ...user } } as IProductWithCustomer;
+    dispatch(addToCart(product));
+  };
 
   const makeTransfer = () => {
     if (transferType === "rubles") {
@@ -56,48 +61,64 @@ const ProductDetail: React.FC<IProductDetail> = ({ open, handleClose, shopItem }
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-			<div className="modal-dialog modal-lg">
-				<div className="modal-content">
-					<div className="modal-header no-border">
-						<i>
-							<CloseIcon onClick={makeTransfer}/>
-						</i>
-					</div>
-					<div className="card no-shadow">
-						<div className="card-body p-t-0">
-							<div className="row">
-								<div className="col-sm-6">
-									<div className="text-center">
-										<figure>
-											<img className="w-100 rounded float-left" src={shopItem?.image} alt=""></img>
-										</figure>
-									</div>
-								</div>
-								<div className="col-sm-6">
-									<h2 className="card-title font-size-30">{shopItem?.title}</h2>
-								
-									<p className="card-text font-size-18">₽{shopItem?.priceRuble}</p>
-									<p className="card-text p-20 bg-light overflow-auto" style={{height: "10rem"}}> {shopItem?.description} </p>
-									<div className="form-group m-t-20">
-										<button type="button" className="btn btn-primary btn-rounded btn-lg w-250 m-b-20">
-											<span>Add to Cart</span> 
-											<i className="icon dripicons-cart text-white"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header no-border">
+              <i>
+                <CloseIcon onClick={makeTransfer} />
+              </i>
+            </div>
+            <div className="card no-shadow">
+              <div className="card-body p-t-0">
+                <div className="row">
+                  <div className="col-sm-6">
+                    <div className="text-center">
+                      <figure>
+                        <img
+                          className="w-100 rounded float-left"
+                          src={shopItem?.image}
+                          alt=""
+                        ></img>
+                      </figure>
+                    </div>
+                  </div>
+                  <div className="col-sm-6">
+                    <h2 className="card-title font-size-30">
+                      {shopItem?.title}
+                    </h2>
+
+                    <p className="card-text font-size-18">
+                      ₽{shopItem?.priceRuble}
+                    </p>
+                    <p
+                      className="card-text p-20 bg-light overflow-auto"
+                      style={{ height: "10rem" }}
+                    >
+                      {" "}
+                      {shopItem?.description}{" "}
+                    </p>
+                    <div className="form-group m-t-20">
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-rounded btn-lg w-250 m-b-20"
+                        onClick={addClick}
+                      >
+                        <span>Add to Cart</span>
+                        <i className="icon dripicons-cart text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Box>
     </Modal>
   );
 };
 
 export default ProductDetail;
-
-
 
 // {/* <div className="modal-dialog modal-dialog modal-lg modal-dialog-centered" role="document">
 //           <div className="modal-content">
@@ -143,5 +164,5 @@ export default ProductDetail;
 // 								<button type="button" className="btn-close btn btn-transprant"></button>
 // 								</div>
 // 								</div>
-								
+
 // 								style="padding-right: 17px; display: block;"*/}
