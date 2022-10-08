@@ -5,7 +5,7 @@ import transferRubleSlice from "./transferRubleSlice/transferRubleSlice";
 import adminSlice from "./adminSlice/adminSlice";
 import activitiesSlice from "./ActivitiesSlice/activitiesSlice";
 import transactionsSlice from "./transactionsSlice/transactionsSlice";
-
+import ordersSlice from "./orderSlice/orderSlice";
 export const store = configureStore({
   reducer: {
     market: marketSlice,
@@ -14,6 +14,7 @@ export const store = configureStore({
     admin: adminSlice,
     activities: activitiesSlice,
     transactions: transactionsSlice,
+    orders: ordersSlice,
   },
 });
 

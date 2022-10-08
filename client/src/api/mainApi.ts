@@ -72,6 +72,9 @@ export interface IOrder {
   id: number;
   userId: IUser;
   productId: IProduct;
+  count:number;
+  sum:number;
+  date:string;
 }
 
 export interface ICreateTransaction {

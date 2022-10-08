@@ -197,13 +197,17 @@
       "id": 1,
       "userId": 2,
       "productId": 1,
-      "count": 1
+      "count": 1,
+      "sum": 10,
+      "date": "2022-10-08T02:35:42.510Z"
     },
     {
       "id": 1,
       "userId": 2,
       "productId": 2,
-      "count": 1
+      "count": 1,
+      "sum": 3,
+      "date": "2022-10-08T02:35:42.510Z"
     }
   ]
 }
