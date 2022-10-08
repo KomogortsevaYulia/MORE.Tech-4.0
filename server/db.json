@@ -124,6 +124,15 @@
       "toId": 4,
       "why": "Начисление от администратора",
       "id": 4
+    },
+    {
+      "amount": 335,
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "userId": 1,
+      "toId": 3,
+      "why": "Начисление от администратора",
+      "id": 5
     }
   ],
   "products": [

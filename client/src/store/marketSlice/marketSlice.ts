@@ -36,7 +36,7 @@ export const marketSlice = createSlice({
         state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state) => {
-        state.fetchProductsError = "failed";
+        state.fetchProductsStatus = "failed";
       });
   },
 });

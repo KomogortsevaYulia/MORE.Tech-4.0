@@ -60,10 +60,11 @@ export interface ITransferRubleWithUsers {
 
 export interface IActivityRecords {
   id: number;
-  userId: IUser;
-  activitiesId: IActivities;
+  userId: number;
+  activitiesId: number;
+  user: IUser;
+  activities: IActivities;
 }
-
 
 export interface ICreateTransaction {
   userId: number;
@@ -180,11 +181,32 @@ export class MainApi {
 
   static async fetchActivitiesWithUser(id: number) {
     return axios
-      .get<IActivityRecords[]>(`${apiUrl}/activity_records?userId=${id}&_expand=user&_expand=activities`)
+      .get<IActivityRecords[]>(
+        `${apiUrl}/activity_records?userId=${id}&_expand=user&_expand=activities`
+      )
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
         return err;
       });
+  }
+  static async fetchAllTransactions() {
+    const transactions = axios
+      .get<ITransferRuble[]>(`${apiUrl}/transferRuble`)
+      .then((response) => response.data);
+    const users = axios
+      .get<IUser[]>(`${apiUrl}/users`)
+      .then((response) => response.data);
+
+    return Promise.all([transactions, users]).then(([tData, uData]) => {
+      return tData.map(
+        (t) =>
+          ({
+            ...t,
+            user: uData.find((u) => u.id === t.userId),
+            users2: uData.find((u) => u.id === t.toId),
+          } as ITransferRubleWithUsers)
+      );
+    });
   }
 }
