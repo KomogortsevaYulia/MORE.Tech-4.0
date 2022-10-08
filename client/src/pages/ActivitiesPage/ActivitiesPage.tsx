@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
@@ -15,13 +15,16 @@ import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import styles from './ActivitiesPage.module.css'
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
 import { Divider, Paper } from "@mui/material";
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+
 
 import Button from '@mui/material/Button';
+import styles from './ActivitiesPage.module.css'
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -59,8 +62,78 @@ const ActivitiesPage = () => {
 
   const [value11, setValue11] = React.useState<Date | null>(null);
   const [value2, setValue2] = React.useState<Date | null>(null);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [addStartDate, setAddStartDate] = React.useState<Date | null>(null);
+  const [addEndDate, setAddEndDate] = React.useState<Date | null>(null);
+
+  const handleAddActivity = useCallback(() => {
+
+  }, [])
   return <div>
-    <div>
+    <header className={styles.filters}>
+      <Button variant="contained" onClick={handleOpen}>Создать активность</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute' as 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          borderRadius: 5,
+          boxShadow: 24,
+          p: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Добавление активности
+          </Typography>
+          <TextField label="Название активности" variant="outlined" />
+          <TextField label="Описание активности" variant="outlined" />
+
+          <Typography sx={{ color: 'text.secondary' }}>Даты начала</Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Даты начала"
+              value={addStartDate}
+              onChange={(newValue) => {
+                setAddStartDate(newValue);
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+
+
+          </LocalizationProvider>
+
+          <Typography sx={{ color: 'text.secondary' }}>Даты окончания</Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Даты окончания"
+              value={addEndDate}
+              onChange={(newValue) => {
+                setAddEndDate(newValue);
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+
+
+          </LocalizationProvider>
+          <Button onClick={handleAddActivity} variant="contained">Добавить</Button>
+          <Button onClick={handleClose}>Отмена</Button>
+
+        </Box>
+      </Modal>
       <Stack spacing={2} direction="row">
         <div className={styles.filtersItem}>
           <Typography sx={{ color: 'text.secondary' }}>Название</Typography>
@@ -112,7 +185,7 @@ const ActivitiesPage = () => {
 
       </Stack>
 
-    </div>
+    </header>
     <div className={styles.content}>
 
       <div>
@@ -141,7 +214,7 @@ const ActivitiesPage = () => {
                   <div className={styles.header}>
                     <div className={styles.meta}>
                       <Typography>{row.title}</Typography>
-                      <Typography sx={{ color: 'text.secondary' }}>c {row.date} до {row.date}</Typography>
+                      <Typography sx={{ color: 'text.secondary' }}>c {row.dateStart} до {row.dateEnd}</Typography>
                     </div>
 
                   </div>

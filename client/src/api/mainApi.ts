@@ -35,7 +35,8 @@ export interface IActivities {
   typeId: number;
   title: string;
   description: string;
-  date: string;
+  dateStart: string;
+  dateEnd: string;
 }
 
 export interface ITransferRuble {
