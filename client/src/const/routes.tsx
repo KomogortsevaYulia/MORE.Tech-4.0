@@ -8,6 +8,7 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 
 export const ROUTES = {
   login: {
@@ -56,7 +57,7 @@ export const ROUTES = {
     name: "Колесо фортуны",
     url: "/wheel",
     roleId: 0,
-    icon: <AccessibleForwardIcon />,
+    icon: <WhatshotIcon />,
   },
   admin: {
     name: "Админ панель",

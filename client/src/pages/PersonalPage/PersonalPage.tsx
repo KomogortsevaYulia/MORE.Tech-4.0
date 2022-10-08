@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-
+import styles from "./PersonalPage.module.css";
 import Grid from "@mui/material/Grid";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -82,33 +82,33 @@ const PersonalPage = () => {
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={2}>
-          <Avatar
-            alt="ФИО"
-            src={user!.image}
-            sx={{ width: "100%", height: "100%", border: "1px solid black" }}
-          />
-        </Grid>
-        <Grid item xs={10}>
-          <Typography variant="h3" gutterBottom>
-            {user?.FIO}
-          </Typography>
-          {/* <Typography variant="h4" gutterBottom>
-            Статус
-          </Typography> */}
-          <Stack direction="row" spacing={1}>
-            <Chip
-              label={`${user?.balance.coinsAmount.toLocaleString()} Digital Ruble`}
-              variant="outlined"
-              sx={{
-                background:
-                  user?.balance.coinsAmount !== "0"
-                    ? "var(--purple)"
-                    : "var(--red)",
-              }}
+
+        <div className="w-100 d-flex flex-row  justify-content-between">
+          <div className=" p-2 m-2 d-flex flex-row align-items-center">
+            <Avatar
+              alt="ФИО"
+              src={user!.image}
+              sx={{ width: "10rem", height: "10rem", border: "1px solid black" }}
             />
-          </Stack>
-        </Grid>
+            <Typography className=" ps-4 " variant="h3" gutterBottom>
+              {user?.FIO}
+            </Typography>
+          </div>
+            <div style={{ maxWidth: "12vw" }} className="p-2 m-2">
+              <div className="row d-flex justify-content-center p-2 m-2">
+                <div className={`${styles.coin} `}>
+                  <div className={`${styles.side} ${styles.head}`}>DR</div>
+                  <div className={`${styles.side} ${styles.tail}`}>DR</div>
+                  <div className={`${styles.edge}`}></div>
+                </div>
+              </div>
+              <div className=" text-center">
+                <h2 className="fw-normal">{user?.balance.coinsAmount.toLocaleString()}</h2>
+              </div>
+            </div>
+          
+        </div>
+
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
@@ -193,7 +193,7 @@ const PersonalPage = () => {
             nftCollections.balance.map((nft) => <NftCard nft={nft} />)}
         </Grid>
       </TabPanel>
-    </div>
+    </div >
   );
 };
 

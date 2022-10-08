@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { Alert, Avatar, Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Alert, Avatar, AvatarGroup, Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
 import { fetchProducts } from "../../store/marketSlice/marketSlice";
+import { IProduct } from "../../api/mainApi";
+
 
 const WheelPage = () => {
 
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.market);
   const [data, setData] = React.useState<{ option: string }[]>([{ option: 'loading' }])
-  console.log(data)
+  
   React.useEffect(() => {
     if (products) {
       setData(products.map((p, index) => ({ option: `${index + 1} ${p.title}` })))
@@ -26,7 +28,7 @@ const WheelPage = () => {
 
   const handleSpinClick = () => {
     const newPrizeIndex = Math.floor(Math.random() * data.length)
-    console.log(newPrizeIndex)
+
     setPrizeIndex(newPrizeIndex)
     setMustSpin(true)
   }
@@ -35,8 +37,10 @@ const WheelPage = () => {
   return <div>
     <h1 >Колесо фортуны</h1>
     <hr />
-    <Grid container spacing={3}>
-      <Grid item xs={4}>
+
+    <div className="row">
+      <div className="col-5">
+      <div className="row p-1">
         <Wheel
           mustStartSpinning={mustSpin}
           prizeNumber={prizeIndex}
@@ -58,41 +62,50 @@ const WheelPage = () => {
           onStopSpinning={() => {
             setMustSpin(false);
           }}
-        />
-        <Button variant="outlined" onClick={handleSpinClick}>
-          SPIN
-        </Button >
-      </Grid>
-      <Grid item xs={8}>
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          <nav aria-label="main mailbox folders">
-            <List>
-              {products &&
-                products?.map((row, index) => (
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <Typography variant="h5" gutterBottom>
-                        {index + 1}
-                      </Typography>
-                      <ListItemIcon>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                      </ListItemIcon>
-                      <ListItemText primary={row.title} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+        /></div>
+        <div className="row p-1">
+          <Button variant="contained" onClick={handleSpinClick}>
+            Крутить
+          </Button >
+        </div>
+        <div className="row p-1">
+          {!mustSpin ? <Alert variant="filled" severity="success">Вы получили приз - {data[prizeIndex].option} !</Alert> :
+            <Alert variant="filled" severity="warning">1 раз = 20 Digital Rouble <br/> Крутите колесо фортуны!</Alert>}
+        </div>
+      </div>
+      <div className="col-4">
+        <List
+          sx={{
+            width: '100%',
+            maxWidth: 360,
+            bgcolor: 'background.paper',
+            position: 'relative',
+            overflow: 'auto',
+            maxHeight: 550,
+            '& ul': { padding: 0 },
+          }}
+          subheader={<li />}
+        >
+          <li >
 
+            {products &&
+              products?.map((row: IProduct, index) => (
+                <ListItem >
+                  <ListItemText primary={`${index + 1}`} />
+                  <Avatar
+                    alt={row.title}
+                    src={row.image}
+                  />
+                  <ListItemText primary={`${row.title}`} />
+                </ListItem>
+              ))}
 
-            </List>
-          </nav>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        {!mustSpin ? <Alert severity="success">Вы получили приз - {data[prizeIndex].option} !</Alert> :
-          <Alert severity="info">Крутите колесо фортуны!</Alert>}
-      </Grid>
-    </Grid>
-  </div>;
+          </li>
+        </List>
+      </div>
+    </div>
+
+  </div >;
 };
 
 export default WheelPage;

@@ -3,3 +3,109 @@
     flex-direction: column;
     gap: 5px;
   }
+
+  .nftImage {
+    width: 256px;
+    height: 256px;
+  }
+  
+    
+  .geoArrow {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+  }
+  
+  .coin {
+    --diameter: 100px;
+    --thickness: 20px;
+    --scale: 0.75;
+    --period: 5s;
+    --gradient: linear-gradient(gold 0%, yellow 50%, gold 100%);
+  
+    transform-style: preserve-3d;
+    width: var(--diameter);
+    height: var(--diameter);
+    animation: spin var(--period) linear infinite;
+  }
+  
+  .side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: gold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: yellow;
+    font-size: calc(var(--diameter) * 0.6);
+    font-weight: bold;
+  }
+  
+  .head {
+    transform: translateZ(calc(var(--thickness) / 2));
+    animation: flip-head var(--period) linear infinite;
+  }
+  
+  .tail {
+    transform: translateZ(calc(0px - var(--thickness) / 2)) rotateY(180deg);
+    animation: flip-tail var(--period) linear infinite;
+  }
+  
+  .edge {
+    position: absolute;
+    width: var(--thickness);
+    height: 100%;
+    transform: translateX(calc(var(--diameter) / 2))
+      translateZ(calc(var(--thickness) / 2)) rotateY(90deg);
+    transform-origin: 0 0;
+    background-color: gold;
+    background-image: var(--gradient);
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotateY(0deg) scale(var(--scale));
+    }
+  
+    100% {
+      transform: rotateY(360deg) scale(var(--scale));
+    }
+  }
+  
+  @keyframes flip-tail {
+    0% {
+      background-image: var(--gradient);
+      color: transparent;
+    }
+  
+    50% {
+      background-image: none;
+      color: yellow;
+    }
+  
+    100% {
+      background-image: var(--gradient);
+      color: transparent;
+    }
+  }
+  
+  @keyframes flip-head {
+    0% {
+      background-image: none;
+      color: yellow;
+    }
+  
+    50% {
+      background-image: var(--gradient);
+      color: transparent;
+    }
+  
+    100% {
+      background-image: none;
+      color: yellow;
+    }
+  }
+  

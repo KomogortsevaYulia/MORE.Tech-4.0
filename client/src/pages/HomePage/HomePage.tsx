@@ -156,8 +156,8 @@ const HomePage = () => {
               <div className="h-100 p-1 bg-light border rounded-3 ">
                 <div className="d-flex justify-content-center">
                   <div className={`${styles.coin} `}>
-                    <div className={`${styles.side} ${styles.head}`}>1</div>
-                    <div className={`${styles.side} ${styles.tail}`}>1</div>
+                    <div className={`${styles.side} ${styles.head}`}>DR</div>
+                    <div className={`${styles.side} ${styles.tail}`}>DR</div>
                     <div className={`${styles.edge}`}></div>
                   </div>
                 </div>

@@ -144,15 +144,15 @@ const TransactionsPage = () => {
             alignItems: "flex-start",
           }}
         >
-          <div style={{ maxWidth: "12vw" }} className="col ">
-            <div className="row d-flex justify-content-center">
+          <div style={{ maxWidth: "12vw" }} className="col p-2 m-2">
+            <div className="row d-flex justify-content-center p-2 m-2">
               <div className={`${styles.coin} `}>
-                <div className={`${styles.side} ${styles.head}`}>1</div>
-                <div className={`${styles.side} ${styles.tail}`}>1</div>
+                <div className={`${styles.side} ${styles.head}`}>DR</div>
+                <div className={`${styles.side} ${styles.tail}`}>DR</div>
                 <div className={`${styles.edge}`}></div>
               </div>
             </div>
-            <div className="row d-flex justify-content-center">
+            <div className=" text-center">
               <h2 className="fw-normal">{user?.balance.coinsAmount.toLocaleString()}</h2>
             </div>
           </div>
@@ -164,57 +164,7 @@ const TransactionsPage = () => {
             width: "100%",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: "8px",
-            }}
-          >
-            <Typography variant="h3" component="h5">
-              Вывод в рубли
-            </Typography>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <TextField
-                variant="outlined"
-                label="Я отдам"
-                type="number"
-                value={rublesAmount.toString()}
-                onChange={handleRublesChange}
-              />{" "}
-              Digital Rubles
-            </div>
-            <div className="row d-flex justify-content-center">
-              <div className="col-2">
-                <ArrowDownwardIcon color="success" />
-              </div>
-              <div className="col-auto">
-                <Typography sx={{ color: "#1F9D57", fontSize: 12 }} component="p">
-                  {currentCourse} Digital Rubles = 1 Цифровой рубль
-                </Typography>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <TextField
-                variant="outlined"
-                label="Я получу"
-                type="number"
-                value={realRublesAmount.toString()}
-                onChange={handleRealRublesChange}
-              />{" "}
-              <span style={{ maxWidth: "6vw" }}>
-                Цифровых рублей банка России
-              </span>
-            </div>
-            <Button variant="outlined">Вывести</Button>
-          </div>
+          
           <Box
             style={{
               display: "flex",
@@ -223,7 +173,7 @@ const TransactionsPage = () => {
               gap: "16px",
             }}
           >
-            <Typography variant="h3" component="h5">
+            <Typography variant="h4" component="h4">
               Переводы другим
             </Typography>
             <FormControl fullWidth>
@@ -252,12 +202,12 @@ const TransactionsPage = () => {
             >
               <TextField
                 variant="outlined"
-                label="Количество"
+                label="Количество Digital Rubles"
                 type="number"
                 value={rublesToTransfer.toString()}
                 onChange={handleRublesToTransferChange}
               />{" "}
-              <span style={{ maxWidth: "6vw" }}>Digital Rubles</span>
+              
             </div>
             <div
               style={{
@@ -285,7 +235,7 @@ const TransactionsPage = () => {
               gap: "16px",
             }}
           >
-            <Typography variant="h3" component="h5">
+            <Typography variant="h4" component="h4">
               Переводы NFT
             </Typography>
             <FormControl fullWidth>
@@ -348,6 +298,54 @@ const TransactionsPage = () => {
               Отправить
             </Button>
           </Box>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "8px",
+            }}
+          >
+            <Typography variant="h4" component="h4">
+              Вывод в рубли
+            </Typography>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <TextField
+                variant="outlined"
+                label="Я отдам Digital Rubles"
+                type="number"
+                value={rublesAmount.toString()}
+                onChange={handleRublesChange}
+              />{" "}
+              
+            </div>
+            <div className="row d-flex justify-content-center">
+              <div className="col-1">
+                <ArrowDownwardIcon color="success" />
+              </div>
+              <div className="col-auto align-items-center">
+                <Typography sx={{ color: "#1F9D57", fontSize: 13 }} component="p">
+                  {currentCourse} Digital Rubles = 1 Цифровой рубль
+                </Typography>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <TextField
+                variant="outlined"
+                label="Я получу цифровых рублей"
+                type="number"
+                value={realRublesAmount.toString()}
+                onChange={handleRealRublesChange}
+              />{" "}
+            </div>
+            <Button variant="outlined">Вывести</Button>
+          </div>
         </div>
       </Box>
       <Divider sx={{ marginTop: "64px" }} />
