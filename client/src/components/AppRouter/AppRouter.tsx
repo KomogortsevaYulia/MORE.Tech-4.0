@@ -11,6 +11,7 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import MarketPage from "../../pages/MarketPage/MarketPage";
 import PersonalPage from "../../pages/PersonalPage/PersonalPage";
 import TransactionsPage from "../../pages/TransactionsPage/TransactionsPage";
+import WheelPage from "../../pages/WheelPage/WheelPage";
 import { LoadingStatuses, ROLES_IDS } from "../../types/enums";
 import Navbar from "../Navbar/Navbar";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -66,6 +67,7 @@ const AppRouter = () => {
               path={ROUTES.transactions.url}
               element={<TransactionsPage />}
             />
+            <Route path={ROUTES.wheel.url} element={<WheelPage />} />
           </Route>
         </Route>
       </Routes>

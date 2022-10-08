@@ -1,18 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../store";
-import { MainApi, IProduct } from "../../api/mainApi";
+import { MainApi, IProduct, IProductWithCustomer } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
 
 export interface MarketState {
   products: IProduct[] | null;
   fetchProductsStatus: LoadingStatus | null;
   fetchProductsError: string | null;
+  cart: IProductWithCustomer[];
 }
 
 const initialState: MarketState = {
   products: null,
   fetchProductsStatus: null,
   fetchProductsError: null,
+  cart: [],
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -25,7 +27,11 @@ export const fetchProducts = createAsyncThunk(
 export const marketSlice = createSlice({
   name: "market",
   initialState,
-  reducers: {},
+  reducers: {
+    addToCart(state, action: PayloadAction<IProductWithCustomer>) {
+      state.cart.push(action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -41,6 +47,6 @@ export const marketSlice = createSlice({
   },
 });
 
-export const {} = marketSlice.actions;
+export const { addToCart } = marketSlice.actions;
 
 export default marketSlice.reducer;
