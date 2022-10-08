@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import React from 'react'
 import { IProduct, IProductWithCustomer } from '../../../api/mainApi';
 import ProductDetail from '../ProductDetail/ProductDetail';
@@ -65,13 +64,11 @@ const ShopItem: React.FC<IShopItemProps> = ({
                 <div className="card rounded" >
                     <div className="bg-image card-img-top"
                         data-mdb-ripple-color="light">
-                        <img src={shopItem.image} className="w-100" onClick={() => openModalClick(shopItem)} />
+                        <img src={shopItem.image} alt={shopItem.title} className="w-100" onClick={() => openModalClick(shopItem)} />
 
                     </div>
                     <div className="card-inner text-center">
-                        <a onClick={() => openModalClick(shopItem)} className="text-reset">
-                            <h5 className="card-title mb-2 mt-2">{shopItem.title}</h5>
-                        </a>
+                        <h5 onClick={() => openModalClick(shopItem)} className="card-title mb-2 mt-2 text-reset">{shopItem.title}</h5>
 
                         <h6 className="mb-2 mx-auto ">{shopItem.priceRuble}₽</h6>
                     </div>

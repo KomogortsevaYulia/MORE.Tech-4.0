@@ -29,7 +29,6 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { fetchUsers } from "../../store/adminSlice/adminSlice";
-import { Bold } from "react-feather";
 
 const TransactionsPage = () => {
   const dispatch = useAppDispatch();
@@ -106,22 +105,14 @@ const TransactionsPage = () => {
       backgroundColor: "#8e47e4",
       color: "#FFFFFF",
       fontSize: 16,
-      
+
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
   }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
+
+
 
   return (
     <>
