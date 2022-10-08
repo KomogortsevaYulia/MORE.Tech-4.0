@@ -64,6 +64,11 @@ export interface IActivityRecords {
   activitiesId: IActivities;
 }
 
+export interface IOrder {
+  id: number;
+  userId: IUser;
+  productId: IProduct;
+}
 
 export interface ICreateTransaction {
   userId: number;
@@ -181,6 +186,15 @@ export class MainApi {
   static async fetchActivitiesWithUser(id: number) {
     return axios
       .get<IActivityRecords[]>(`${apiUrl}/activity_records?userId=${id}&_expand=user&_expand=activities`)
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }
+  static async fetchOrderWithUser(id: number) {
+    return axios
+      .get<IOrder[]>(`${apiUrl}/orders?userId=${id}&_expand=user&_expand=product`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
