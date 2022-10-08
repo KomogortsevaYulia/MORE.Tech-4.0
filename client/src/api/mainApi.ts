@@ -44,6 +44,7 @@ export interface ITransferRuble {
   toPublicKey: string;
   amount: number;
   why: string;
+  date: string;
 }
 
 export interface ITransferRubleWithUsers {
@@ -54,8 +55,23 @@ export interface ITransferRubleWithUsers {
   toPublicKey: string;
   amount: number;
   why: string;
+  date: string;
   user: IUser;
   users2: IUser;
+}
+
+export interface IActivityRecords {
+  id: number;
+  userId: number;
+  activitiesId: number;
+  user: IUser;
+  activities: IActivities;
+}
+
+export interface IOrder {
+  id: number;
+  userId: IUser;
+  productId: IProduct;
 }
 
 export interface ICreateTransaction {
@@ -167,7 +183,51 @@ export class MainApi {
 
   static async addTransaction(data: ICreateTransaction) {
     return axios
-      .post(`${apiUrl}/transferRuble`, data)
+      .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })
       .then((response) => response.data);
   }
+
+  static async fetchActivitiesWithUser(id: number) {
+    return axios
+      .get<IActivityRecords[]>(
+        `${apiUrl}/activity_records?userId=${id}&_expand=user&_expand=activities`
+      )
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }
+  static async fetchAllTransactions() {
+    const transactions = axios
+      .get<ITransferRuble[]>(`${apiUrl}/transferRuble`)
+      .then((response) => response.data);
+    const users = axios
+      .get<IUser[]>(`${apiUrl}/users`)
+      .then((response) => response.data);
+
+    return Promise.all([transactions, users]).then(([tData, uData]) => {
+      return tData.map(
+        (t) =>
+          ({
+            ...t,
+            user: uData.find((u) => u.id === t.userId),
+            users2: uData.find((u) => u.id === t.toId),
+          } as ITransferRubleWithUsers)
+      );
+    });
+  }
+
+  static async fetchOrderWithUser(id: number) {
+    return axios
+      .get<IOrder[]>(
+        `${apiUrl}/orders?userId=${id}&_expand=user&_expand=product`
+      )
+      .then((response) => response.data)
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  }
+  
 }
