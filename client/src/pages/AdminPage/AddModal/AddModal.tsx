@@ -19,7 +19,7 @@ import { transferRubles } from "../../../store/transactionsSlice/transactionsSli
 interface IAddModal {
   open: boolean;
   handleClose: () => void;
-  currentUser: IUser | null;
+  onAccrueClick: (amount: number) => void;
 }
 
 const style = {
@@ -36,42 +36,15 @@ const style = {
   alignItems: "center",
 };
 
-const AddModal: React.FC<IAddModal> = ({ open, handleClose, currentUser }) => {
-  const dispatch = useAppDispatch();
-
-  const { user } = useAppSelector((state) => state.user);
-
-  const [transferType, setTransferType] = React.useState("rubles");
-
-  const handleTransferTypeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTransferType((event.target as HTMLInputElement).value);
-  };
-
+const AddModal: React.FC<IAddModal> = ({
+  open,
+  handleClose,
+  onAccrueClick,
+}) => {
   const [rublesAmount, setRublesAmount] = React.useState<number | string>("");
-  const [nft, setNft] = React.useState(null);
 
   const handleRublesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRublesAmount(+event.target.value);
-  };
-
-  const makeTransfer = () => {
-    if (transferType === "rubles") {
-      dispatch(
-        transferRubles({
-          amount: +rublesAmount,
-          toPublicKey: currentUser!.publicKey,
-          fromPrivateKey: user!.privateKey,
-          userId: user!.id,
-          toId: currentUser!.id,
-          why: "Начисление от администратора",
-        })
-      );
-    } else {
-    }
-
-    handleClose();
   };
 
   return (
@@ -83,50 +56,22 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, currentUser }) => {
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h4" component="h2">
-          Начисление пользователю {currentUser?.FIO}
+          Начисление выбранным пользователям
         </Typography>
-        <FormControl>
-          <FormLabel id="demo-radio-buttons-group-label">
-            <Typography variant="h6" component="h3">
-              Что начисляем?
-            </Typography>
-          </FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="rubles"
-            name="radio-buttons-group"
-            value={transferType}
-            onChange={handleTransferTypeChange}
-            sx={{ display: "flex", flexDirection: "row" }}
-          >
-            <FormControlLabel
-              value="rubles"
-              control={<Radio />}
-              label="Digital Rubles"
-            />
-            <FormControlLabel value="nft" control={<Radio />} label="NFT" />
-          </RadioGroup>
-        </FormControl>
         <div>
-          {transferType === "rubles" ? (
-            <>
-              <Typography variant="h6" component="h3">
-                Сколько начисляем?
-              </Typography>
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                placeholder="Количество"
-                type="number"
-                value={rublesAmount.toString()}
-                onChange={handleRublesChange}
-              />
-            </>
-          ) : (
-            <FileUpload setFile={setNft} accept="image/*" />
-          )}
+          <Typography variant="h6" component="h3">
+            Сколько начисляем?
+          </Typography>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            placeholder="Количество"
+            type="number"
+            value={rublesAmount.toString()}
+            onChange={handleRublesChange}
+          />
         </div>
-        <Button variant="outlined" onClick={makeTransfer}>
+        <Button variant="outlined" onClick={() => onAccrueClick(+rublesAmount)}>
           Начислить!
         </Button>
       </Box>

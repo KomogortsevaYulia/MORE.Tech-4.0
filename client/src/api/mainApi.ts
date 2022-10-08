@@ -43,6 +43,7 @@ export interface IActivities {
   description: string;
   dateStart: string;
   dateEnd: string;
+  users: IActivityRecords[];
 }
 
 export interface ITransferRuble {
@@ -187,13 +188,23 @@ export class MainApi {
   }
 
   static async fetchActivities() {
-    return axios
+    const activities = await axios
       .get<IActivities[]>(`${apiUrl}/activities`)
-      .then((response) => response.data)
-      .catch((err) => {
-        console.log(err);
-        return err;
-      });
+      .then((response) => response.data);
+
+    const usersActivities = await axios
+      .get<IActivityRecords[]>(
+        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
+      )
+      .then((response) => response.data);
+
+    for (let activity of activities) {
+      activity.users = usersActivities.filter(
+        (userActivity) => userActivity.activitiesId === activity.id
+      );
+    }
+
+    return activities;
   }
 
   static async addTransaction(data: ICreateTransaction) {
