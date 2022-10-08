@@ -144,6 +144,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
+              style={{ width: "100%" }}
             >
               <MenuIcon />
             </IconButton>
@@ -220,7 +221,7 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                   justifyContent: "center",
                 }}
               >
-                <LogoutIcon />
+                <LogoutIcon style={{ transform: "rotateY(180deg)" }} />
               </ListItemIcon>
               <ListItemText primary="Выйти" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
