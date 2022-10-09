@@ -221,6 +221,7 @@ export class MainApi {
     }));
   }
 
+
   static async fetchActivities() {
     const activities = await axios
       .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart`)
@@ -238,24 +239,6 @@ export class MainApi {
     console.log(activities);
     return activities;
   }
-
-  // static async fetchUserInDepartments(userId: number) {
-  //   const activities = await axios
-  //     .get<IActivities[]>(`${apiUrl}/activities`)
-  //     .then((response) => response.data);
-
-  //   const usersActivities = await axios
-  //     .get<IActivityRecords[]>(`${apiUrl}/activity_records?&_expand=user&_expand=activities`)
-  //     .then((response) => response.data);
-
-  //   for (let activity of activities) {
-  //     activity.users = usersActivities.filter(
-  //       (userActivity) => userActivity.activitiesId === activity.id,
-  //     );
-  //   }
-
-  //   return activities;
-  // }
 
   static async fetchActivitiesForHome() {
     const activities = await axios
@@ -277,6 +260,12 @@ export class MainApi {
   static async addTransaction(data: ICreateTransaction) {
     return axios
       .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })
+      .then((response) => response.data);
+  }
+
+  static async patchCompletedActivities(id: number) {
+    return axios
+      .patch(`${apiUrl}/activities/${id}`, { "completed": true })
       .then((response) => response.data);
   }
 

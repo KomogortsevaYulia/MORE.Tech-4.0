@@ -93,7 +93,7 @@
       "dateEnd": "2022-13-10",
       "rewardValue": 55,
       "rewardType": 1,
-      "completed": false
+      "completed": true
     },
     {
       "id": 2,
@@ -104,7 +104,7 @@
       "dateEnd": "2022-15-08",
       "rewardValue": "https://games.mail.ru/hotbox/content_files/news/2022/01/26/d1c28756c16646898f81153f35c9d686.jpg",
       "rewardType": 2,
-      "completed": false
+      "completed": true
     },
     {
       "id": 3,
@@ -115,7 +115,7 @@
       "dateEnd": "2022-12-07",
       "rewardValue": 10,
       "rewardType": 1,
-      "completed": false
+      "completed": true
     },
     {
       "id": 4,
@@ -126,7 +126,7 @@
       "dateEnd": "2022-19-07",
       "rewardValue": 40,
       "rewardType": 1,
-      "completed": false
+      "completed": true
     },
     {
       "id": 6,
@@ -159,7 +159,7 @@
       "dateEnd": "2022-29-10",
       "rewardValue": 15,
       "rewardType": 1,
-      "completed": false
+      "completed": true
     },
     {
       "id": 9,
@@ -221,7 +221,7 @@
       "dateEnd": "2022-16-12",
       "rewardValue": 150,
       "rewardType": 1,
-      "completed": false
+      "completed": true
     },
     {
       "dateEnd": "2022-10-08",
@@ -679,6 +679,56 @@
       "why": "Начисление от Руководителя отдела",
       "date": "2022-10-09T05:06:16.846Z",
       "id": 41
+    },
+    {
+      "amount": 40,
+      "userId": 2,
+      "toId": 3,
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "why": "За обучение Обучение медитации",
+      "date": "2022-10-09T05:28:42.952Z",
+      "id": 42
+    },
+    {
+      "amount": 10,
+      "userId": 2,
+      "toId": 3,
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "why": "За обучение Обучение таймменеджменту",
+      "date": "2022-10-09T05:29:16.194Z",
+      "id": 43
+    },
+    {
+      "amount": 10,
+      "userId": 2,
+      "toId": 4,
+      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
+      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "why": "За обучение Обучение таймменеджменту",
+      "date": "2022-10-09T05:29:16.192Z",
+      "id": 44
+    },
+    {
+      "amount": 55,
+      "userId": 1,
+      "toId": 2,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "why": "За командное взаимодействие Поход на природу",
+      "date": "2022-10-09T05:31:31.122Z",
+      "id": 45
+    },
+    {
+      "amount": 55,
+      "userId": 1,
+      "toId": 3,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "why": "За командное взаимодействие Поход на природу",
+      "date": "2022-10-09T05:31:31.124Z",
+      "id": 46
     }
   ],
   "products": [
@@ -822,9 +872,8 @@
     {
       "userId": 1,
       "activitiesId": 2,
-      "bet": 50,
       "id": 20,
-      "isWin": false
+      "isWin": true
     },
     {
       "userId": 1,
