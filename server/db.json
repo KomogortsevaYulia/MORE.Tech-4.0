@@ -729,6 +729,16 @@
       "why": "За командное взаимодействие Поход на природу",
       "date": "2022-10-09T05:31:31.124Z",
       "id": 46
+    },
+    {
+      "amount": 10,
+      "fromPrivateKey": "4e29114ac856f75adbe44fd20bc52c39780b3328856dfeeb4aff2271637b8b27",
+      "why": "Взнос на участие в челендже",
+      "userId": 4,
+      "toId": 1,
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "date": "2022-10-09T05:55:15.918Z",
+      "id": 47
     }
   ],
   "products": [
@@ -796,7 +806,7 @@
       "isWin": false
     },
     {
-      "id": 1,
+      "id": 2,
       "userId": 2,
       "activitiesId": 2,
       "isWin": false
@@ -847,7 +857,7 @@
       "id": 15,
       "userId": 1,
       "activitiesId": 14,
-      "isWin": false
+      "isWin": true
     },
     {
       "id": 17,
@@ -909,6 +919,12 @@
       "bet": 20,
       "id": 25,
       "isWin": false
+    },
+    {
+      "userId": 4,
+      "activitiesId": 16,
+      "bet": 10,
+      "id": 26
     }
   ],
   "orders": [

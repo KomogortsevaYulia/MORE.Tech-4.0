@@ -269,6 +269,12 @@ export class MainApi {
       .then((response) => response.data);
   }
 
+  static async patchWinnerActivities(id: number) {
+    return axios
+      .patch(`${apiUrl}/activity_records/${id}`, { "isWin": true })
+      .then((response) => response.data);
+  }
+
   static async addActivityToUser(data: ICreateRecordUserActivity) {
     return axios.post(`${apiUrl}/activity_records`, { ...data }).then((response) => response.data);
   }

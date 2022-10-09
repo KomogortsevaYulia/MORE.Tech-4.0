@@ -20,7 +20,7 @@ import { styled } from "@mui/material/styles";
 import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { createActivityRecord, patchCompletedActivities } from "../../store/ActivitiesSlice/activitiesSlice";
+import { createActivityRecord, patchCompletedActivities, patchWinnerActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import { transferNft, transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 
 
@@ -115,36 +115,34 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   };
 
   const handleTransferSorev = () => {
-    currentActivity.users.map((userTo) => {
-      if (currentActivity.rewardType === 1) {
-        dispatch(
-          transferRubles({
-            amount: +currentActivity.rewardValue,
-            userId: user!.id,
-            toId: userTo.userId,
-            fromPrivateKey: user!.privateKey,
-            toPublicKey: userTo!.user.publicKey,
-            why: 
-            currentActivity.typeId===3?
-            "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
-          })
-        )
-      } else if (currentActivity.rewardType === 2) {
-        const tokenId = user!.balanceNFT.balance.find(
-          (nft) => nft.uri === currentActivity.rewardValue
-        )!.tokens[0];
-        dispatch(
-          transferNft({
-            fromPrivateKey: user!.privateKey,
-            tokenId,
-            toPublicKey: userTo!.user.publicKey,
-          })
-        )
-      }
+    
+    if (currentActivity.rewardType === 1) {
+      dispatch(
+        transferRubles({
+          amount: +currentActivity.rewardValue,
+          userId: user!.id,
+          toId: userTo.userId,
+          fromPrivateKey: user!.privateKey,
+          toPublicKey: userTo!.user.publicKey,
+          why: "За победу в "+ currentActivity.title,
+        })
+      )
+    } else if (currentActivity.rewardType === 2) {
+      const tokenId = user!.balanceNFT.balance.find(
+        (nft) => nft.uri === currentActivity.rewardValue
+      )!.tokens[0];
+      dispatch(
+        transferNft({
+          fromPrivateKey: user!.privateKey,
+          tokenId,
+          toPublicKey: userTo!.user.publicKey,
+        })
+      )
     }
-    ) 
+    
     dispatch(
       patchCompletedActivities(currentActivity.id)
+      patchWinnerActivities(userTo.id)
     )
     handleCloseEnd();
   };
@@ -270,18 +268,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               gap: "10px",
             }}
           >
-            <Typography variant="h5">
-              Завершение активности {row.title}
-            </Typography>
             <Typography variant="body1">
-              Количество участвующих: {row.users.length}
+              {row.title}
             </Typography>
-            {/* <Typography variant="h5">
-              Стоимость
-            </Typography>
-            <Typography variant="body1">
-              {row.rewardValue} {row.rewardType} * {row.users.length} кол-во =  {+row.rewardValue * row.users.length}
-            </Typography> */}
             <Typography variant="h6">
 
               Баланс:{" "}
@@ -400,22 +389,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   null
                   :
                   <div>
-                    {row.completed ?
-                      <Tooltip title="Завершено">
-                        <Button
-                          disabled={true}
-                          style={{ background: "var(--orange)", margin: "0 10px" }}
-                          variant="contained"
-                          onClick={(e) => {
-                            handleOpen();
-                            setCurrentActivity(row);
-                            e.stopPropagation();
-                          }}
-                        >
-                          Завершено
-                        </Button>
-                      </Tooltip>
-                      :
+                    {
                       canFinish ?
                         <Tooltip title="Завершить активность">
                           <Button
