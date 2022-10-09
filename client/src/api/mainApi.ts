@@ -140,9 +140,6 @@ export class MainApi {
         return err;
       });
 
-    user.balance = await BlockchainApi.balanceFiat(user.publicKey);
-    user.balanceNFT = await BlockchainApi.balanceNFT(user.publicKey);
-
     return user as IUserWithBalance;
   }
 
@@ -253,7 +250,6 @@ export class MainApi {
 
   //   return activities;
   // }
-
 
   static async fetchActivitiesForHome() {
     const activities = await axios
