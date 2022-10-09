@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ROUTES } from "../../const/routes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import ActivitiesPage from "../../pages/ActivitiesPage/ActivitiesPage";
@@ -26,7 +26,7 @@ const AppRouter = () => {
     if (user && !user.balance) {
       dispatch(fetchUserBalance(user.publicKey));
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <>
