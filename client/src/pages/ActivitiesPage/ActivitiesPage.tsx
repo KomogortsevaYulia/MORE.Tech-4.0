@@ -223,9 +223,7 @@ const ActivitiesPage = () => {
 
 
           <div style={{ margin: "auto" }} className="d-flex flex-row ">
-
             <div className="">
-            
               <Autocomplete 
                 id="free-solo-demo"
                 
