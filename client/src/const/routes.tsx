@@ -51,7 +51,7 @@ export const ROUTES = {
   analytic: {
     name: "Аналитика",
     url: "/analytic",
-    roleId: 0,
+    roleId:ROLES_IDS.ADMIN,
     icon: <EqualizerIcon />,
   },
   wheel: {

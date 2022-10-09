@@ -124,10 +124,9 @@
       "rewardValue": 40,
       "rewardType": 1
     },
-    
     {
       "id": 6,
-      "typeId": 2,
+      "typeId": 1,
       "title": "Кто переработает больше всех",
       "description": "Соревнование по преработке. Победитель получит выходной",
       "dateStart": "2022-18-12",
@@ -141,7 +140,9 @@
       "title": "Мастер класс по Microsoft Office",
       "description": "Мастер класс от лучших.",
       "dateStart": "2022-10-12",
-      "dateEnd": "2022-12-12"
+      "dateEnd": "2022-12-12",
+      "rewardValue": 25,
+      "rewardType": 1
     },
     {
       "id": 8,
@@ -149,7 +150,9 @@
       "title": "Субботник",
       "description": "На уборку!",
       "dateStart": "2022-29-10",
-      "dateEnd": "2022-29-10"
+      "dateEnd": "2022-29-10",
+      "rewardValue": 15,
+      "rewardType": 1
     },
     {
       "id": 9,
@@ -157,7 +160,9 @@
       "title": "Соревнования по спортивному программированию",
       "description": "Соревнования по спортивному программированию. Докажите ваши навыки по алгоритмическим задачам!",
       "dateStart": "2022-29-10",
-      "dateEnd": "2022-29-10"
+      "dateEnd": "2022-29-10",
+      "rewardValue": 100,
+      "rewardType": 1
     },
     {
       "id": 10,
@@ -165,7 +170,9 @@
       "title": "Хакатон по мобильной разработке",
       "description": "Соревнование внутри коллектива, проверьте свои навыки!",
       "dateStart": "2022-2-12",
-      "dateEnd": "2022-4-12"
+      "dateEnd": "2022-4-12",
+      "rewardValue": 90,
+      "rewardType": 1
     },
     {
       "id": 12,
@@ -181,7 +188,9 @@
       "title": "Курс по продвинутой работе с компьютером",
       "description": "Поможет поднять ваши навыки работы за компьютером",
       "dateStart": "2022-10-11",
-      "dateEnd": "2023-12-11"
+      "dateEnd": "2023-12-11",
+      "rewardValue": 23,
+      "rewardType": 1
     },
     {
       "id": 14,
@@ -197,7 +206,9 @@
       "title": "Соревновательный матч в CS:GO",
       "description": "Соревнование внутри коллектива, наберите комманду из 5 человек и покажите на что способны",
       "dateStart": "2022-16-12",
-      "dateEnd": "2022-16-12"
+      "dateEnd": "2022-16-12",
+      "rewardValue": 150,
+      "rewardType": 1
     },
     {
       "dateEnd": "2022-10-08",
@@ -643,27 +654,12 @@
       "activitiesId": 4
     },
     {
-      "id": 6,
-      "userId": 3,
-      "activitiesId": 4
-    },
-    {
       "id": 7,
       "userId": 3,
       "activitiesId": 2
     },
     {
       "id": 8,
-      "userId": 3,
-      "activitiesId": 15
-    },
-    {
-      "id": 9,
-      "userId": 3,
-      "activitiesId": 15
-    },
-    {
-      "id": 10,
       "userId": 3,
       "activitiesId": 15
     },
