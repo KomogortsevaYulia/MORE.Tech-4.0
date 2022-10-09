@@ -62,7 +62,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
-  
+
   //Уже записан на мероприятие
   const isRec =
     row.users.findIndex((item) => item.userId === user?.id) !== -1
@@ -70,10 +70,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
       : false;
 
   //Если пользователь выйграл
-  const userIsWin = isRec ? 
-  (row.users[row.users.findIndex((item) => item.userId === user?.id)].isWin ? true : false) 
-  : false;
-  
+  const userIsWin = isRec ?
+    (row.users[row.users.findIndex((item) => item.userId === user?.id)].isWin ? true : false)
+    : false;
+
 
   const bet = row.users.find((u) => u.userId === user!.id)?.bet;
 
@@ -114,8 +114,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
     handleClose();
   };
 
-
-  const handleTransferStudyAndKOMAND = () => {
+  const handleTransferSorev = () => {
     currentActivity.users.map((userTo) => {
       if (currentActivity.rewardType === 1) {
         dispatch(
@@ -125,9 +124,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             toId: userTo.userId,
             fromPrivateKey: user!.privateKey,
             toPublicKey: userTo!.user.publicKey,
-            why: 
-            currentActivity.typeId===3?
-            "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
+            why:
+              currentActivity.typeId === 3 ?
+                "За обучение " + currentActivity.title : currentActivity.typeId === 4 ? "За командное взаимодействие " + currentActivity.title : "'",
           })
         )
       } else if (currentActivity.rewardType === 2) {
@@ -143,7 +142,42 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         )
       }
     }
-    ) 
+    )
+    dispatch(
+      patchCompletedActivities(currentActivity.id)
+    )
+    handleCloseEnd();
+  };
+
+  const handleTransfer = () => {
+    currentActivity.users.map((userTo) => {
+      if (currentActivity.rewardType === 1) {
+        dispatch(
+          transferRubles({
+            amount: +currentActivity.rewardValue,
+            userId: user!.id,
+            toId: userTo.userId,
+            fromPrivateKey: user!.privateKey,
+            toPublicKey: userTo!.user.publicKey,
+            why:
+              currentActivity.typeId === 3 ?
+                "За обучение " + currentActivity.title : currentActivity.typeId === 4 ? "За командное взаимодействие " + currentActivity.title : "'",
+          })
+        )
+      } else if (currentActivity.rewardType === 2) {
+        const tokenId = user!.balanceNFT.balance.find(
+          (nft) => nft.uri === currentActivity.rewardValue
+        )!.tokens[0];
+        dispatch(
+          transferNft({
+            fromPrivateKey: user!.privateKey,
+            tokenId,
+            toPublicKey: userTo!.user.publicKey,
+          })
+        )
+      }
+    }
+    )
     dispatch(
       patchCompletedActivities(currentActivity.id)
     )
@@ -241,12 +275,12 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             <Typography variant="body1">
               Количество участвующих: {row.users.length}
             </Typography>
-            <Typography variant="h5">
+            {/* <Typography variant="h5">
               Стоимость
             </Typography>
             <Typography variant="body1">
               {row.rewardValue} {row.rewardType} * {row.users.length} кол-во =  {+row.rewardValue * row.users.length}
-            </Typography>
+            </Typography> */}
             <Typography variant="h6">
 
               Баланс:{" "}
@@ -255,43 +289,25 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             </Typography>
             {currentActivity?.typeId === 1 ? (
               <div className="d-flex flex-row ">
+
+                <Typography variant="body1">
+                  Выбор челов
+                </Typography>
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleEnrollClick}
+                  onClick={handleTransferSorev}
                 >
                   Начислить и завершить!
                 </Button>
               </div>
             ) : null}
-            {currentActivity?.typeId === 2 ? (
+            {currentActivity?.typeId === 2 || currentActivity?.typeId === 3 || currentActivity?.typeId === 4 ? (
               <div className="d-flex flex-row ">
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleEnrollClick}
-                >
-                  Начислить и завершить!
-                </Button>
-              </div>
-            ) : null}
-            {currentActivity?.typeId === 3 ? (
-              <div className="d-flex flex-row ">
-                <Button
-                  className={styles.enrollButton}
-                  variant="contained"
-                  onClick={handleTransferStudyAndKOMAND}
-                >
-                  Начислить и завершить!
-                </Button>
-              </div>
-            ) : null}
-            {currentActivity?.typeId === 4 ? (
-              <div className="d-flex flex-row ">
-                <Button
-                  className={styles.enrollButton}
-                  variant="contained"
-                  onClick={handleTransferStudyAndKOMAND}
+                  onClick={handleTransfer}
                 >
                   Начислить и завершить!
                 </Button>
@@ -312,28 +328,28 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "8px" }}
                 >
-                 
-                  {userIsWin && withoutButton ?  
+
+                  {userIsWin && withoutButton ?
                     <Chip
-                      label= "Победа"
+                      label="Победа"
                       style={{
                         background: "var(--purple)",
-                    }}/>
-                  : null}
-                  {row.completed ? 
-                      <div className="m-0 p-0 d-flex flex-row align-items-center">
-                        <Chip
-                          label="Окончено"
-                          className="me-2"
-                          style={{
-                            background: "var(--red)",
-                        }}/>
-                        <Typography><s>{row.title}</s></Typography>
-                      </div>
+                      }} />
+                    : null}
+                  {row.completed ?
+                    <div className="m-0 p-0 d-flex flex-row align-items-center">
+                      <Chip
+                        label="Окончено"
+                        className="me-2"
+                        style={{
+                          background: "var(--red)",
+                        }} />
+                      <Typography><s>{row.title}</s></Typography>
+                    </div>
                     :
                     <Typography>{row.title}</Typography>
                   }
-                  
+
                   <Chip
                     label={typeActivity[row.typeId].title}
                     style={{
@@ -383,25 +399,11 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   null
                   :
                   <div>
-                    {canFinish ?
-                      <Tooltip title="Завершить активность">
+                    {row.completed ?
+                      <Tooltip title="Завершено">
                         <Button
-                          style={{ background: "rgb(221, 76, 76)", margin: "0 10px" }}
-                          variant="contained"
-                          onClick={(e) => {
-                            handleOpenEnd();
-                            setCurrentActivity(row);
-                            e.stopPropagation();
-                          }}
-                        >
-                          Завершить
-                        </Button>
-                      </Tooltip>
-                      :
-                      <Tooltip title="Записаться на мероприятие">
-                        <Button
-                          disabled={isRec}
-                          className={styles.enrollButton}
+                          disabled={true}
+                          style={{ background: "var(--orange)", margin: "0 10px" }}
                           variant="contained"
                           onClick={(e) => {
                             handleOpen();
@@ -409,9 +411,39 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                             e.stopPropagation();
                           }}
                         >
-                          {isRec ? "Вы уже записаны" : "Записаться"}
+                          Завершено
                         </Button>
                       </Tooltip>
+                      :
+                      canFinish ?
+                        <Tooltip title="Завершить активность">
+                          <Button
+                            style={{ background: "rgb(221, 76, 76)", margin: "0 10px" }}
+                            variant="contained"
+                            onClick={(e) => {
+                              handleOpenEnd();
+                              setCurrentActivity(row);
+                              e.stopPropagation();
+                            }}
+                          >
+                            Завершить
+                          </Button>
+                        </Tooltip>
+                        :
+                        <Tooltip title="Записаться на мероприятие">
+                          <Button
+                            disabled={isRec}
+                            className={styles.enrollButton}
+                            variant="contained"
+                            onClick={(e) => {
+                              handleOpen();
+                              setCurrentActivity(row);
+                              e.stopPropagation();
+                            }}
+                          >
+                            {isRec ? "Вы уже записаны" : "Записаться"}
+                          </Button>
+                        </Tooltip>
                     }
                   </div>
                 }
