@@ -11,6 +11,11 @@ export interface IUser {
   departmentId: number;
 }
 
+export interface IUserWithBalance extends IUser {
+  balance: BalanceFiat;
+  balanceNFT: BalanceNFT;
+}
+
 export interface IDepartment {
   id: number;
   title: string;
@@ -22,18 +27,6 @@ export interface IDepartmentWithUser extends IDepartment {
 
 export interface IUserWithDepartment extends IUserWithBalance {
   department: IDepartment;
-}
-
-export interface IUserWithBalance {
-  id: number;
-  roleId: number;
-  privateKey: string;
-  publicKey: string;
-  FIO: string;
-  image: string;
-  balance: BalanceFiat;
-  balanceNFT: BalanceNFT;
-  departmentId: number;
 }
 
 export interface IProduct {
