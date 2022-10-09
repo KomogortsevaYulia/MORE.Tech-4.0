@@ -71,6 +71,7 @@ const ActivitiesPage = () => {
 
   const [activityName, setActivityName] = React.useState("");
   const [activityDescription, setActivityDescription] = React.useState("");
+  const [activityReward, setActivityReward] = React.useState("");
 
   const handleActivityNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -82,6 +83,10 @@ const ActivitiesPage = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setActivityDescription(event.target.value);
+  };
+
+  const handleActivityReward = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setActivityReward(event.target.value);
   };
 
   const [typeActivityId, setTypeActivityId] = React.useState(1);
@@ -100,6 +105,7 @@ const ActivitiesPage = () => {
         description: activityDescription,
         title: activityName,
         typeId: typeActivityId,
+        reward: activityReward,
       })
     );
 
@@ -115,6 +121,7 @@ const ActivitiesPage = () => {
     activityDescription,
     addStartDate,
     addEndDate,
+    activityReward,
   ]);
   return (
     <div
@@ -138,7 +145,7 @@ const ActivitiesPage = () => {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                maxWidth: "800px",
+                width: 800,
                 bgcolor: "background.paper",
                 borderRadius: 5,
                 boxShadow: 24,
@@ -182,6 +189,12 @@ const ActivitiesPage = () => {
                 variant="outlined"
                 value={activityDescription}
                 onChange={handleActivityDescriptionChange}
+              />
+              <TextField
+                label="Награда"
+                variant="outlined"
+                value={activityReward}
+                onChange={handleActivityReward}
               />
 
               <Typography sx={{ color: "text.secondary" }}>

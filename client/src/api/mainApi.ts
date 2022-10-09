@@ -51,6 +51,7 @@ export interface IActivities {
   description: string;
   dateStart: string;
   dateEnd: string;
+  reward: string;
   users: IActivityRecords[];
 }
 
@@ -124,6 +125,7 @@ export interface ICreateActivity {
   description: string;
   dateStart: string;
   dateEnd: string;
+  reward: string;
 }
 
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3004";
