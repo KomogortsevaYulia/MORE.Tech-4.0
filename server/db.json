@@ -104,7 +104,7 @@
       "dateEnd": "2022-15-08",
       "rewardValue": "https://games.mail.ru/hotbox/content_files/news/2022/01/26/d1c28756c16646898f81153f35c9d686.jpg",
       "rewardType": 2,
-      "completed": false
+      "completed": true
     },
     {
       "id": 3,
@@ -732,9 +732,8 @@
     {
       "userId": 1,
       "activitiesId": 2,
-      "bet": 50,
       "id": 20,
-      "isWin" : false
+      "isWin" : true
     },
     {
       "userId": 1,

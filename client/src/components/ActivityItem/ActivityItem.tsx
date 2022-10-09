@@ -62,15 +62,21 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
+  
+  //Уже записан на мероприятие
   const isRec =
     row.users.findIndex((item) => item.userId === user?.id) !== -1
       ? true
       : false;
 
-  const bet = row.users.find((u) => u.userId === user!.id)?.bet;
-  // const rewardType = activitiesCurrency.find((i:any) => i.id === row?.rewardType).title;
+  //Если пользователь выйграл
+  const userIsWin = isRec ? 
+  (row.users[row.users.findIndex((item) => item.userId === user?.id)].isWin ? true : false) 
+  : false;
+  
 
-  const [activitiesCurrencyValue, setActivitiesCurrency] = React.useState(activitiesCurrency);
+  const bet = row.users.find((u) => u.userId === user!.id)?.bet;
+
   const [currentActivity, setCurrentActivity] = React.useState(row);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -270,7 +276,28 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "8px" }}
                 >
-                  <Typography>{row.title}</Typography>
+                 
+                  {userIsWin && withoutButton ?  
+                    <Chip
+                      label= "Победа"
+                      style={{
+                        background: "var(--purple)",
+                    }}/>
+                  : null}
+                  {row.completed ? 
+                      <div className="m-0 p-0 d-flex flex-row align-items-center">
+                        <Chip
+                          label="Окончено"
+                          className="me-2"
+                          style={{
+                            background: "var(--red)",
+                        }}/>
+                        <Typography><s>{row.title}</s></Typography>
+                      </div>
+                    :
+                    <Typography>{row.title}</Typography>
+                  }
+                  
                   <Chip
                     label={typeActivity[row.typeId].title}
                     style={{
