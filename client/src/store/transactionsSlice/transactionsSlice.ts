@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../store';
-import { MainApi, IProduct, ITransferRubleWithUsers } from '../../api/mainApi';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { MainApi, ITransferRubleWithUsers } from '../../api/mainApi';
 import { LoadingStatus } from '../../types/types';
 import { BlockchainApi } from '../../api/blockchainApi';
 import { TransferData } from '../adminSlice/adminSlice';
