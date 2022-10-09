@@ -20,7 +20,7 @@ import { styled } from "@mui/material/styles";
 import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { createActivityRecord } from "../../store/ActivitiesSlice/activitiesSlice";
+import { createActivityRecord, patchCompletedActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import { transferNft, transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { activitiesCurrency } from "../../const/activitiesCurrency"
 
@@ -109,10 +109,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   };
 
 
-
-
-  const handleTransferStudy = () => {
-
+  const handleTransferStudyAndKOMAND = () => {
     currentActivity.users.map((userTo) => {
       if (currentActivity.rewardType === 1) {
         dispatch(
@@ -122,7 +119,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             toId: userTo.userId,
             fromPrivateKey: user!.privateKey,
             toPublicKey: userTo!.user.publicKey,
-            why: "За обучение "+ currentActivity.title,
+            why: 
+            currentActivity.typeId===3?
+            "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
           })
         )
       } else if (currentActivity.rewardType === 2) {
@@ -139,6 +138,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
       }
     }
     ) 
+    dispatch(
+      patchCompletedActivities(currentActivity.id)
+    )
     handleCloseEnd();
   };
 
@@ -272,7 +274,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleTransferStudy}
+                  onClick={handleTransferStudyAndKOMAND}
                 >
                   Начислить и завершить!
                 </Button>
@@ -283,7 +285,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleEnrollClick}
+                  onClick={handleTransferStudyAndKOMAND}
                 >
                   Начислить и завершить!
                 </Button>

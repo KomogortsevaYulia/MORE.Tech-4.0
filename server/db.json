@@ -221,7 +221,7 @@
       "dateEnd": "2022-16-12",
       "rewardValue": 150,
       "rewardType": 1,
-      "completed": false
+      "completed": true
     },
     {
       "dateEnd": "2022-10-08",
@@ -693,123 +693,123 @@
       "id": 1,
       "userId": 2,
       "activitiesId": 1,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 1,
       "userId": 2,
       "activitiesId": 2,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 6,
       "userId": 4,
       "activitiesId": 3,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 5,
       "userId": 3,
       "activitiesId": 4,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 7,
       "userId": 3,
       "activitiesId": 2,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 8,
       "userId": 3,
       "activitiesId": 15,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 11,
       "userId": 3,
       "activitiesId": 1,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 12,
       "userId": 3,
       "activitiesId": 12,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 14,
       "userId": 3,
       "activitiesId": 3,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 15,
       "userId": 1,
       "activitiesId": 14,
-      "isWin" : false
+      "isWin": false
     },
     {
       "id": 17,
       "userId": 2,
       "activitiesId": 11,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 2,
       "activitiesId": 6,
       "bet": 100,
       "id": 18,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 2,
       "activitiesId": 14,
       "bet": 100,
       "id": 19,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 1,
       "activitiesId": 2,
       "bet": 50,
       "id": 20,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 1,
       "activitiesId": 6,
       "bet": 10,
       "id": 21,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 3,
       "activitiesId": 6,
       "bet": 5,
       "id": 22,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 3,
       "activitiesId": 14,
       "bet": 12,
       "id": 23,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 4,
       "activitiesId": 6,
       "bet": 10,
       "id": 24,
-      "isWin" : false
+      "isWin": false
     },
     {
       "userId": 4,
       "activitiesId": 2,
       "bet": 20,
       "id": 25,
-      "isWin" : false
+      "isWin": false
     }
   ],
   "orders": [

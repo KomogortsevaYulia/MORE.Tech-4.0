@@ -44,10 +44,18 @@ export const fetchActivitiesForHome = createAsyncThunk(
     return MainApi.fetchActivitiesForHome();
   }
 );
+
 export const fetchTypeActivities = createAsyncThunk(
   "Activities/fetchTypeActivities",
   async () => {
     return MainApi.fetchTypeActivities();
+  }
+);
+
+export const patchCompletedActivities = createAsyncThunk(
+  "Activities/patchCompletedActivities",
+  async (id: number) => {
+    return MainApi.patchCompletedActivities(id);
   }
 );
 
@@ -101,6 +109,11 @@ export const ActivitiesSlice = createSlice({
         state.Activities?.find(
           (a) => a.id === action.payload.activitiesId
         )?.users.push(action.payload);
+      })
+      .addCase(patchCompletedActivities.fulfilled, (state, action) => {
+        state.Activities!.find(
+          (a) => a.id === action.payload.id
+        )!.completed=true;
       })
       .addCase(createActivity.fulfilled, (state, action) => {
         state.Activities?.push(action.payload);
