@@ -238,7 +238,6 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                     />
                   </Tooltip>
                 : null }
-0
                 {row.rewardType === 3 ?
                   <Typography className="fw-bold">{row.rewardValue}</Typography>
                 : null }
@@ -246,7 +245,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             :null}
 
             {row.users.length !== 0 ? 
-              <div >            
+              <div >
                 <Typography sx={{ color: "text.secondary" }}>Участники</Typography>
                 <div className={styles.allMembers}>
                   <AvatarGroup max={row.users.length}>
