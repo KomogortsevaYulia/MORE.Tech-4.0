@@ -440,10 +440,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             :null}
 
             {row.rewardValue ?
-              <div className={styles.flexColumn}>
-                <Typography sx={{ color: "text.secondary" }}>Награда</Typography>
+              <div className={`${styles.flexColumn} mx-auto`}>
+                <Typography sx={{ color: "text.secondary " }}>Награда</Typography>
                 {row.rewardType === 1 ?
-                  <Typography className="fw-bold">{row.rewardValue} Digital Rubles</Typography>
+                  <Typography className="fw-bold mx-auto">{row.rewardValue} Digital Rubles</Typography>
                   : null}
 
                 {row.rewardType === 2 ?
