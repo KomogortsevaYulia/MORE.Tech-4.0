@@ -22,7 +22,7 @@ import { logout } from "../../store/userSlice/userSlice";
 import styles from "./Navbar.module.css";
 import { Tooltip } from "@mui/material";
 
-import Zoom from '@mui/material/Zoom';
+import Zoom from "@mui/material/Zoom";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -54,9 +54,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
-
-
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -99,16 +96,22 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
 
   return (
     <Box
-      className={`${location.pathname === ROUTES.home.url ? styles.myStyle : styles.backgroundWrapper
-        }`}
+      className={`${
+        location.pathname === ROUTES.home.url
+          ? styles.myStyle
+          : styles.backgroundWrapper
+      }`}
       sx={{ display: "flex" }}
     >
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           {open ? (
-            <Tooltip title="Свернуть меню" placement="right" TransitionComponent={Zoom}>
-
+            <Tooltip
+              title="Свернуть меню"
+              placement="right"
+              TransitionComponent={Zoom}
+            >
               <IconButton onClick={handleDrawerClose}>
                 {theme.direction === "rtl" ? (
                   <ChevronRightIcon />
@@ -117,10 +120,12 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                 )}
               </IconButton>
             </Tooltip>
-
           ) : (
-            <Tooltip title="Раскрыть меню" placement="right" TransitionComponent={Zoom}>
-
+            <Tooltip
+              title="Раскрыть меню"
+              placement="right"
+              TransitionComponent={Zoom}
+            >
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -145,7 +150,8 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
           <List>
             {Object.values(ROUTES).map(
               ({ name, url, roleId, icon }, index) =>
-                (roleId === 0 || roleId === user?.roleId) && (
+                (roleId === 0 || roleId === user?.roleId) &&
+                !(url === "/wheel" && user?.roleId === 1) && (
                   <ListItem
                     key={name}
                     disablePadding
@@ -163,8 +169,12 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                         px: 2.5,
                       }}
                     >
-                      <Tooltip title={name} placement="right" disableHoverListener={open} TransitionComponent={Zoom}>
-
+                      <Tooltip
+                        title={name}
+                        placement="right"
+                        disableHoverListener={open}
+                        TransitionComponent={Zoom}
+                      >
                         <ListItemIcon
                           sx={{
                             minWidth: 0,
@@ -206,7 +216,12 @@ export const MiniDrawer: React.FC<IMiniDrawer> = ({ children }) => {
                   justifyContent: "center",
                 }}
               >
-                <Tooltip title="Выход" placement="right" disableHoverListener={open} TransitionComponent={Zoom}>
+                <Tooltip
+                  title="Выход"
+                  placement="right"
+                  disableHoverListener={open}
+                  TransitionComponent={Zoom}
+                >
                   <LogoutIcon style={{ transform: "rotateY(180deg)" }} />
                 </Tooltip>
               </ListItemIcon>

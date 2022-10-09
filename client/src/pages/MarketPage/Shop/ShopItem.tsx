@@ -91,22 +91,46 @@ const ShopItem: React.FC<IShopItemProps> = ({ shopItem }) => {
               {shopItem.title}
             </h5>
 
-            <h6 className="mb-2 mx-auto ">{shopItem.priceRuble} Digital Ruble</h6>
+            {!shopItem.nftUri ? (
+              <h6 className="mb-2 mx-auto ">{shopItem.priceRuble}₽</h6>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingBottom: "8px",
+                }}
+              >
+                x1{" "}
+                <img
+                  src={shopItem.nftUri}
+                  alt="НФТ как цена товара"
+                  style={{ width: 48, height: 48, borderRadius: "100%" }}
+                />
+              </div>
+            )}
           </div>
-          <button
-            type="button"
-            className="btn btn-info btn-rounded mx-4 mb-2"
-            onClick={addClick}
-          >
-            <span>Добавить в корзину </span>
-          </button>
-          {canBuyByNFT && (
+          {!shopItem.nftUri ? (
             <button
               type="button"
               className="btn btn-info btn-rounded mx-4 mb-2"
-              onClick={buyByNFT}
+              onClick={addClick}
             >
-              <span>Купить за NFT </span>
+              <span>Добавить в корзину </span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-info btn-rounded mx-4 mb-2"
+              onClick={addClick}
+              disabled={
+                !user!.balanceNFT?.balance?.some(
+                  (nft) => nft.uri === shopItem.nftUri
+                )
+              }
+            >
+              <span>Добавить в корзину </span>
             </button>
           )}
         </div>
