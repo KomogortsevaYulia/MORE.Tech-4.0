@@ -59,6 +59,7 @@ export interface IActivities {
   description: string;
   dateStart: string;
   dateEnd: string;
+  completed: boolean;
   rewardValue: string | number;
   rewardType: number;
   users: IActivityRecords[];
@@ -93,6 +94,7 @@ export interface IActivityRecords {
   userId: number;
   activitiesId: number;
   user: IUser;
+  isWin:boolean;
   activities: IActivities;
   bet?: number;
 }
@@ -269,7 +271,6 @@ export class MainApi {
         (userActivity) => userActivity.activitiesId === activity.id,
       );
     }
-
     return activities;
   }
 

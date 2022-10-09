@@ -114,8 +114,8 @@ const AdminPage = () => {
 
   return (
     <>
-      <div>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <div className="card ">
+        <Box className="card-body" sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
             onChange={handleChange}
