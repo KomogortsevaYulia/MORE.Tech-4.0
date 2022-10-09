@@ -104,6 +104,11 @@ const ActivitiesPage = () => {
     );
 
     handleClose();
+    setTypeActivityId(1);
+    setActivityName("");
+    setActivityDescription("");
+    setAddEndDate(null);
+    setAddStartDate(null);
   }, [
     typeActivityId,
     activityName,
@@ -133,7 +138,7 @@ const ActivitiesPage = () => {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                width: 400,
+                maxWidth: "800px",
                 bgcolor: "background.paper",
                 borderRadius: 5,
                 boxShadow: 24,
