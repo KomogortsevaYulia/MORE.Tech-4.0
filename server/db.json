@@ -629,6 +629,56 @@
       "why": "По доброте душевной",
       "date": "2022-10-09T04:46:41.156Z",
       "id": 36
+    },
+    {
+      "amount": 134,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "toId": 1,
+      "userId": 1,
+      "why": "Начисление от администратора",
+      "date": "2022-10-09T04:59:09.389Z",
+      "id": 37
+    },
+    {
+      "amount": 1212,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 3,
+      "why": "Начисление от Руководителя отдела",
+      "date": "2022-10-09T05:06:09.407Z",
+      "id": 38
+    },
+    {
+      "amount": 1212,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "toId": 4,
+      "userId": 3,
+      "why": "Начисление от Руководителя отдела",
+      "date": "2022-10-09T05:06:09.405Z",
+      "id": 39
+    },
+    {
+      "amount": 11,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
+      "toId": 4,
+      "userId": 3,
+      "why": "Начисление от Руководителя отдела",
+      "date": "2022-10-09T05:06:16.845Z",
+      "id": 40
+    },
+    {
+      "amount": 11,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
+      "toId": 3,
+      "userId": 3,
+      "why": "Начисление от Руководителя отдела",
+      "date": "2022-10-09T05:06:16.846Z",
+      "id": 41
     }
   ],
   "products": [
