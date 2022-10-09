@@ -63,17 +63,18 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
 
   const [open, setOpen] = React.useState(false);
   
+  const userId = row.users.findIndex((item) => item.userId === user?.id);
   //Уже записан на мероприятие
-  const isRec =
-    row.users.findIndex((item) => item.userId === user?.id) !== -1
-      ? true
-      : false;
+  const isRec = userId !== -1 ? true : false;
 
   //Если пользователь выйграл
   const userIsWin = isRec ? 
-  (row.users[row.users.findIndex((item) => item.userId === user?.id)].isWin ? true : false) 
-  : false;
-  
+    (row.users[userId].isWin ? true : false) 
+    : false;
+
+
+  const wineerUser = row.users[row.users.findIndex((item) => item.isWin === true)]
+
 
   const bet = row.users.find((u) => u.userId === user!.id)?.bet;
 
@@ -379,7 +380,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               </div>
               <div className={styles.activityButtons}>
 
-                {withoutButton ?
+                {withoutButton || row.completed ?
                   null
                   :
                   <div>
@@ -425,6 +426,19 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               <Typography sx={{ color: "text.secondary" }}>Описание</Typography>
               <Typography>{row.description}</Typography>
             </div>
+
+            {row.typeId == 1 && wineerUser ? 
+              <div className={styles.flexColumn}>
+                <Typography sx={{ color: "text.secondary" }}>Победитель</Typography>
+                <Tooltip title={`${wineerUser?.user.FIO}`}>
+                  <Avatar
+                    alt={`${wineerUser?.user.FIO}`}
+                    src={`${wineerUser?.user.image}`}
+                  />
+                </Tooltip>
+              </div>
+            :null}
+
             {row.rewardValue ?
               <div className={styles.flexColumn}>
                 <Typography sx={{ color: "text.secondary" }}>Награда</Typography>
