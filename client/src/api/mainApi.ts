@@ -233,9 +233,27 @@ export class MainApi {
         (userActivity) => userActivity.activitiesId === activity.id
       );
     }
-
     return activities;
   }
+
+  // static async fetchUserInDepartments(userId: number) {
+  //   const activities = await axios
+  //     .get<IActivities[]>(`${apiUrl}/activities`)
+  //     .then((response) => response.data);
+
+  //   const usersActivities = await axios
+  //     .get<IActivityRecords[]>(`${apiUrl}/activity_records?&_expand=user&_expand=activities`)
+  //     .then((response) => response.data);
+
+  //   for (let activity of activities) {
+  //     activity.users = usersActivities.filter(
+  //       (userActivity) => userActivity.activitiesId === activity.id,
+  //     );
+  //   }
+
+  //   return activities;
+  // }
+
 
   static async fetchActivitiesForHome() {
     const activities = await axios
