@@ -61,7 +61,7 @@ export const transferRubles = createAsyncThunk(
       );
 
       transaction = await Promise.all(transaction).then((data) => data);
-      const performs2 = await Promise.all(performs).then((data) => data);
+      await Promise.all(performs).then((data) => data);
 
       return await Promise.all(
         transaction.map(async (t) => ({
@@ -99,7 +99,5 @@ export const transactionsSlice = createSlice({
       });
   },
 });
-
-export const {} = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
