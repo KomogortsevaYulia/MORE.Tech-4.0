@@ -69,15 +69,7 @@ export interface ITransferRuble {
   date: string;
 }
 
-export interface ITransferRubleWithUsers {
-  id: number;
-  userId: number;
-  toId: number;
-  fromPrivateKey: string;
-  toPublicKey: string;
-  amount: number;
-  why: string;
-  date: string;
+export interface ITransferRubleWithUsers extends ITransferRuble {
   user: IUser;
   users2: IUser;
 }
