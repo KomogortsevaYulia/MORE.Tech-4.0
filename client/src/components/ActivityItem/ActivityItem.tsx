@@ -57,6 +57,12 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
+  const [openEnd, setOpenEnd] = React.useState(false);
+
+  const handleOpenEnd = () => setOpenEnd(true);
+  const handleCloseEnd = () => setOpenEnd(false);
+
   const [rublesAmount, setRublesAmount] = React.useState<number | string>("");
   const handleRublesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRublesAmount(+event.target.value);
@@ -141,6 +147,100 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         </>
       </Modal>
 
+      <Modal
+        open={openEnd}
+        onClose={handleCloseEnd}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <>
+          <Box
+            sx={{
+              position: "absolute" as "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 450,
+              bgcolor: "background.paper",
+              borderRadius: 5,
+              boxShadow: 24,
+              p: 4,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <Typography variant="h5">
+              Завершение активности {row.title}
+            </Typography>
+
+            <Typography variant="h6">
+
+
+              Баланс:{" "}
+              {user!.balance?.coinsAmount.toLocaleString() ||
+                "Баланс загружается..."}
+            </Typography>
+            {currentActivity?.typeId === 2 ? (
+              <div className="d-flex flex-row ">
+                <Typography variant="h5">
+                  Челлендж {row.title}
+                </Typography>
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+            {currentActivity?.typeId === 2 ? (
+              <div className="d-flex flex-row ">
+                <Typography variant="h5">
+                  Челлендж {row.title}
+                </Typography>
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+            {currentActivity?.typeId === 2 ? (
+              <div className="d-flex flex-row ">
+                <Typography variant="h5">
+                  Челлендж {row.title}
+                </Typography>
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+            {currentActivity?.typeId === 1 ? (
+              <div className="d-flex flex-row ">
+                <Typography variant="h5">
+                  Соревнование {row.title}
+                </Typography>
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+          </Box>
+        </>
+      </Modal>
+
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -175,26 +275,26 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               </div>
               <div className={styles.activityButtons}>
 
-                {withoutButton ? 
+                {withoutButton ?
                   null
-                :
+                  :
                   <div>
-                    {user?.roleId === 1 ? 
+                    {user?.roleId === 1 ?
                       <Tooltip title="Завершить активность">
                         <Button
-                          style={{background: "rgb(221, 76, 76)", margin: "0 10px"}}
+                          style={{ background: "rgb(221, 76, 76)", margin: "0 10px" }}
                           variant="contained"
                           onClick={(e) => {
-                            handleOpen();
+                            handleOpenEnd();
                             setCurrentActivity(row);
                             e.stopPropagation();
                           }}
                         >
-                          Завершить 
+                          Завершить
                         </Button>
 
                       </Tooltip>
-                    :
+                      :
                       <Tooltip title="Записаться на мероприятие">
                         <Button
                           disabled={isRec}
@@ -206,7 +306,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                             e.stopPropagation();
                           }}
                         >
-                          {isRec ? "Вы уже записаны": "Записаться"}
+                          {isRec ? "Вы уже записаны" : "Записаться"}
                         </Button>
                       </Tooltip>
                     }
