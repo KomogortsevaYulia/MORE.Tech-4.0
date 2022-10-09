@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { MainApi, IUserWithBalance } from '../../api/mainApi';
-import { LoadingStatus } from '../../types/types';
-import { BalanceNFT, BlockchainApi } from '../../api/blockchainApi';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { MainApi, IUserWithBalance } from "../../api/mainApi";
+import { LoadingStatus } from "../../types/types";
+import { BalanceNFT, BlockchainApi } from "../../api/blockchainApi";
 
 export interface AdminState {
   users: IUserWithBalance[] | null;
@@ -32,36 +32,39 @@ export interface IGenerateNftProps {
   uri: string;
 }
 
-export const fetchUsers = createAsyncThunk('admin/fetchUsers', async () => {
+export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
   return MainApi.fetchUsers();
 });
 
-export const fetchNFTBalance = createAsyncThunk('admin/fetchNFTBalance', async (key: string) => {
-  return BlockchainApi.balanceNFT(key);
-});
+export const fetchNFTBalance = createAsyncThunk(
+  "admin/fetchNFTBalance",
+  async (key: string) => {
+    return BlockchainApi.balanceNFT(key);
+  }
+);
 
 export const generateNft = createAsyncThunk(
-  'admin/generateNft',
+  "admin/generateNft",
   async (data: IGenerateNftProps) => {
     return BlockchainApi.nftGenerate(data.publicKey, data.uri, data.count);
-  },
+  }
 );
 
 export const adminSlice = createSlice({
-  name: 'admin',
+  name: "admin",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
-        state.fetchUsersStatus = 'loading';
+        state.fetchUsersStatus = "loading";
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.fetchUsersStatus = 'success';
+        state.fetchUsersStatus = "success";
         state.users = action.payload;
       })
       .addCase(fetchUsers.rejected, (state) => {
-        state.fetchUsersError = 'failed';
+        state.fetchUsersError = "failed";
       })
 
       .addCase(fetchNFTBalance.fulfilled, (state, action) => {

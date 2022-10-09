@@ -37,6 +37,24 @@ export const userSlice = createSlice({
       state.fetchUserError = null;
       state.fethcUserStatus = null;
     },
+    changeBalance(state, action) {
+      state.user!.balance!.coinsAmount += action.payload;
+    },
+    removeNftFromBalance(state, action) {
+      state
+        .user!.balanceNFT.balance.find((nft) => nft.uri === action.payload)
+        ?.tokens.splice(0, 1);
+
+      if (
+        state.user!.balanceNFT.balance.find((nft) => nft.uri === action.payload)
+          ?.tokens.length === 0
+      ) {
+        console.log(123);
+        state.user!.balanceNFT.balance = state.user!.balanceNFT.balance.filter(
+          (nft) => nft.uri !== action.payload
+        );
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,6 +76,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, changeBalance, removeNftFromBalance } =
+  userSlice.actions;
 
 export default userSlice.reducer;

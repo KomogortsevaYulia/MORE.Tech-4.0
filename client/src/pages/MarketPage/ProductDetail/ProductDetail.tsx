@@ -28,12 +28,16 @@ const ProductDetail: React.FC<IProductDetail> = ({
   const { user } = useAppSelector((state) => state.user);
 
   const addClick = () => {
-    const product = { product: { ...shopItem }, user: { ...user } } as IProductWithCustomer;
+    const product = {
+      product: { ...shopItem },
+      user: { ...user },
+    } as IProductWithCustomer;
     dispatch(addToCart(product));
-    handleClose()
+    handleClose();
   };
-  const handleCloseMethod = () => { handleClose() };
-
+  const handleCloseMethod = () => {
+    handleClose();
+  };
 
   return (
     <Modal
@@ -70,7 +74,30 @@ const ProductDetail: React.FC<IProductDetail> = ({
                     </h2>
 
                     <p className="card-text font-size-18">
-                      ₽ {shopItem?.priceRuble}
+                      {!shopItem.nftUri ? (
+                        <h6 className="mb-2 mx-auto ">
+                          {shopItem.priceRuble}₽
+                        </h6>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            paddingBottom: "8px",
+                          }}
+                        >
+                          x1{" "}
+                          <img
+                            src={shopItem.nftUri}
+                            alt="НФТ как цена товара"
+                            style={{
+                              width: 48,
+                              height: 48,
+                              borderRadius: "100%",
+                            }}
+                          />
+                        </div>
+                      )}
                     </p>
                     <p
                       className="card-text p-20 bg-light overflow-auto"
