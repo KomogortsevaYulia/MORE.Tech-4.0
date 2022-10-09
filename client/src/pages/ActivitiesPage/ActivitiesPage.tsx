@@ -194,9 +194,6 @@ const ActivitiesPage = () => {
                 onChange={handleActivityReward}
               />
 
-              <Typography sx={{ color: "text.secondary" }}>
-                Дата начала
-              </Typography>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Даты начала"
@@ -208,9 +205,6 @@ const ActivitiesPage = () => {
                 />
               </LocalizationProvider>
 
-              <Typography sx={{ color: "text.secondary" }}>
-                Дата окончания
-              </Typography>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Даты окончания"

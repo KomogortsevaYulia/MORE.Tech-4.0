@@ -376,15 +376,14 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       src={`${row.rewardValue}`}
                     />
                   </Tooltip>
-                  : null}
-                0
+                : null }
                 {row.rewardType === 3 ?
                   <Typography className="fw-bold">{row.rewardValue}</Typography>
                   : null}
               </div>
               : null}
 
-            {row.users.length !== 0 ?
+            {row.users.length !== 0 ? 
               <div >
                 <Typography sx={{ color: "text.secondary" }}>Участники</Typography>
                 <div className={styles.allMembers}>

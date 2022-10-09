@@ -654,11 +654,7 @@
       "userId": 3,
       "activitiesId": 4
     },
-    {
-      "id": 6,
-      "userId": 3,
-      "activitiesId": 4
-    },
+
     {
       "id": 7,
       "userId": 3,
@@ -666,16 +662,6 @@
     },
     {
       "id": 8,
-      "userId": 3,
-      "activitiesId": 15
-    },
-    {
-      "id": 9,
-      "userId": 3,
-      "activitiesId": 15
-    },
-    {
-      "id": 10,
       "userId": 3,
       "activitiesId": 15
     },
