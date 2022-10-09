@@ -112,7 +112,7 @@ export default function Shop() {
 										<div>
 											<p className="small mb-0 text-dark">Цена:</p>
 											<h5 className="fw-semibold">
-												₽ {item.product.priceRuble}
+											{item.product.priceRuble} Digital Ruble 
 											</h5>
 										</div>
 									</div>
