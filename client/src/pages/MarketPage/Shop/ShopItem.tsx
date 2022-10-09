@@ -91,7 +91,7 @@ const ShopItem: React.FC<IShopItemProps> = ({ shopItem }) => {
               {shopItem.title}
             </h5>
 
-            <h6 className="mb-2 mx-auto ">{shopItem.priceRuble}₽</h6>
+            <h6 className="mb-2 mx-auto ">{shopItem.priceRuble} Digital Ruble</h6>
           </div>
           <button
             type="button"
