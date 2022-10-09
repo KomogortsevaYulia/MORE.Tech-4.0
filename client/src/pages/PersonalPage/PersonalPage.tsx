@@ -57,7 +57,7 @@ function a11yProps(index: number) {
 
 const PersonalPage = () => {
   const { user } = useAppSelector((state) => state.user);
-  React.useEffect(() => { }, [user]);
+  React.useEffect(() => {}, [user]);
 
   const [value, setValue] = React.useState(0);
 
@@ -82,33 +82,37 @@ const PersonalPage = () => {
   return (
     <div>
       <Grid container spacing={2}>
-
         <div className="w-100 d-flex flex-row  justify-content-between">
           <div className=" p-2 m-2 d-flex flex-row align-items-center">
             <Avatar
               alt="ФИО"
               src={user!.image}
-              sx={{ width: "10rem", height: "10rem", border: "1px solid black" }}
+              sx={{
+                width: "10rem",
+                height: "10rem",
+                border: "1px solid black",
+              }}
             />
             <Typography className=" ps-4 " variant="h3" gutterBottom>
               {user?.FIO}
             </Typography>
           </div>
-            <div style={{ maxWidth: "12vw" }} className="p-2 m-2">
-              <div className="row d-flex justify-content-center p-2 m-2">
-                <div className={`${styles.coin} `}>
-                  <div className={`${styles.side} ${styles.head}`}>DR</div>
-                  <div className={`${styles.side} ${styles.tail}`}>DR</div>
-                  <div className={`${styles.edge}`}></div>
-                </div>
-              </div>
-              <div className=" text-center">
-                <h2 className="fw-normal">{user?.balance.coinsAmount.toLocaleString()}</h2>
+          <div style={{ maxWidth: "12vw" }} className="p-2 m-2">
+            <div className="row d-flex justify-content-center p-2 m-2">
+              <div className={`${styles.coin} `}>
+                <div className={`${styles.side} ${styles.head}`}>DR</div>
+                <div className={`${styles.side} ${styles.tail}`}>DR</div>
+                <div className={`${styles.edge}`}></div>
               </div>
             </div>
-          
+            <div className=" text-center">
+              <h2 className="fw-normal">
+                {user?.balance?.coinsAmount.toLocaleString() ||
+                  "Загружается..."}
+              </h2>
+            </div>
+          </div>
         </div>
-
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
@@ -125,7 +129,9 @@ const PersonalPage = () => {
       <TabPanel value={value} index={0}>
         <div>
           {ActivitiesRecords &&
-            ActivitiesRecords?.map((row) => <ActivityItem key={row.id} row={row} withoutButton={true}/>)}
+            ActivitiesRecords?.map((row) => (
+              <ActivityItem key={row.id} row={row} withoutButton={true} />
+            ))}
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -193,7 +199,7 @@ const PersonalPage = () => {
             nftCollections.balance.map((nft) => <NftCard nft={nft} />)}
         </Grid>
       </TabPanel>
-    </div >
+    </div>
   );
 };
 
