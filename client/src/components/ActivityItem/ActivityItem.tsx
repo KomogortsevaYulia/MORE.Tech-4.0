@@ -129,9 +129,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         transferRubles({
           amount: +currentActivity.rewardValue,
           userId: user!.id,
-          toId: userTo.userId,
+          toId: winUser!.id,
           fromPrivateKey: user!.privateKey,
-          toPublicKey: userTo!.user.publicKey,
+          toPublicKey: winUser!.publicKey,
           why: "За победу в "+ currentActivity.title,
         })
       )
@@ -143,14 +143,14 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         transferNft({
           fromPrivateKey: user!.privateKey,
           tokenId,
-          toPublicKey: userTo!.user.publicKey,
+          toPublicKey: winUser!.publicKey,
         })
       )
     }
-    
     dispatch(
-      patchCompletedActivities(currentActivity.id)
-      patchWinnerActivities(userTo.id)
+      patchCompletedActivities(currentActivity.id)    )
+    dispatch(
+      patchWinnerActivities(currentActivity!.users!.find((item) => item.userId === winUser!.id)!.id)
     )
     handleCloseEnd();
   };

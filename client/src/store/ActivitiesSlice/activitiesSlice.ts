@@ -110,7 +110,7 @@ export const ActivitiesSlice = createSlice({
         state.Activities!.find((a) => a.id === action.payload.id)!.completed = true;
       })
       .addCase(patchWinnerActivities.fulfilled, (state, action) => {
-        state.Activities!.find((a) => a.users.id === action.payload.id)!.completed = true;
+        state.Activities!.find((a) => a.users.forEach(o=> {if( o.id === action.payload.id){o.isWin=true}}));
       })
       .addCase(createActivity.fulfilled, (state, action) => {
         state.Activities?.push(action.payload);
