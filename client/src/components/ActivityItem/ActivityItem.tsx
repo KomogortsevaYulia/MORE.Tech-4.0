@@ -22,7 +22,6 @@ import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createActivityRecord, patchCompletedActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import { transferNft, transferRubles } from "../../store/transactionsSlice/transactionsSlice";
-import { activitiesCurrency } from "../../const/activitiesCurrency"
 
 
 enum UserRoles {
@@ -57,12 +56,12 @@ const Accordion = styled((props: AccordionProps) => (
 }));
 
 const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
-  const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
   const { users } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
-
+  
   //Уже записан на мероприятие
   const isRec =
     row.users.findIndex((item) => item.userId === user?.id) !== -1
@@ -124,9 +123,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             toId: userTo.userId,
             fromPrivateKey: user!.privateKey,
             toPublicKey: userTo!.user.publicKey,
-            why:
-              currentActivity.typeId === 3 ?
-                "За обучение " + currentActivity.title : currentActivity.typeId === 4 ? "За командное взаимодействие " + currentActivity.title : "'",
+            why: 
+            currentActivity.typeId===3?
+            "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
           })
         )
       } else if (currentActivity.rewardType === 2) {
@@ -142,7 +141,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         )
       }
     }
-    )
+    ) 
     dispatch(
       patchCompletedActivities(currentActivity.id)
     )
@@ -184,10 +183,11 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
     handleCloseEnd();
   };
 
-  const canFinish = user && (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.CHALENG) ||
+
+  const canFinish = user && ((user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.CHALENG) ||
     (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.SOREV) ||
     (user?.roleId === UserRoles.HR && row.typeId === TypeActivityID.OBUCH) ||
-    (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.KOMAND)
+    (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.KOMAND))
 
   return (
     <div className={styles.activity}>

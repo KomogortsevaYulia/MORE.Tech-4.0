@@ -11,7 +11,6 @@ import {
 } from "@mui/lab";
 import { Typography } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import nft from "../../assets/nft.png";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -42,8 +41,8 @@ const HomePage = () => {
         <div className={`${styles.Ellipse20} `}></div>
         <div className={`${styles.Ellipse21} `}></div>
         <div className={`position-relative overflow-hidden text-center `}>
-          <div className="col-md-5 p-lg-5 mx-auto my-5 " style={{ color: "white"}}>
-            <h1 className="display-4 fw-normal" style={{ color: "white"}} >Крутой проект</h1>
+          <div className="col-md-5 p-lg-5 mx-auto my-5 " style={{ color: "white" }}>
+            <h1 className="display-4 fw-normal" style={{ color: "white" }} >Крутой проект</h1>
             <p className="lead fw-normal" >
               Цель: Повысить мотивацию и вовлеченность сотрудников компании для
               формирования дружественной атмосферы, а так-же профессионального
@@ -57,8 +56,8 @@ const HomePage = () => {
           className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}
         >
           <div className="col-md-6 p-lg-6 mx-auto my-6 " >
-            <h2 className="display-4 fw-normal" style={{ color: "white"}}>Механика</h2>
-            <p className="lead fw-normal" style={{ color: "white"}}>
+            <h2 className="display-4 fw-normal" style={{ color: "white" }}>Механика</h2>
+            <p className="lead fw-normal" style={{ color: "white" }}>
               В системе существуют монеты и NFT, будь активным и они у тебя
               появятся!
             </p>
@@ -187,13 +186,13 @@ const HomePage = () => {
           className={`position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center `}
         >
           <div className="col-md-6 p-lg-6 mx-auto my-6 " >
-            <h2 className="display-4 fw-normal" style={{ color: "white"}}>Предстоящие активности</h2>
+            <h2 className="display-4 fw-normal" style={{ color: "white" }}>Предстоящие активности</h2>
           </div>
           <div className={styles.content}>
             <div>
               <div className={styles.activities}>
                 {ActivitiesRecords &&
-                  ActivitiesRecords?.map((row) => <ActivityItem key={row.id} row={row} withoutButton={false}/>)}
+                  ActivitiesRecords?.map((row) => <ActivityItem key={row.id} row={row} withoutButton={false} />)}
               </div>
             </div>
           </div>

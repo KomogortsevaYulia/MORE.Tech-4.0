@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../store";
-import { MainApi, IUser, IUserWithBalance } from "../../api/mainApi";
-import { LoadingStatus } from "../../types/types";
-import { BlockchainApi } from "../../api/blockchainApi";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { MainApi, IUserWithBalance } from '../../api/mainApi';
+import { LoadingStatus } from '../../types/types';
+import { BlockchainApi } from '../../api/blockchainApi';
 
 export interface UserState {
   user: IUserWithBalance | null;
@@ -16,24 +15,21 @@ const initialState: UserState = {
   fetchUserError: null,
 };
 
-export const fetchUserById = createAsyncThunk(
-  "user/fetchUserById",
-  async (id: number) => {
-    return MainApi.fetchUserById(id);
-  }
-);
+export const fetchUserById = createAsyncThunk('user/fetchUserById', async (id: number) => {
+  return MainApi.fetchUserById(id);
+});
 
 export const fetchUserBalance = createAsyncThunk(
-  "user/fetchUserBalance",
+  'user/fetchUserBalance',
   async (publicKey: string) => {
     const balance = BlockchainApi.balanceFiat(publicKey);
     const balanceNFT = BlockchainApi.balanceNFT(publicKey);
 
     return Promise.all([balance, balanceNFT]);
-  }
+  },
 );
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
@@ -45,14 +41,14 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserById.pending, (state) => {
-        state.fethcUserStatus = "loading";
+        state.fethcUserStatus = 'loading';
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
-        state.fethcUserStatus = "success";
+        state.fethcUserStatus = 'success';
         state.user = action.payload;
       })
       .addCase(fetchUserById.rejected, (state) => {
-        state.fethcUserStatus = "failed";
+        state.fethcUserStatus = 'failed';
       })
       .addCase(fetchUserBalance.fulfilled, (state, action) => {
         const [balance, balanceNft] = action.payload;
