@@ -20,7 +20,7 @@ const AnalyticPage = () => {
 
     useEffect(() => {
         dispatch(fetchDepartments())
-    }, [])
+    }, [dispatch])
     const [openModal, setOpenModal] = React.useState(false);
 
     const addClick = (ids: GridRowId[]) => {
@@ -49,7 +49,7 @@ const AnalyticPage = () => {
             )
         );
         closeModal();
-    }, [usersToGetMoney]);
+    }, [usersToGetMoney, closeModal, dispatch, user]);
     return (
         <div>
             <h1>Отделы</h1>

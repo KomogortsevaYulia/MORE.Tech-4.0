@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { Alert, Avatar, AvatarGroup, Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { Alert, Avatar, List, ListItem, ListItemText } from "@mui/material";
 import Button from '@mui/material/Button';
 import { fetchProducts } from "../../store/marketSlice/marketSlice";
 import { IProduct } from "../../api/mainApi";
@@ -29,7 +29,7 @@ const WheelPage = () => {
 
   const handleSpinClick = () => {
     const newPrizeIndex = Math.floor(Math.random() * data.length)
-    setMustSpin(true); 
+    setMustSpin(true);
     setPrizeIndex(-1)
     setPrizeNumber(newPrizeIndex)
   }
@@ -40,40 +40,40 @@ const WheelPage = () => {
 
     <div className="row">
       <div className="col-5">
-      <div className="row p-1">
-        <Wheel
-          mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
-          data={data}
-          innerBorderColor={"#ffffff"}
-          innerBorderWidth={5}
-          outerBorderColor={"#ffffff"}
-          radiusLineColor={"#FFFFFF"}
-          radiusLineWidth={5}
-          textColors={["#666666"]}
-          fontSize={10}
-          backgroundColors={[
-            '#9E95F5',
-            "#E0FFDF",
-            "#F08182",
-            "#FFB976",
-            "#1CE7FF"
-          ]}
-          onStopSpinning={() => {
-            setPrizeIndex(prizeNumber);
-            setMustSpin(false)
-          }}
-        /></div>
         <div className="row p-1">
-          <Button variant="contained" onClick={() => {handleSpinClick();}}>
+          <Wheel
+            mustStartSpinning={mustSpin}
+            prizeNumber={prizeNumber}
+            data={data}
+            innerBorderColor={"#ffffff"}
+            innerBorderWidth={5}
+            outerBorderColor={"#ffffff"}
+            radiusLineColor={"#FFFFFF"}
+            radiusLineWidth={5}
+            textColors={["#666666"]}
+            fontSize={10}
+            backgroundColors={[
+              '#9E95F5',
+              "#E0FFDF",
+              "#F08182",
+              "#FFB976",
+              "#1CE7FF"
+            ]}
+            onStopSpinning={() => {
+              setPrizeIndex(prizeNumber);
+              setMustSpin(false)
+            }}
+          /></div>
+        <div className="row p-1">
+          <Button variant="contained" onClick={() => { handleSpinClick(); }}>
             Крутить
           </Button >
         </div>
         <div className="row p-1">
           {!mustSpin && prizeIndex !== -1 ?
             <Alert variant="filled" severity="success">Вы получили приз - {data[prizeIndex].option} !</Alert>
-          :
-            <Alert variant="filled" severity="warning">1 раз = 20 Digital Rouble <br/> Крутите колесо фортуны!</Alert>}
+            :
+            <Alert variant="filled" severity="warning">1 раз = 20 Digital Rouble <br /> Крутите колесо фортуны!</Alert>}
           {/* // :
           //   <Alert variant="filled" severity="warning">1 раз = 20 Digital Rouble <br/> Крутите колесо фортуны!</Alert>} */}
         </div>
