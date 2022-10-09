@@ -22,6 +22,7 @@ import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createActivityRecord } from "../../store/ActivitiesSlice/activitiesSlice";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
+import {activitiesCurrency} from "../../const/activitiesCurrency"
 
 interface IActivityItemProps {
   row: IActivities;
@@ -53,6 +54,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
 
   const bet = row.users.find((u) => u.userId === user!.id)?.bet;
 
+  const [activitiesCurrencyValue, setActivitiesCurrency] = React.useState(activitiesCurrency);
   const [currentActivity, setCurrentActivity] = React.useState(row);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -190,7 +192,6 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                         >
                           Завершить 
                         </Button>
-
                       </Tooltip>
                     :
                       <Tooltip title="Записаться на мероприятие">
@@ -215,31 +216,52 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <div className={styles.details}>
-            <div className={styles.flexColumn}>
+          <div className={`${styles.details} d-flex flex-row justify-content-between`}>
+            <div className={`${styles.flexColumn} `}>
               <Typography sx={{ color: "text.secondary" }}>Описание</Typography>
               <Typography>{row.description}</Typography>
             </div>
-            <div className={styles.flexColumn}>
-              <Typography sx={{ color: "text.secondary" }}>Награда</Typography>
-              <Typography>{row.reward}</Typography>
-            </div>
-            <div className={styles.members}>
-              <div className={styles.flexColumn}></div>
-            </div>
-            <div className={styles.allMembers}>
-              <AvatarGroup max={row.users.length}>
-                {row.users.map((user) => (
-                  <Tooltip key={user.id} title={user.user.FIO}>
+            {row.rewardValue ? 
+              <div className={styles.flexColumn}>
+                <Typography sx={{ color: "text.secondary" }}>Награда</Typography>
+                {row.rewardType === 1 ?
+                  <Typography className="fw-bold">{row.rewardValue} Digital Rubles</Typography>
+                : null }
+
+                {row.rewardType === 2 ?
+                  <Tooltip title="NFT">
                     <Avatar
-                      alt={user.user.FIO}
-                      src={user.user.image}
-                      className={styles.memberAvatar}
+                      alt="NFT"
+                      src={`${row.rewardValue}`}
                     />
                   </Tooltip>
-                ))}
-              </AvatarGroup>
-            </div>
+                : null }
+0
+                {row.rewardType === 3 ?
+                  <Typography className="fw-bold">{row.rewardValue}</Typography>
+                : null }
+              </div>
+            :null}
+
+            {row.users.length !== 0 ? 
+              <div >            
+                <Typography sx={{ color: "text.secondary" }}>Участники</Typography>
+                <div className={styles.allMembers}>
+                  <AvatarGroup max={row.users.length}>
+                    {row.users.map((user) => (
+                      <Tooltip key={user.id} title={user.user.FIO}>
+                        <Avatar
+                          alt={user.user.FIO}
+                          src={user.user.image}
+                          className={styles.memberAvatar}
+                        />
+                      </Tooltip>
+                    ))}
+                  </AvatarGroup>
+                </div>              
+              </div>
+             :null}
+
           </div>
         </AccordionDetails>
       </Accordion>

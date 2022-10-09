@@ -51,7 +51,8 @@ export interface IActivities {
   description: string;
   dateStart: string;
   dateEnd: string;
-  reward: string;
+  rewardValue: string | number;
+  rewardType: number;
   users: IActivityRecords[];
 }
 
@@ -219,20 +220,21 @@ export class MainApi {
 
   static async fetchActivities() {
     const activities = await axios
-      .get<IActivities[]>(`${apiUrl}/activities`)
-      .then((response) => response.data);
+    .get<IActivities[]>(`${apiUrl}/activities`)
+    .then((response) => response.data);
 
     const usersActivities = await axios
-      .get<IActivityRecords[]>(
-        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
-      )
-      .then((response) => response.data);
+    .get<IActivityRecords[]>(
+      `${apiUrl}/activity_records?&_expand=user&_expand=activities`
+    )
+    .then((response) => response.data);
 
     for (let activity of activities) {
       activity.users = usersActivities.filter(
         (userActivity) => userActivity.activitiesId === activity.id
       );
     }
+    console.log(activities)
     return activities;
   }
 
@@ -401,7 +403,7 @@ export class MainApi {
         activitiesWithUsers[userActivity.activitiesId] = [userActivity];
       }
     });
-
+    console.log(activitiesWithUsers)
     return activitiesWithUsers;
   }
 

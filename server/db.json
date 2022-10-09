@@ -69,6 +69,20 @@
       "id": 3
     }
   ],
+  "activitiesCurrency": [
+    {
+      "title": "Digital Rubles",
+      "id": 1
+    },
+    {
+      "title": "NFT",
+      "id": 2
+    },
+    {
+      "title": "Действие",
+      "id": 3
+    }
+  ],
   "activities": [
     {
       "id": 1,
@@ -77,7 +91,8 @@
       "description": "Планируется поход в Тунку, поесть чебуреков, попить пива и посидеть в источниках",
       "dateStart": "2022-10-10",
       "dateEnd": "2022-13-10",
-      "reward": "55 Digital Rubles"
+      "rewardValue": 55,
+      "rewardType": 1
     },
     {
       "id": 2,
@@ -86,7 +101,8 @@
       "description": "Объявлен конкурс на самый смешной мем про начальника. Победитель лишается премии",
       "dateStart": "2022-15-07",
       "dateEnd": "2022-15-08",
-      "reward": "x1 NFT с собачкой"
+      "rewardValue": "https://games.mail.ru/hotbox/content_files/news/2022/01/26/d1c28756c16646898f81153f35c9d686.jpg",
+      "rewardType": 2
     },
     {
       "id": 3,
@@ -95,7 +111,8 @@
       "description": "Мастер класс от ведущих мировых специалистов",
       "dateStart": "2022-12-07",
       "dateEnd": "2022-12-07",
-      "reward": "10 Digital Rubles"
+      "rewardValue": 10,
+      "rewardType": 1
     },
     {
       "id": 4,
@@ -104,7 +121,8 @@
       "description": "Мастер класс от ведущих мировых специалистов",
       "dateStart": "2022-19-07",
       "dateEnd": "2022-19-07",
-      "reward": "20 Digital Rubles"
+      "rewardValue": 40,
+      "rewardType": 1
     },
     {
       "id": 5,
@@ -121,7 +139,8 @@
       "description": "Соревнование по преработке. Победитель получит выходной",
       "dateStart": "2022-18-12",
       "dateEnd": "2022-19-12",
-      "reward": "Отгул или 100 Digital Rubles"
+      "rewardValue": "Отгул",
+      "rewardType": 3
     },
     {
       "id": 7,
@@ -217,7 +236,6 @@
       "description": "никогда такого не было и вот опять - соревнование на самого алкогольного алкоголика",
       "title": "А ТЫ сможешь выпить 2 литра пива залпом???",
       "typeId": 2,
-      "reward": "х2 от сделанной тобой ставки",
       "id": 18
     }
   ],
