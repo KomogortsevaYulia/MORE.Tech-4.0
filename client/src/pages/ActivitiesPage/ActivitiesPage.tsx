@@ -17,6 +17,7 @@ import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 import { FormLabel, RadioGroup, FormControlLabel } from "@mui/material";
 import { Radio } from "antd";
+import AddIcon from '@mui/icons-material/Add';
 
 
 const ActivitiesPage = () => {
@@ -32,7 +33,7 @@ const ActivitiesPage = () => {
 
   const typeActivity: any = [
     {
-      title: "Битва",
+      title: "Соревнование",
       id: 1,
     },
      {
@@ -44,7 +45,7 @@ const ActivitiesPage = () => {
       id: 3,
     },
      {
-      title: "Общественная деятельность",
+      title: "Командное взаимодействие",
       id: 4,}
     ];
   
@@ -68,9 +69,9 @@ const ActivitiesPage = () => {
         flexDirection: "column"
       }}
     >
+      <div className="container-sm">
       <header className={styles.filters}>
         <div className="card card-body">
-
           <Modal
             open={open}
             onClose={handleClose}
@@ -105,9 +106,7 @@ const ActivitiesPage = () => {
                 {typeActivity && typeActivity?.map((row:any) =>
                   <FormControlLabel value={row.title} control={<Radio />} label={row.title} />
                 )}
-
               </RadioGroup>
-
 
               <TextField label="Название активности" variant="outlined" />
               <TextField label="Описание активности" variant="outlined" />
@@ -147,26 +146,19 @@ const ActivitiesPage = () => {
           </Modal>
 
           <Stack spacing={2} direction="row" style={{ margin: "auto" }}>
-            <div className={styles.filtersItem}>
-              {user?.roleId === 1 ? (
-                <Button variant="contained" className="mt-4" onClick={handleOpen}>
-                  Создать активность
-                </Button>
-              ) : (
-                null
-              )}
-            </div>
+
 
             <div className={styles.filtersItem}>
-              <Typography sx={{ color: "text.secondary" }}>Название</Typography>
-              <Autocomplete
+              
+              <Autocomplete 
                 id="free-solo-demo"
+                
                 freeSolo
                 options={
                   (Activities && Activities?.map((option) => option.title)) || []
                 }
-                renderInput={(params) => <TextField {...params} />}
-                sx={{ width: 300 }}
+                renderInput={(params) => <TextField {...params} label="Название"/>}
+                sx={{ width: 300 }} 
               />
             </div>
             <div className={styles.filtersItem}>
@@ -194,19 +186,27 @@ const ActivitiesPage = () => {
               </LocalizationProvider>
             </div>
             <div className={styles.filtersItem}>
-              <Typography sx={{ color: "text.secondary" }}>
-                Применить фильтры
-              </Typography>
-              <Tooltip title="Применить фильтры">
+              <Tooltip title="Применить фильтр">
                 <Button variant="contained">Применить</Button>
               </Tooltip>
             </div>
           </Stack>
         </div>
       </header>
+</div>
+
 
       <div className={styles.content}>
         <div className="card card-body">
+        <div className={styles.filtersItem}>
+              {user?.roleId === 1 ? (
+                <Button variant="contained" className="m-2" onClick={handleOpen}>
+                 <AddIcon/> Создать активность
+                </Button>
+              ) : (
+                null
+              )}
+            </div>
           <div className={styles.activities}>
             {Activities && Activities?.map((row) => <ActivityItem key={row.id} row={row} />)}
           </div>

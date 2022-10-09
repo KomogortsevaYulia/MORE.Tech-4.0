@@ -1,6 +1,6 @@
 export const typeActivity: any = {
   1: {
-    title: "Битва",
+    title: "Соревнование",
     id: 1,
     color: "var(--orange)",
   },
@@ -15,7 +15,7 @@ export const typeActivity: any = {
     color: "var(--purple)",
   },
   4: {
-    title: "Общественная деятельность",
+    title: "Командное взаимодействие",
     id: 4,
     color: "var(--blue)",
   },

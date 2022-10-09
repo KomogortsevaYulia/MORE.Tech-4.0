@@ -43,7 +43,8 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUserById.rejected, (state) => {
         state.fethcUserStatus = "failed";
-      });
+      })
+      ;
   },
 });
 
