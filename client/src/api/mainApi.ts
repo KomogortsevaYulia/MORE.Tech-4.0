@@ -1,5 +1,5 @@
-import axios from "axios";
-import { BalanceFiat, BalanceNFT, BlockchainApi } from "./blockchainApi";
+import axios from 'axios';
+import { BalanceFiat, BalanceNFT, BlockchainApi } from './blockchainApi';
 
 export interface IUser {
   id: number;
@@ -14,6 +14,14 @@ export interface IUser {
 export interface IDepartment {
   id: number;
   title: string;
+}
+
+export interface IDepartmentWithUser extends IDepartment {
+  users: IUser[];
+}
+
+export interface IUserWithDepartment extends IUser {
+  department: IDepartment;
 }
 
 export interface IUserWithBalance {
@@ -129,7 +137,7 @@ export interface ICreateActivity {
   reward: string;
 }
 
-const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3004";
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3004';
 
 export class MainApi {
   static async fetchUserById(id: number) {
@@ -158,8 +166,8 @@ export class MainApi {
     for (let user of users) {
       promises.push(
         BlockchainApi.balanceFiat(user.publicKey).then(
-          (balance: BalanceFiat) => (user.balance = balance)
-        )
+          (balance: BalanceFiat) => (user.balance = balance),
+        ),
       );
     }
 
@@ -180,9 +188,7 @@ export class MainApi {
 
   static async fetchTransferRubleByUsers(id: number) {
     const transfer0 = await axios
-      .get<ITransferRuble[]>(
-        `${apiUrl}/transferRuble?userId=${id}&_expand=user`
-      )
+      .get<ITransferRuble[]>(`${apiUrl}/transferRuble?userId=${id}&_expand=user`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
@@ -191,14 +197,12 @@ export class MainApi {
 
     transfer0.push(
       ...(await axios
-        .get<ITransferRuble[]>(
-          `${apiUrl}/transferRuble?toId=${id}&_expand=user`
-        )
+        .get<ITransferRuble[]>(`${apiUrl}/transferRuble?toId=${id}&_expand=user`)
         .then((response) => response.data)
         .catch((err) => {
           console.log(err);
           return err;
-        }))
+        })),
     );
 
     const users = await axios
@@ -221,17 +225,15 @@ export class MainApi {
       .then((response) => response.data);
 
     const usersActivities = await axios
-    .get<IActivityRecords[]>(
-      `${apiUrl}/activity_records?&_expand=user&_expand=activities`
-    )
-    .then((response) => response.data);
+      .get<IActivityRecords[]>(`${apiUrl}/activity_records?&_expand=user&_expand=activities`)
+      .then((response) => response.data);
 
     for (let activity of activities) {
       activity.users = usersActivities.filter(
-        (userActivity) => userActivity.activitiesId === activity.id
+        (userActivity) => userActivity.activitiesId === activity.id,
       );
     }
-    console.log(activities)
+    console.log(activities);
     return activities;
   }
 
@@ -255,20 +257,16 @@ export class MainApi {
 
   static async fetchActivitiesForHome() {
     const activities = await axios
-      .get<IActivities[]>(
-        `${apiUrl}/activities?_sort=dateStart&_order=asc&_limit=5`
-      )
+      .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart&_order=asc&_limit=5`)
       .then((response) => response.data);
 
     const usersActivities = await axios
-      .get<IActivityRecords[]>(
-        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
-      )
+      .get<IActivityRecords[]>(`${apiUrl}/activity_records?&_expand=user&_expand=activities`)
       .then((response) => response.data);
 
     for (let activity of activities) {
       activity.users = usersActivities.filter(
-        (userActivity) => userActivity.activitiesId === activity.id
+        (userActivity) => userActivity.activitiesId === activity.id,
       );
     }
 
@@ -282,9 +280,7 @@ export class MainApi {
   }
 
   static async addActivityToUser(data: ICreateRecordUserActivity) {
-    return axios
-      .post(`${apiUrl}/activity_records`, { ...data })
-      .then((response) => response.data);
+    return axios.post(`${apiUrl}/activity_records`, { ...data }).then((response) => response.data);
   }
 
   static async fetchActivitiesWithUser(id: number) {
@@ -293,14 +289,12 @@ export class MainApi {
       .then((response) => response.data);
 
     const usersActivities = await axios
-      .get<IActivityRecords[]>(
-        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
-      )
+      .get<IActivityRecords[]>(`${apiUrl}/activity_records?&_expand=user&_expand=activities`)
       .then((response) => response.data);
 
     for (let activity of activities) {
       activity.users = usersActivities.filter(
-        (userActivity) => userActivity.activitiesId === activity.id
+        (userActivity) => userActivity.activitiesId === activity.id,
       );
     }
 
@@ -313,9 +307,7 @@ export class MainApi {
     const transactions = axios
       .get<ITransferRuble[]>(`${apiUrl}/transferRuble`)
       .then((response) => response.data);
-    const users = axios
-      .get<IUser[]>(`${apiUrl}/users`)
-      .then((response) => response.data);
+    const users = axios.get<IUser[]>(`${apiUrl}/users`).then((response) => response.data);
 
     return Promise.all([transactions, users]).then(([tData, uData]) => {
       return tData.map(
@@ -324,16 +316,14 @@ export class MainApi {
             ...t,
             user: uData.find((u) => u.id === t.userId),
             users2: uData.find((u) => u.id === t.toId),
-          } as ITransferRubleWithUsers)
+          } as ITransferRubleWithUsers),
       );
     });
   }
 
   static async fetchOrderWithUser(id: number) {
     return axios
-      .get<IOrder[]>(
-        `${apiUrl}/orders?userId=${id}&_expand=user&_expand=product`
-      )
+      .get<IOrder[]>(`${apiUrl}/orders?userId=${id}&_expand=user&_expand=product`)
       .then((response) => response.data)
       .catch((err) => {
         console.log(err);
@@ -341,16 +331,29 @@ export class MainApi {
       });
   }
 
-  static async addActivity(data:IActivities) {
+  static async addActivity(data: IActivities) {
     return axios
       .post<IOrder[]>(`${apiUrl}/activities`, { ...data })
       .then((response) => response.data);
   }
 
-  static async fetchDepartmentsWithUsers() {
+  static async fetchDepartmentsWithUsers(): Promise<IDepartmentWithUser[]> {
     return axios
-      .get<IOrder[]>(`${apiUrl}/users?&_expand=department`)
+      .get<IUserWithDepartment[]>(`${apiUrl}/users?&_expand=department`)
       .then((response) => response.data)
+      .then((users: IUserWithDepartment[]) => {
+        const departments: IDepartmentWithUser[] = [];
+
+        users.forEach((user) => {
+          if (departments[user.departmentId] !== undefined) {
+            departments[user.departmentId].users.push(user);
+          } else {
+            departments[user.departmentId] = { ...user.department, users: [user] };
+          }
+        });
+        console.log(departments);
+        return departments;
+      })
       .catch((err) => {
         console.log(err);
         return err;
@@ -391,9 +394,7 @@ export class MainApi {
 
   static async fetchActivitiesWithUsers() {
     const usersActivities = await axios
-      .get<Array<any>>(
-        `${apiUrl}/activity_records?&_expand=user&_expand=activities`
-      )
+      .get<Array<any>>(`${apiUrl}/activity_records?&_expand=user&_expand=activities`)
       .then((response) => response.data);
 
     const activitiesWithUsers = {} as any;
@@ -405,15 +406,11 @@ export class MainApi {
         activitiesWithUsers[userActivity.activitiesId] = [userActivity];
       }
     });
-    console.log(activitiesWithUsers)
+    console.log(activitiesWithUsers);
     return activitiesWithUsers;
   }
 
-  static async createActivityRecord(
-    userId: number,
-    activitiesId: number,
-    bet?: number
-  ) {
+  static async createActivityRecord(userId: number, activitiesId: number, bet?: number) {
     const record = await axios
       .post(`${apiUrl}/activity_records`, {
         userId,
@@ -424,7 +421,7 @@ export class MainApi {
 
     return await axios
       .get<IActivityRecords[]>(
-        `${apiUrl}/activity_records?&_expand=user&_expand=activities&id=${record.id}`
+        `${apiUrl}/activity_records?&_expand=user&_expand=activities&id=${record.id}`,
       )
       .then((response) => response.data[0]);
   }
