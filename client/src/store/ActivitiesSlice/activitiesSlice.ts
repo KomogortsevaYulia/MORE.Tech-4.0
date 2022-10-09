@@ -4,6 +4,7 @@ import {
   IActivities,
   ICreateRecordUserActivity,
   ITypeActivities,
+  ICreateActivity,
 } from "../../api/mainApi";
 import { LoadingStatus } from "../../types/types";
 
@@ -61,6 +62,13 @@ export const createActivityRecord = createAsyncThunk(
   }
 );
 
+export const createActivity = createAsyncThunk(
+  "Activities/createActivity",
+  async (data: ICreateActivity) => {
+    return MainApi.createActivity(data);
+  }
+);
+
 export const ActivitiesSlice = createSlice({
   name: "Activities",
   initialState,
@@ -88,6 +96,14 @@ export const ActivitiesSlice = createSlice({
       .addCase(fetchActivitiesForHome.fulfilled, (state, action) => {
         state.fethcActivitiesStatus = "success";
         state.ActivitiesRecords = action.payload;
+      })
+      .addCase(createActivityRecord.fulfilled, (state, action) => {
+        state.Activities?.find(
+          (a) => a.id === action.payload.activitiesId
+        )?.users.push(action.payload);
+      })
+      .addCase(createActivity.fulfilled, (state, action) => {
+        state.Activities?.push(action.payload);
       });
   },
 });

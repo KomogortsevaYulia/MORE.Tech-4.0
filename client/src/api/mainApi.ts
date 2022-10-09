@@ -112,9 +112,18 @@ export interface ICreateRecordUserActivity {
   activitiesId: number;
   bet?: number;
 }
+
 export interface ITypeActivities {
   id: number;
   title: string;
+}
+
+export interface ICreateActivity {
+  typeId: number;
+  title: string;
+  description: string;
+  dateStart: string;
+  dateEnd: string;
 }
 
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3004";
@@ -381,10 +390,28 @@ export class MainApi {
     activitiesId: number,
     bet?: number
   ) {
-    return axios.post(`${apiUrl}/activity_records`, {
-      userId,
-      activitiesId,
-      bet,
-    });
+    const record = await axios
+      .post(`${apiUrl}/activity_records`, {
+        userId,
+        activitiesId,
+        bet,
+      })
+      .then((response) => response.data);
+
+    return await axios
+      .get<IActivityRecords[]>(
+        `${apiUrl}/activity_records?&_expand=user&_expand=activities&id=${record.id}`
+      )
+      .then((response) => response.data[0]);
+  }
+
+  static async createActivity(data: ICreateActivity) {
+    const acitivity = await axios
+      .post<IActivities>(`${apiUrl}/activities`, data)
+      .then((response) => response.data);
+
+    acitivity.users = [];
+
+    return acitivity;
   }
 }

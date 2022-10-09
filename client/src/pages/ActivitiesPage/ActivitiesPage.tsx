@@ -1,7 +1,11 @@
 import React, { useCallback } from "react";
 import Typography from "@mui/material/Typography";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchActivities, fetchTypeActivities } from "../../store/ActivitiesSlice/activitiesSlice";
+import {
+  createActivity,
+  fetchActivities,
+  fetchTypeActivities,
+} from "../../store/ActivitiesSlice/activitiesSlice";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -15,9 +19,14 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
-import { FormLabel, RadioGroup, FormControlLabel } from "@mui/material";
-import { Radio } from "antd";
-
+import {
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  Radio,
+} from "@mui/material";
+import { fetchUsers } from "../../store/adminSlice/adminSlice";
 
 const ActivitiesPage = () => {
   const { user } = useAppSelector((state) => state.user);
@@ -28,6 +37,7 @@ const ActivitiesPage = () => {
 
   React.useEffect(() => {
     dispatch(fetchActivities());
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   const typeActivity: any = [
@@ -35,19 +45,19 @@ const ActivitiesPage = () => {
       title: "Битва",
       id: 1,
     },
-     {
+    {
       title: "Челлендж",
       id: 2,
     },
-     {
+    {
       title: "Обучение",
       id: 3,
     },
-     {
+    {
       title: "Общественная деятельность",
-      id: 4,}
-    ];
-  
+      id: 4,
+    },
+  ];
 
   const [value11, setValue11] = React.useState<Date | null>(null);
   const [value2, setValue2] = React.useState<Date | null>(null);
@@ -59,18 +69,58 @@ const ActivitiesPage = () => {
   const [addStartDate, setAddStartDate] = React.useState<Date | null>(null);
   const [addEndDate, setAddEndDate] = React.useState<Date | null>(null);
 
-  const handleAddActivity = useCallback(() => { }, []);
+  const [activityName, setActivityName] = React.useState("");
+  const [activityDescription, setActivityDescription] = React.useState("");
+
+  const handleActivityNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setActivityName(event.target.value);
+  };
+
+  const handleActivityDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setActivityDescription(event.target.value);
+  };
+
+  const [typeActivityId, setTypeActivityId] = React.useState(1);
+
+  const handleTypeActivityChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTypeActivityId(+(event.target as HTMLInputElement).value);
+  };
+
+  const handleAddActivity = useCallback(() => {
+    dispatch(
+      createActivity({
+        dateEnd: addEndDate!.toISOString().split("T")[0],
+        dateStart: addStartDate!.toISOString().split("T")[0],
+        description: activityDescription,
+        title: activityName,
+        typeId: typeActivityId,
+      })
+    );
+
+    handleClose();
+  }, [
+    typeActivityId,
+    activityName,
+    activityDescription,
+    addStartDate,
+    addEndDate,
+  ]);
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        flexDirection: "column"
+        flexDirection: "column",
       }}
     >
       <header className={styles.filters}>
         <div className="card card-body">
-
           <Modal
             open={open}
             onClose={handleClose}
@@ -97,20 +147,37 @@ const ActivitiesPage = () => {
                 Добавление активности
               </Typography>
 
-              <FormLabel id="demo-radio-buttons-group-label">Тип</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
-              >
-                {typeActivity && typeActivity?.map((row:any) =>
-                  <FormControlLabel value={row.title} control={<Radio />} label={row.title} />
-                )}
+              <FormControl>
+                <FormLabel id="demo-radio-buttons-group-label">Тип</FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="radio-buttons-group"
+                  value={typeActivityId}
+                  onChange={handleTypeActivityChange}
+                >
+                  {typeActivity &&
+                    typeActivity?.map((row: any) => (
+                      <FormControlLabel
+                        value={row.id}
+                        control={<Radio />}
+                        label={row.title}
+                      />
+                    ))}
+                </RadioGroup>
+              </FormControl>
 
-              </RadioGroup>
-
-
-              <TextField label="Название активности" variant="outlined" />
-              <TextField label="Описание активности" variant="outlined" />
+              <TextField
+                label="Название активности"
+                variant="outlined"
+                value={activityName}
+                onChange={handleActivityNameChange}
+              />
+              <TextField
+                label="Описание активности"
+                variant="outlined"
+                value={activityDescription}
+                onChange={handleActivityDescriptionChange}
+              />
 
               <Typography sx={{ color: "text.secondary" }}>
                 Дата начала
@@ -149,12 +216,14 @@ const ActivitiesPage = () => {
           <Stack spacing={2} direction="row" style={{ margin: "auto" }}>
             <div className={styles.filtersItem}>
               {user?.roleId === 1 ? (
-                <Button variant="contained" className="mt-4" onClick={handleOpen}>
+                <Button
+                  variant="contained"
+                  className="mt-4"
+                  onClick={handleOpen}
+                >
                   Создать активность
                 </Button>
-              ) : (
-                null
-              )}
+              ) : null}
             </div>
 
             <div className={styles.filtersItem}>
@@ -163,7 +232,8 @@ const ActivitiesPage = () => {
                 id="free-solo-demo"
                 freeSolo
                 options={
-                  (Activities && Activities?.map((option) => option.title)) || []
+                  (Activities && Activities?.map((option) => option.title)) ||
+                  []
                 }
                 renderInput={(params) => <TextField {...params} />}
                 sx={{ width: 300 }}
@@ -208,12 +278,14 @@ const ActivitiesPage = () => {
       <div className={styles.content}>
         <div className="card card-body">
           <div className={styles.activities}>
-            {Activities && Activities?.map((row) => <ActivityItem key={row.id} row={row} withoutButton={false}/>)}
+            {Activities &&
+              Activities?.map((row) => (
+                <ActivityItem key={row.id} row={row} withoutButton={false} />
+              ))}
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 
