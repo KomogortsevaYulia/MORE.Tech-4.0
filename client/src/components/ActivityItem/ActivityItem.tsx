@@ -168,24 +168,48 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   )}
                 </div>
                 <Typography sx={{ color: "var(--purple)" }}>
-                  c {row.dateStart} до {row.dateEnd} {withoutButton}
+                  c {row.dateStart} до {row.dateEnd}
                 </Typography>
               </div>
               <div className={styles.activityButtons}>
-                <Tooltip title="Записаться на мероприятие">
-                  <Button
-                    disabled={isRec}
-                    className={styles.enrollButton}
-                    variant="contained"
-                    onClick={(e) => {
-                      handleOpen();
-                      setCurrentActivity(row);
-                      e.stopPropagation();
-                    }}
-                  >
-                    {isRec ? "Вы уже записаны" : "Записаться"}
-                  </Button>
-                </Tooltip>
+
+                {withoutButton ? 
+                  null
+                :
+                  <div>
+                    {user?.roleId === 1 ? 
+                      <Tooltip title="Завершить активность">
+                        <Button
+                          style={{background: "rgb(221, 76, 76)", margin: "0 10px"}}
+                          variant="contained"
+                          onClick={(e) => {
+                            handleOpen();
+                            setCurrentActivity(row);
+                            e.stopPropagation();
+                          }}
+                        >
+                          Завершить 
+                        </Button>
+
+                      </Tooltip>
+                    :
+                      <Tooltip title="Записаться на мероприятие">
+                        <Button
+                          disabled={isRec}
+                          className={styles.enrollButton}
+                          variant="contained"
+                          onClick={(e) => {
+                            handleOpen();
+                            setCurrentActivity(row);
+                            e.stopPropagation();
+                          }}
+                        >
+                          {isRec ? "Вы уже записаны": "Записаться"}
+                        </Button>
+                      </Tooltip>
+                    }
+                  </div>
+                }
               </div>
             </div>
           </div>
