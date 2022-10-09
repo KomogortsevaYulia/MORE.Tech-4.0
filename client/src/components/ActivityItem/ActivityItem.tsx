@@ -119,10 +119,23 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
       transferRubles({
         amount: +rublesAmount,
         fromPrivateKey: user!.privateKey,
-        why: "Взнос на участие в челендже",
+        why: "Взнос на участие в челлендже",
         userId: user!.id,
         toId: users!.find((u) => u.roleId === 1)!.id,
         toPublicKey: users!.find((u) => u.roleId === 1)!.publicKey,
+      })
+    );
+    handleClose();
+  };
+
+
+  const handleEnrollClickRecord = (e: any) => {
+    e.stopPropagation();
+    dispatch(
+      createActivityRecord({
+        activitiesId: row.id,
+        userId: user!.id,
+        bet: +rublesAmount,
       })
     );
     handleClose();
@@ -173,7 +186,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
       if (currentActivity.rewardType === 1) {
         dispatch(
           transferRubles({
-            amount: +currentActivity.rewardValue,
+            amount:  currentActivity.typeId === 2 ? +currentActivity.rewardValue*2 :+currentActivity.rewardValue,
             userId: user!.id,
             toId: userTo.userId,
             fromPrivateKey: user!.privateKey,
@@ -182,8 +195,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               currentActivity.typeId === 3
                 ? "За обучение " + currentActivity.title
                 : currentActivity.typeId === 4
-                ? "За командное взаимодействие " + currentActivity.title
-                : "'",
+                  ? "За командное взаимодействие " + currentActivity.title
+                  :  currentActivity.typeId === 2
+                  ? "За челлендж " + currentActivity.title :""
           })
         );
       } else if (currentActivity.rewardType === 2) {
@@ -193,7 +207,6 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         dispatch(
           transferNft({
             fromPrivateKey: user!.privateKey,
-
             toPublicKey: userTo!.user.publicKey,
             nft,
             toId: userTo!.userId,
@@ -202,8 +215,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               currentActivity.typeId === 3
                 ? "За обучение " + currentActivity.title
                 : currentActivity.typeId === 4
-                ? "За командное взаимодействие " + currentActivity.title
-                : "'",
+                  ? "За командное взаимодействие " + currentActivity.title
+                  : currentActivity.typeId === 2
+                  ? "За челлендж " + currentActivity.title :""
           })
         );
         dispatch(removeNftFromBalance(nft.uri));
@@ -275,7 +289,17 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   Сделать ставку!
                 </Button>
               </div>
-            ) : null}
+            ) :
+              <div className="d-flex flex-row ">
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClickRecord}
+                >
+                  Записаться!
+                </Button>
+              </div>
+            }
           </Box>
         </>
       </Modal>
@@ -310,12 +334,13 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 "Баланс загружается..."}
             </Typography>
             {currentActivity?.typeId === 1 ? (
-              <div className="d-flex flex-row ">
+              <div className="">
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={winSorevUser}
                   label="Выбор челов"
+                  className="w-100 mb-2"
                   onChange={handleChangeWinSorevUser}
                 >
                   {row.users &&
@@ -323,6 +348,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       <MenuItem value={row.userId}>{row.user.FIO}</MenuItem>
                     ))}
                 </Select>
+
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
@@ -330,11 +356,11 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 >
                   Начислить и завершить!
                 </Button>
-              </div>
+            </div>
             ) : null}
             {currentActivity?.typeId === 2 ||
-            currentActivity?.typeId === 3 ||
-            currentActivity?.typeId === 4 ? (
+              currentActivity?.typeId === 3 ||
+              currentActivity?.typeId === 4 ? (
               <div className="d-flex flex-row ">
                 <Button
                   className={styles.enrollButton}
@@ -414,11 +440,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                     />
                   ) : (
                     <Chip
-                      label={`Награда: ${currentActivity.rewardValue} ${
-                        currentActivity.rewardType === 1
-                          ? "Digital Rubles"
-                          : " "
-                      }`}
+                      label={`Награда: ${currentActivity.rewardValue} ${currentActivity.rewardType === 1
+                        ? "Digital Rubles"
+                        : " "
+                        }`}
                       style={{
                         background: "var(--green)",
                       }}
@@ -432,7 +457,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               <div className={styles.activityButtons}>
                 {withoutButton || row.completed ? null : (
                   <div>
-                    {canFinish ? (
+                    {canFinish || user?.roleId === 1 ? (
                       <Tooltip title="Завершить активность">
                         <Button
                           style={{
