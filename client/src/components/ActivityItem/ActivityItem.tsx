@@ -20,6 +20,8 @@ import { styled } from "@mui/material/styles";
 import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { createActivityRecord } from "../../store/ActivitiesSlice/activitiesSlice";
+import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 
 interface IActivityItemProps {
   row: IActivities;
@@ -40,15 +42,48 @@ const Accordion = styled((props: AccordionProps) => (
 
 const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
+  const { users } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
-  const [isRec, setIsRec] = React.useState(
-    row.users.findIndex((item) => item.userId === user?.id) !== -1 ? true : false
-  );
+  const isRec =
+    row.users.findIndex((item) => item.userId === user?.id) !== -1
+      ? true
+      : false;
+
+  const bet = row.users.find((u) => u.userId === user!.id)?.bet;
+
   const [currentActivity, setCurrentActivity] = React.useState(row);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [rublesAmount, setRublesAmount] = React.useState<number | string>("");
+  const handleRublesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRublesAmount(+event.target.value);
+  };
+
+  const handleEnrollClick = (e: any) => {
+    e.stopPropagation();
+    dispatch(
+      createActivityRecord({
+        activitiesId: row.id,
+        userId: user!.id,
+        bet: +rublesAmount,
+      })
+    );
+    dispatch(
+      transferRubles({
+        amount: +rublesAmount,
+        fromPrivateKey: user!.privateKey,
+        why: "Взнос на участие в челендже",
+        userId: user!.id,
+        toId: users!.find((u) => u.roleId === 1)!.id,
+        toPublicKey: users!.find((u) => u.roleId === 1)!.publicKey,
+      })
+    );
+    handleClose();
+  };
+
   return (
     <div className={styles.activity}>
       <Modal
@@ -57,23 +92,29 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute" as "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 450,
-            bgcolor: "background.paper",
-            borderRadius: 5,
-            boxShadow: 24,
-            p: 4,
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
+        <>
+          <Box
+            sx={{
+              position: "absolute" as "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 450,
+              bgcolor: "background.paper",
+              borderRadius: 5,
+              boxShadow: 24,
+              p: 4,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
           >
-            
+            <Typography variant="h5">
+              Запись на мероприятие {row.title}
+            </Typography>
+            <Typography variant="h6">
+              Баланс: {user!.balance.coinsAmount.toLocaleString()}
+            </Typography>
             {currentActivity?.typeId === 2 ? (
               <div className="d-flex flex-row ">
                 <TextField
@@ -82,25 +123,22 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   type="number"
                   className="me-4"
                   variant="standard"
+                  value={rublesAmount}
+                  onChange={handleRublesChange}
                 />
                 <Button
-                      className={styles.enrollButton}
-                      variant="contained"
-                      onClick={(e) => {
-                        handleClose();
-                        console.log(row);
-                        e.stopPropagation();
-                      }}
-                    > 
-                      Сделать ставку!
-                  </Button>
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Сделать ставку!
+                </Button>
               </div>
-            ):(
-              null
-            )}
+            ) : null}
           </Box>
+        </>
       </Modal>
-      
+
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -120,50 +158,34 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       background: typeActivity[row.typeId].color as string,
                     }}
                   />
+                  {bet && (
+                    <Chip
+                      label={`Ваша ставка: ${bet}`}
+                      style={{
+                        background: "var(--red: #F08182)",
+                      }}
+                    />
+                  )}
                 </div>
                 <Typography sx={{ color: "var(--purple)" }}>
                   c {row.dateStart} до {row.dateEnd} {withoutButton}
                 </Typography>
               </div>
               <div className={styles.activityButtons}>
-                
-                {withoutButton ? 
-                  null
-                :
-                  <div>
-                    {user?.roleId === 1 ? 
-                      <Tooltip title="Завершить активность">
-                        <Button
-                          style={{background: "rgb(221, 76, 76)", margin: "0 10px"}}
-                          variant="contained"
-                          onClick={(e) => {
-                            handleOpen();
-                            setCurrentActivity(row);
-                            e.stopPropagation();
-                          }}
-                        >
-                          Завершить 
-                        </Button>
-
-                      </Tooltip>
-                    :
-                      <Tooltip title="Записаться на мероприятие">
-                        <Button
-                          disabled={isRec}
-                          className={styles.enrollButton}
-                          variant="contained"
-                          onClick={(e) => {
-                            handleOpen();
-                            setCurrentActivity(row);
-                            e.stopPropagation();
-                          }}
-                        >
-                          {isRec ? "Вы уже записаны": "Записаться"}
-                        </Button>
-                      </Tooltip>
-                    }
-                  </div>
-                }
+                <Tooltip title="Записаться на мероприятие">
+                  <Button
+                    disabled={isRec}
+                    className={styles.enrollButton}
+                    variant="contained"
+                    onClick={(e) => {
+                      handleOpen();
+                      setCurrentActivity(row);
+                      e.stopPropagation();
+                    }}
+                  >
+                    {isRec ? "Вы уже записаны" : "Записаться"}
+                  </Button>
+                </Tooltip>
               </div>
             </div>
           </div>
