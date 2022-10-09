@@ -22,7 +22,22 @@ import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createActivityRecord } from "../../store/ActivitiesSlice/activitiesSlice";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
-import {activitiesCurrency} from "../../const/activitiesCurrency"
+import { activitiesCurrency } from "../../const/activitiesCurrency"
+
+
+enum UserRoles {
+  ADMIN = 1,
+  HR = 2,
+  RUKOVOD = 3,
+  SOTRUDNIK = 4
+}
+
+enum TypeActivityID {
+  SOREV = 1,
+  CHALENG = 2,
+  OBUCH = 3,
+  KOMAND = 4,
+}
 
 interface IActivityItemProps {
   row: IActivities;
@@ -85,6 +100,11 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
     );
     handleClose();
   };
+
+  const canFinish = user && (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.CHALENG) ||
+    (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.SOREV) ||
+    (user?.roleId === UserRoles.HR && row.typeId === TypeActivityID.OBUCH) ||
+    (user?.roleId === UserRoles.RUKOVOD && row.typeId === TypeActivityID.KOMAND)
 
   return (
     <div className={styles.activity}>
@@ -177,14 +197,14 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               </div>
               <div className={styles.activityButtons}>
 
-                {withoutButton ? 
+                {withoutButton ?
                   null
-                :
+                  :
                   <div>
-                    {user?.roleId === 1 ? 
+                    {canFinish ?
                       <Tooltip title="Завершить активность">
                         <Button
-                          style={{background: "rgb(221, 76, 76)", margin: "0 10px"}}
+                          style={{ background: "rgb(221, 76, 76)", margin: "0 10px" }}
                           variant="contained"
                           onClick={(e) => {
                             handleOpen();
@@ -192,10 +212,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                             e.stopPropagation();
                           }}
                         >
-                          Завершить 
+                          Завершить
                         </Button>
                       </Tooltip>
-                    :
+                      :
                       <Tooltip title="Записаться на мероприятие">
                         <Button
                           disabled={isRec}
@@ -207,7 +227,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                             e.stopPropagation();
                           }}
                         >
-                          {isRec ? "Вы уже записаны": "Записаться"}
+                          {isRec ? "Вы уже записаны" : "Записаться"}
                         </Button>
                       </Tooltip>
                     }
@@ -223,12 +243,12 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               <Typography sx={{ color: "text.secondary" }}>Описание</Typography>
               <Typography>{row.description}</Typography>
             </div>
-            {row.rewardValue ? 
+            {row.rewardValue ?
               <div className={styles.flexColumn}>
                 <Typography sx={{ color: "text.secondary" }}>Награда</Typography>
                 {row.rewardType === 1 ?
                   <Typography className="fw-bold">{row.rewardValue} Digital Rubles</Typography>
-                : null }
+                  : null}
 
                 {row.rewardType === 2 ?
                   <Tooltip title="NFT">
@@ -237,16 +257,16 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       src={`${row.rewardValue}`}
                     />
                   </Tooltip>
-                : null }
-0
+                  : null}
+                0
                 {row.rewardType === 3 ?
                   <Typography className="fw-bold">{row.rewardValue}</Typography>
-                : null }
+                  : null}
               </div>
-            :null}
+              : null}
 
-            {row.users.length !== 0 ? 
-              <div >            
+            {row.users.length !== 0 ?
+              <div >
                 <Typography sx={{ color: "text.secondary" }}>Участники</Typography>
                 <div className={styles.allMembers}>
                   <AvatarGroup max={row.users.length}>
@@ -260,9 +280,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       </Tooltip>
                     ))}
                   </AvatarGroup>
-                </div>              
+                </div>
               </div>
-             :null}
+              : null}
 
           </div>
         </AccordionDetails>
