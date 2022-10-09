@@ -67,9 +67,9 @@ export const ROUTES = {
     icon: <AdminPanelSettingsIcon />,
   },
   employee: {
-    name: "Сотрудники",
+    name: "Отделы",
     url: "/employee",
-    roleId: ROLES_IDS.MASTER,
+    roleId: 0,
     icon: <PeopleOutlineIcon />,
   },
 };
