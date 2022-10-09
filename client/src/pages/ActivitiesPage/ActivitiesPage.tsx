@@ -20,7 +20,7 @@ import Button from "@mui/material/Button";
 import styles from "./ActivitiesPage.module.css";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 import { FormLabel, RadioGroup, FormControlLabel, FormControl } from "@mui/material";
-import { Radio } from "antd";
+import { Radio } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { fetchUsers } from "../../store/adminSlice/adminSlice";
 
@@ -142,14 +142,14 @@ const ActivitiesPage = () => {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                width: 800,
+                width: "max-content",
                 bgcolor: "background.paper",
                 borderRadius: 5,
                 boxShadow: 24,
                 p: 4,
                 display: "flex",
                 flexDirection: "column",
-                gap: "10px",
+                gap: "4px",
               }}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -164,8 +164,7 @@ const ActivitiesPage = () => {
                   value={typeActivityId}
                   onChange={handleTypeActivityChange}
                 >
-                  {typeActivity &&
-                    typeActivity?.map((row: any) => (
+                  {typeActivity && typeActivity?.map((row: any) => (
                       <FormControlLabel
                         value={row.id}
                         control={<Radio />}
@@ -174,7 +173,6 @@ const ActivitiesPage = () => {
                     ))}
                 </RadioGroup>
               </FormControl>
-
               <TextField
                 label="Название активности"
                 variant="outlined"
@@ -188,6 +186,7 @@ const ActivitiesPage = () => {
                 onChange={handleActivityDescriptionChange}
               />
               <TextField
+                disabled={ typeActivityId === 2 ? true: false}
                 label="Награда"
                 variant="outlined"
                 value={activityReward}
@@ -222,21 +221,11 @@ const ActivitiesPage = () => {
             </Box>
           </Modal>
 
-          <Stack spacing={2} direction="row" style={{ margin: "auto" }}>
-            <div className={styles.filtersItem}>
-              {user?.roleId === 1 ? (
-                <Button
-                  variant="contained"
-                  className="mt-4"
-                  onClick={handleOpen}
-                >
-                  Создать активность
-                </Button>
-              ) : null}
-            </div>
 
-            <div className={styles.filtersItem}>
-              
+          <div style={{ margin: "auto" }} className="d-flex flex-row ">
+
+            <div className="">
+            
               <Autocomplete 
                 id="free-solo-demo"
                 
@@ -249,8 +238,8 @@ const ActivitiesPage = () => {
                 sx={{ width: 300 }} 
               />
             </div>
-            <div className={styles.filtersItem}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <div className="mx-2">
+              <LocalizationProvider dateAdapter={AdapterDateFns} >
                 <DatePicker
                   label="Дата начала"
                   value={value11}
@@ -261,7 +250,7 @@ const ActivitiesPage = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div className={styles.filtersItem}>
+            <div className="">
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   label="Дата окончания"
@@ -273,28 +262,28 @@ const ActivitiesPage = () => {
                 />
               </LocalizationProvider>
             </div>
-            <div className={styles.filtersItem}>
-              <Tooltip title="Применить фильтр">
+            <div className="ms-2">
+              <Tooltip title="Применить фильтр" className="h-100">
                 <Button variant="contained">Применить</Button>
               </Tooltip>
             </div>
-          </Stack>
+          </div>
         </div>
       </header>
 </div>
 
 
       <div className={styles.content}>
-        <div className="card card-body">
-        <div className={styles.filtersItem}>
+        <div className="card card-body d-flex flex-col">
+          <div className=" mb-2">
               {user?.roleId === 1 ? (
-                <Button variant="contained" className="m-2" onClick={handleOpen}>
+                <Button variant="contained" className=" w-100" onClick={handleOpen}>
                  <AddIcon/> Создать активность
                 </Button>
               ) : (
                 null
               )}
-            </div>
+          </div>
           <div className={styles.activities}>
             {Activities &&
               Activities?.map((row) => (
