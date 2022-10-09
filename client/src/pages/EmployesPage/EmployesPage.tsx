@@ -1,5 +1,5 @@
-import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-import React, { useEffect } from "react";
+import { Accordion, AccordionSummary, AccordionDetails, ListItem, List, ListItemButton, ListItemText, ListItemIcon } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchDepartments } from "../../store/departmentSlice/departmentSlice";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -9,9 +9,8 @@ import { IUserWithBalance } from "../../api/mainApi";
 import AddModal from "../AdminPage/AddModal/AddModal";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { ROLES_IDS } from "../../types/enums";
-
+import PersonIcon from '@mui/icons-material/Person';
 const AnalyticPage = () => {
-    const { users, nftCollections } = useAppSelector((state) => state.admin);
     const [usersToGetMoney, setUsersToGetMoney] = React.useState<any[]>([]);
     const { user } = useAppSelector((state) => state.user);
 
@@ -25,6 +24,7 @@ const AnalyticPage = () => {
     const [openModal, setOpenModal] = React.useState(false);
 
     const addClick = (ids: GridRowId[]) => {
+        const users = departments[user!.departmentId].users
         if (users) {
             setUsersToGetMoney(users!.filter((u) => ids.includes(u.id)));
         }
@@ -34,7 +34,8 @@ const AnalyticPage = () => {
     const closeModal = React.useCallback(() => {
         setOpenModal(false);
     }, [setOpenModal]);
-    const accrueClick = (amount: number) => {
+    const accrueClick = useCallback((amount: number) => {
+        console.log(usersToGetMoney)
         dispatch(
             transferRubles(
                 usersToGetMoney.map((u) => ({
@@ -43,12 +44,12 @@ const AnalyticPage = () => {
                     toPublicKey: u.publicKey,
                     toId: u.id,
                     userId: user!.id,
-                    why: "Начисление от администратора",
+                    why: "Начисление от Руководителя отдела",
                 }))
             )
         );
         closeModal();
-    };
+    }, [usersToGetMoney]);
     return (
         <div>
             <h1>Отделы</h1>
@@ -67,21 +68,44 @@ const AnalyticPage = () => {
                             <h3>Сотрудники</h3>
 
                             <div>
-                                <UsersTable
-                                    rows={
-                                        d.users?.map((user) => ({
-                                            ...user,
-                                            balance:
-                                                (user as IUserWithBalance).balance?.coinsAmount?.toLocaleString() ||
-                                                "Загружается...",
-                                            name: user.FIO,
-                                        })) || []
-                                    }
-                                    onAddClick={addClick}
-                                    isAddVisible={
-                                        user?.roleId === ROLES_IDS.MASTER && user.departmentId === d.id
-                                    }
-                                />
+                                {
+                                    user?.roleId === ROLES_IDS.MASTER && user.departmentId === d.id ? (
+                                        <UsersTable
+                                            rows={
+                                                d.users?.map((user) => ({
+                                                    ...user,
+                                                    balance:
+                                                        (user as IUserWithBalance).balance?.coinsAmount?.toLocaleString() ||
+                                                        "Загружается...",
+                                                    name: user.FIO,
+                                                })) || []
+                                            }
+                                            onAddClick={addClick}
+                                        />
+                                    ) : (
+                                        <List>
+                                            {
+                                                d.users.map(u => (
+                                                    <ListItem key={u.id}>
+                                                        <ListItemButton
+
+                                                        >
+                                                            <ListItemIcon>
+                                                                <PersonIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText
+                                                                primary={u.FIO}
+                                                            />
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                ))
+                                            }
+
+
+                                        </List>
+                                    )
+                                }
+
                             </div>
                         </AccordionDetails>
                     </Accordion>

@@ -23,10 +23,9 @@ const columns: GridColDef[] = [
 interface IUsersTableProps {
   rows: IUsersDataType[];
   onAddClick: (ids: GridRowId[]) => void;
-  isAddVisible?: boolean
 }
 
-const UsersTable: React.FC<IUsersTableProps> = ({ rows, onAddClick, isAddVisible = true }) => {
+const UsersTable: React.FC<IUsersTableProps> = ({ rows, onAddClick }) => {
   const [selectionModel, setSelectionModel] =
     React.useState<GridSelectionModel>([]);
 
@@ -52,12 +51,10 @@ const UsersTable: React.FC<IUsersTableProps> = ({ rows, onAddClick, isAddVisible
         selectionModel={selectionModel}
       />
       <div>
-        {
-          isAddVisible && (
-            <Button onClick={() => onAddClick(selectionModel)}>Начислить</Button>
 
-          )
-        }
+        <Button onClick={() => onAddClick(selectionModel)}>Начислить</Button>
+
+
       </div>
     </div>
   );

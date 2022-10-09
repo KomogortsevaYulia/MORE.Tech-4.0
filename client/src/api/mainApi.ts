@@ -221,6 +221,7 @@ export class MainApi {
     }));
   }
 
+
   static async fetchActivities() {
     const activities = await axios
       .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart`)
@@ -259,6 +260,12 @@ export class MainApi {
   static async addTransaction(data: ICreateTransaction) {
     return axios
       .post(`${apiUrl}/transferRuble`, { ...data, date: new Date() })
+      .then((response) => response.data);
+  }
+
+  static async patchCompletedActivities(id: number) {
+    return axios
+      .patch(`${apiUrl}/activities/${id}`, { "completed": true })
       .then((response) => response.data);
   }
 
