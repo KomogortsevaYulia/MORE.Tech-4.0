@@ -306,3 +306,53 @@
     color: rgb(187, 185, 255);
   }
 }
+
+
+
+.cardCongratulations{
+  background: linear-gradient(118deg,#7367f0,rgba(115,103,240,.7))
+}
+.cardCongratulations .congratulationsImgLeft {
+  left: 0;
+}
+.cardCongratulations .congratulationsImgLeft {
+  width: 200px;
+  position: absolute;
+  top: 0;
+}
+.cardCongratulations .congratulationsImgRight {
+  right: 0;
+}
+.cardCongratulations .congratulationsImgRight {
+  width: 175px;
+  position: absolute;
+  top: 0;
+}
+
+.bAvatar .bAvatarCustom, .bAvatar .bAvatarImg, .bAvatar .bAvatarText {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-mask-image: radial-gradient(#fff,#000);
+  mask-image: radial-gradient(#fff,#000);
+}
+.feather {
+  font-family: feather!important;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
