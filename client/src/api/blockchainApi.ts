@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosResponse } from 'axios';
 
 export interface TransactionResponse {
   transactionHash: string;
@@ -45,8 +45,8 @@ export interface WalletHistoryResponse {
   };
 }
 
-const axios = require("axios").default;
-const baseUrl = "https://hackathon.lsp.team/hk";
+const axios = require('axios').default;
+const baseUrl = 'https://hackathon.lsp.team/hk';
 
 export class BlockchainApi {
   /**
@@ -56,11 +56,7 @@ export class BlockchainApi {
    * @param amount сумма перевода валюты
    * @returns сигнатура транзакции (идентификатор транзакции в блокчейне)
    */
-  static rubleTransfer(
-    fromPrivateKey: string,
-    toPublicKey: string,
-    amount: number
-  ) {
+  static rubleTransfer(fromPrivateKey: string, toPublicKey: string, amount: number) {
     return axios
       .post(`${baseUrl}/v1/transfers/ruble`, {
         fromPrivateKey: fromPrivateKey,
@@ -68,7 +64,6 @@ export class BlockchainApi {
         amount: amount,
       })
       .then(function (response: any) {
-        console.log(response.data);
         return response.data;
       })
       .catch(function (error: any) {
@@ -84,11 +79,7 @@ export class BlockchainApi {
    * @param amount сумма перевода валюты
    * @returns сигнатура транзакции (идентификатор транзакции в блокчейне)
    */
-  static maticTransfer(
-    fromPrivateKey: string,
-    toPublicKey: string,
-    amount: number
-  ) {
+  static maticTransfer(fromPrivateKey: string, toPublicKey: string, amount: number) {
     return axios
       .post(`${baseUrl}/v1/transfers/matic`, {
         fromPrivateKey: fromPrivateKey,
@@ -110,11 +101,7 @@ export class BlockchainApi {
    * @param tokenId id нфт
    * @returns сигнатура транзакции (идентификатор транзакции в блокчейне)
    */
-  static nftTransfer(
-    fromPrivateKey: string,
-    toPublicKey: string,
-    tokenId: number
-  ) {
+  static nftTransfer(fromPrivateKey: string, toPublicKey: string, tokenId: number) {
     return axios
       .post(`${baseUrl}/v1/transfers/nft`, {
         fromPrivateKey: fromPrivateKey,
@@ -251,7 +238,7 @@ export class BlockchainApi {
     publicKey: string,
     page?: number | 100,
     offset?: number | 20,
-    sort?: string | "asc"
+    sort?: string | 'asc',
   ) {
     return axios
       .post(`${baseUrl}/v1/wallets/${publicKey}/history`, {

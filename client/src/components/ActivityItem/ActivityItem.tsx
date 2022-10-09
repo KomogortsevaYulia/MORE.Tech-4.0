@@ -65,14 +65,14 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false);
-  
+
   const userId = row.users.findIndex((item) => item.userId === user?.id);
   //Уже записан на мероприятие
   const isRec = userId !== -1 ? true : false;
 
   //Если пользователь выйграл
-  const userIsWin = isRec ? 
-    (row.users[userId].isWin ? true : false) 
+  const userIsWin = isRec ?
+    (row.users[userId].isWin ? true : false)
     : false;
 
 
@@ -124,43 +124,42 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
 
   const handleTransferSorev = () => {
     const winUser = row.users.find(item => item.userId === winSorevUser)?.user
-    console.log(winUser)
-    // currentActivity.users.map((userTo) => {
-    //   if (currentActivity.rewardType === 1) {
-    //     dispatch(
-    //       transferRubles({
-    //         amount: +currentActivity.rewardValue,
-    //         userId: user!.id,
-    //         toId: userTo.userId,
-    //         fromPrivateKey: user!.privateKey,
-    //         toPublicKey: userTo!.user.publicKey,
-    //         why: 
-    //         currentActivity.typeId===3?
-    //         "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
-    //       })
-    //     )
-    //   } else if (currentActivity.rewardType === 2) {
-    //     const tokenId = user!.balanceNFT.balance.find(
-    //       (nft) => nft.uri === currentActivity.rewardValue
-    //     )!.tokens[0];
-    //     dispatch(
-    //       transferNft({
-    //         fromPrivateKey: user!.privateKey,
-    //         tokenId,
-    //         toPublicKey: userTo!.user.publicKey,
-    //       })
-    //     )
-    //   }
-    // }
-    // ) 
-    // dispatch(
-    //   patchCompletedActivities(currentActivity.id)
-    // )
-    // handleCloseEnd();
+    currentActivity.users.map((userTo) => {
+      if (currentActivity.rewardType === 1) {
+        dispatch(
+          transferRubles({
+            amount: +currentActivity.rewardValue,
+            userId: user!.id,
+            toId: userTo.userId,
+            fromPrivateKey: user!.privateKey,
+            toPublicKey: userTo!.user.publicKey,
+            why: 
+            currentActivity.typeId===3?
+            "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
+          })
+        )
+      } else if (currentActivity.rewardType === 2) {
+        const tokenId = user!.balanceNFT.balance.find(
+          (nft) => nft.uri === currentActivity.rewardValue
+        )!.tokens[0];
+        dispatch(
+          transferNft({
+            fromPrivateKey: user!.privateKey,
+            tokenId,
+            toPublicKey: userTo!.user.publicKey,
+          })
+        )
+      }
+    }
+    ) 
+    dispatch(
+      patchCompletedActivities(currentActivity.id)
+    )
+    handleCloseEnd();
   };
 
   const handleTransfer = () => {
-    currentActivity.users.map((userTo) => {
+    currentActivity.users.forEach((userTo) => {
       if (currentActivity.rewardType === 1) {
         dispatch(
           transferRubles({
@@ -477,7 +476,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               <Typography>{row.description}</Typography>
             </div>
 
-            {row.typeId == 1 && wineerUser ? 
+            {row.typeId === 1 && wineerUser ?
               <div className={styles.flexColumn}>
                 <Typography sx={{ color: "text.secondary" }}>Победитель</Typography>
                 <Tooltip title={`${wineerUser?.user.FIO}`}>
@@ -487,7 +486,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   />
                 </Tooltip>
               </div>
-            :null}
+              : null}
 
             {row.rewardValue ?
               <div className={`${styles.flexColumn} mx-auto`}>
