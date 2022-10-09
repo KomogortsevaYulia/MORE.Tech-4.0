@@ -115,7 +115,9 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               Запись на мероприятие {row.title}
             </Typography>
             <Typography variant="h6">
-              Баланс: {user!.balance.coinsAmount.toLocaleString()}
+              Баланс:{" "}
+              {user!.balance?.coinsAmount.toLocaleString() ||
+                "Баланс загружается..."}
             </Typography>
             {currentActivity?.typeId === 2 ? (
               <div className="d-flex flex-row ">

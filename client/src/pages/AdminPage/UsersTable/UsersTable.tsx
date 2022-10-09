@@ -33,7 +33,7 @@ const UsersTable: React.FC<IUsersTableProps> = ({ rows, onAddClick }) => {
     <div
       style={{
         height: 400,
-        width: 800,
+
         display: "flex",
         flexDirection: "column",
         gap: "24px",
@@ -42,7 +42,7 @@ const UsersTable: React.FC<IUsersTableProps> = ({ rows, onAddClick }) => {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
+        pageSize={25}
         rowsPerPageOptions={[5]}
         checkboxSelection
         onSelectionModelChange={(newSelectionModel) => {

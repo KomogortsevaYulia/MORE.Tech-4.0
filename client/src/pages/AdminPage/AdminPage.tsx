@@ -11,10 +11,7 @@ import {
 } from "../../store/adminSlice/adminSlice";
 import UsersTable from "./UsersTable/UsersTable";
 import AddModal from "./AddModal/AddModal";
-import {
-  IconButton,
-  Grid,
-} from "@mui/material";
+import { IconButton, Grid } from "@mui/material";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { GridRowId } from "@mui/x-data-grid";
 import NftCard from "./NftCard/NftCard";
@@ -136,7 +133,7 @@ const AdminPage = () => {
                 ...user,
                 balance:
                   user.balance?.coinsAmount?.toLocaleString() ||
-                  "Не удалось получить данные кошелька",
+                  "Загружается...",
                 name: user.FIO,
               })) || []
             }
@@ -146,7 +143,9 @@ const AdminPage = () => {
         <TabPanel value={value} index={1}>
           <Grid style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             {nftCollections &&
-              nftCollections.balance.map((nft) => <NftCard key={nft.uri} nft={nft} />)}
+              nftCollections.balance.map((nft) => (
+                <NftCard key={nft.uri} nft={nft} />
+              ))}
             <IconButton sx={{ width: 256 }} onClick={openNftGenerateModal}>
               <AddAPhotoIcon sx={{ fontSize: 128 }} />
             </IconButton>

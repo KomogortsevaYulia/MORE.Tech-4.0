@@ -2,7 +2,7 @@ import React from "react";
 
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ROUTES } from "../../const/routes";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import ActivitiesPage from "../../pages/ActivitiesPage/ActivitiesPage";
 import AdminPage from "../../pages/AdminPage/AdminPage";
 import AnalyticPage from "../../pages/AnalyticPage/AnalyticPage";
@@ -11,16 +11,21 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import MarketPage from "../../pages/MarketPage/MarketPage";
 import PersonalPage from "../../pages/PersonalPage/PersonalPage";
 import TransactionsPage from "../../pages/TransactionsPage/TransactionsPage";
+import EmployesPage from "../../pages/EmployesPage/EmployesPage";
 import WheelPage from "../../pages/WheelPage/WheelPage";
+import { fetchUserBalance } from "../../store/userSlice/userSlice";
 import { LoadingStatuses, ROLES_IDS } from "../../types/enums";
 import Navbar from "../Navbar/Navbar";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const AppRouter = () => {
+  const dispatch = useAppDispatch();
   const { user, fethcUserStatus } = useAppSelector((state) => state.user);
 
   React.useEffect(() => {
-    console.log(user);
+    if (user && !user.balance) {
+      dispatch(fetchUserBalance(user.publicKey));
+    }
   }, [user]);
 
   return (
@@ -68,6 +73,7 @@ const AppRouter = () => {
               element={<TransactionsPage />}
             />
             <Route path={ROUTES.wheel.url} element={<WheelPage />} />
+            <Route path={ROUTES.employee.url} element={<EmployesPage />} />
           </Route>
         </Route>
       </Routes>

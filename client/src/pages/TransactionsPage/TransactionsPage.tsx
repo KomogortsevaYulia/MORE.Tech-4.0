@@ -175,7 +175,8 @@ const TransactionsPage = () => {
             </div>
             <div className="row d-flex justify-content-center text-center">
               <h2 className="fw-normal">
-                {user?.balance.coinsAmount.toLocaleString()}
+                {user?.balance?.coinsAmount.toLocaleString() ||
+                  "Загружается..."}
               </h2>
             </div>
           </div>
@@ -187,7 +188,6 @@ const TransactionsPage = () => {
             width: "100%",
           }}
         >
-          
           <Box
             style={{
               display: "flex",
@@ -230,7 +230,6 @@ const TransactionsPage = () => {
                 value={rublesToTransfer.toString()}
                 onChange={handleRublesToTransferChange}
               />{" "}
-              
             </div>
             <div
               style={{
@@ -340,14 +339,16 @@ const TransactionsPage = () => {
                 value={rublesAmount.toString()}
                 onChange={handleRublesChange}
               />{" "}
-              
             </div>
             <div className="row d-flex justify-content-center">
               <div className="col-1">
                 <ArrowDownwardIcon color="success" />
               </div>
               <div className="col-auto align-items-center">
-                <Typography sx={{ color: "#1F9D57", fontSize: 13 }} component="p">
+                <Typography
+                  sx={{ color: "#1F9D57", fontSize: 13 }}
+                  component="p"
+                >
                   {currentCourse} Digital Rubles = 1 Цифровой рубль
                 </Typography>
               </div>

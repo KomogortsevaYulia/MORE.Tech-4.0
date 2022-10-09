@@ -22,16 +22,16 @@ const LoginPage = () => {
       }}
     >
       <Button variant="outlined" onClick={() => login(1)}>
-        Админчик
+        Администратор
       </Button>
       <Button variant="outlined" onClick={() => login(2)}>
-        ХР-чик
+        HR
       </Button>
       <Button variant="outlined" onClick={() => login(3)}>
-        Руководительчик
+        Руководитель
       </Button>
       <Button variant="outlined" onClick={() => login(4)}>
-        Работяга
+        Сотрудник
       </Button>
     </Box>
   );

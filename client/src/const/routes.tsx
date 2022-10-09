@@ -9,6 +9,7 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
 import WhatshotIcon from '@mui/icons-material/Whatshot';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 export const ROUTES = {
   login: {
@@ -64,5 +65,11 @@ export const ROUTES = {
     url: "/admin",
     roleId: ROLES_IDS.ADMIN,
     icon: <AdminPanelSettingsIcon />,
+  },
+  employee: {
+    name: "Сотрудники",
+    url: "/employee",
+    roleId: ROLES_IDS.MASTER,
+    icon: <PeopleOutlineIcon />,
   },
 };

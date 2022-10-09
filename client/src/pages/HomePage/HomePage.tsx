@@ -113,10 +113,10 @@ const HomePage = () => {
                   <TimelineItem>
                     <TimelineSeparator>
                       <TimelineConnector />
-                      <TimelineDot color="primary" variant="outlined">
+                      <TimelineDot color="primary" >
                         <CelebrationIcon />
                       </TimelineDot>
-                      <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+                      <TimelineConnector sx={{ bgcolor: "primary" }} />
                     </TimelineSeparator>
                     <TimelineContent sx={{ py: "12px", px: 2 }}>
                       <Typography variant="h6" component="span">
@@ -131,8 +131,8 @@ const HomePage = () => {
                   </TimelineItem>
                   <TimelineItem>
                     <TimelineSeparator>
-                      <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-                      <TimelineDot color="secondary">
+                      <TimelineConnector sx={{ bgcolor: "primary" }} />
+                      <TimelineDot color="primary">
                         <RepeatIcon />
                       </TimelineDot>
                       <TimelineConnector />
@@ -142,7 +142,7 @@ const HomePage = () => {
                         Челленджи
                       </Typography>
                       <Typography>
-                        испытание, в котором пользователь делает ставку монетами
+                        Испытание, в котором пользователь делает ставку монетами
                         «Digital Ruble» и выбираеn задание. Если задание
                         выполнено он получает монеты, иначе теряет.
                       </Typography>
