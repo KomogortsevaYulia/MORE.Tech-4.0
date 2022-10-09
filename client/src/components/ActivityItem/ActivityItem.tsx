@@ -310,12 +310,13 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 "Баланс загружается..."}
             </Typography>
             {currentActivity?.typeId === 1 ? (
-              <div className="d-flex flex-row ">
+              <div className="">
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={winSorevUser}
                   label="Выбор челов"
+                  className="w-100 mb-2"
                   onChange={handleChangeWinSorevUser}
                 >
                   {row.users &&
@@ -323,6 +324,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       <MenuItem value={row.userId}>{row.user.FIO}</MenuItem>
                     ))}
                 </Select>
+
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
@@ -330,7 +332,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 >
                   Начислить и завершить!
                 </Button>
-              </div>
+            </div>
             ) : null}
             {currentActivity?.typeId === 2 ||
             currentActivity?.typeId === 3 ||
@@ -432,7 +434,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               <div className={styles.activityButtons}>
                 {withoutButton || row.completed ? null : (
                   <div>
-                    {canFinish ? (
+                    {canFinish || user?.roleId === 1 ? (
                       <Tooltip title="Завершить активность">
                         <Button
                           style={{
