@@ -68,6 +68,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
       : false;
 
   const bet = row.users.find((u) => u.userId === user!.id)?.bet;
+  // const rewardType = activitiesCurrency.find((i:any) => i.id === row?.rewardType).title;
 
   const [activitiesCurrencyValue, setActivitiesCurrency] = React.useState(activitiesCurrency);
   const [currentActivity, setCurrentActivity] = React.useState(row);
@@ -110,7 +111,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const canFinish = user && (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.CHALENG) ||
     (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.SOREV) ||
     (user?.roleId === UserRoles.HR && row.typeId === TypeActivityID.OBUCH) ||
-    (user?.roleId === UserRoles.RUKOVOD && row.typeId === TypeActivityID.KOMAND)
+    (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.KOMAND)
 
   return (
     <div className={styles.activity}>
@@ -182,7 +183,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 450,
+              width: "min-content",
               bgcolor: "background.paper",
               borderRadius: 5,
               boxShadow: 24,
@@ -195,61 +196,56 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             <Typography variant="h5">
               Завершение активности {row.title}
             </Typography>
-
+            <Typography variant="body1">
+              Количество участвующих: {row.users.length}
+            </Typography>
+            <Typography variant="h5">
+              Стоимость
+            </Typography>
+            <Typography variant="body1">
+              {row.rewardValue} {row.rewardType} * {row.users.length} кол-во =  {+row.rewardValue * row.users.length}
+            </Typography>
             <Typography variant="h6">
-
 
               Баланс:{" "}
               {user!.balance?.coinsAmount.toLocaleString() ||
                 "Баланс загружается..."}
             </Typography>
-            {currentActivity?.typeId === 2 ? (
-              <div className="d-flex flex-row ">
-                <Typography variant="h5">
-                  Челлендж {row.title}
-                </Typography>
-                <Button
-                  className={styles.enrollButton}
-                  variant="contained"
-                  onClick={handleEnrollClick}
-                >
-                  Начислить и завершить!
-                </Button>
-              </div>
-            ) : null}
-            {currentActivity?.typeId === 2 ? (
-              <div className="d-flex flex-row ">
-                <Typography variant="h5">
-                  Челлендж {row.title}
-                </Typography>
-                <Button
-                  className={styles.enrollButton}
-                  variant="contained"
-                  onClick={handleEnrollClick}
-                >
-                  Начислить и завершить!
-                </Button>
-              </div>
-            ) : null}
-            {currentActivity?.typeId === 2 ? (
-              <div className="d-flex flex-row ">
-                <Typography variant="h5">
-                  Челлендж {row.title}
-                </Typography>
-                <Button
-                  className={styles.enrollButton}
-                  variant="contained"
-                  onClick={handleEnrollClick}
-                >
-                  Начислить и завершить!
-                </Button>
-              </div>
-            ) : null}
             {currentActivity?.typeId === 1 ? (
               <div className="d-flex flex-row ">
-                <Typography variant="h5">
-                  Соревнование {row.title}
-                </Typography>
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+            {currentActivity?.typeId === 2 ? (
+              <div className="d-flex flex-row ">
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+            {currentActivity?.typeId === 3 ? (
+              <div className="d-flex flex-row ">
+                <Button
+                  className={styles.enrollButton}
+                  variant="contained"
+                  onClick={handleEnrollClick}
+                >
+                  Начислить и завершить!
+                </Button>
+              </div>
+            ) : null}
+            {currentActivity?.typeId === 4 ? (
+              <div className="d-flex flex-row ">
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
@@ -262,7 +258,6 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
           </Box>
         </>
       </Modal>
-
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -282,14 +277,38 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       background: typeActivity[row.typeId].color as string,
                     }}
                   />
-                  {bet && (
-                    <Chip
-                      label={`Ваша ставка: ${bet}`}
-                      style={{
-                        background: "var(--red: #F08182)",
-                      }}
-                    />
-                  )}
+                  {
+                    currentActivity?.typeId === 2 && !bet ? (
+                      <Chip
+                        label={`Ставка определяется вами`}
+                        style={{
+                          background: "var(--green)",
+                        }}
+                      />
+                    ) :
+                      currentActivity?.typeId === 2 && bet ? (
+                        <Chip
+                          label={`Ваша ставка: ${bet}`}
+                          style={{
+                            background: "var(--green)",
+                          }}
+                        />
+                      ) :
+                        currentActivity.rewardType === 2 ?
+                          <Chip
+                            label={`Награда: NFT`}
+                            style={{
+                              background: "var(--green)",
+                            }}
+                          />
+                          :
+                          <Chip
+                            label={`Награда: ${currentActivity.rewardValue} ${currentActivity.rewardType===1? 'Digital Rubles': " "}`}
+                            style={{
+                              background: "var(--green)",
+                            }}
+                          />
+                  }
                 </div>
                 <Typography sx={{ color: "var(--purple)" }}>
                   c {row.dateStart} до {row.dateEnd}
