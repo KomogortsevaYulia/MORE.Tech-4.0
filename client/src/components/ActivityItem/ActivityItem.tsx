@@ -10,11 +10,14 @@ import {
   Modal,
   Box,
   TextField,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
-import { IActivities } from "../../api/mainApi";
+import { IActivities, IUser } from "../../api/mainApi";
 import { styled } from "@mui/material/styles";
 
 import styles from "./ActivityItem.module.css";
@@ -23,6 +26,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createActivityRecord, patchCompletedActivities, patchWinnerActivities } from "../../store/ActivitiesSlice/activitiesSlice";
 import { transferNft, transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 
+import  { SelectChangeEvent } from '@mui/material/Select';
 
 enum UserRoles {
   ADMIN = 1,
@@ -74,13 +78,13 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
 
   const wineerUser = row.users[row.users.findIndex((item) => item.isWin === true)]
 
+  const [winSorevUser, setWinSorevUser] = React.useState(0);
 
   const bet = row.users.find((u) => u.userId === user!.id)?.bet;
 
   const [currentActivity, setCurrentActivity] = React.useState(row);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
 
   const [openEnd, setOpenEnd] = React.useState(false);
 
@@ -90,6 +94,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const [rublesAmount, setRublesAmount] = React.useState<number | string>("");
   const handleRublesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRublesAmount(+event.target.value);
+  };
+
+  const handleChangeWinSorevUser = (event: SelectChangeEvent<number>) => {
+    setWinSorevUser(Number(event.target.value ));
   };
 
   const handleEnrollClick = (e: any) => {
@@ -115,7 +123,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   };
 
   const handleTransferSorev = () => {
-    
+    const winUser = row.users.find(item => item.userId === winSorevUser)?.user
     if (currentActivity.rewardType === 1) {
       dispatch(
         transferRubles({
@@ -279,14 +287,22 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             </Typography>
             {currentActivity?.typeId === 1 ? (
               <div className="d-flex flex-row ">
-
-                <Typography variant="body1">
-                  Выбор челов
-                </Typography>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={winSorevUser}
+                  label="Выбор челов"
+                  onChange={handleChangeWinSorevUser}
+                >
+                  {row.users &&
+                    row.users?.map((row) => (
+                      <MenuItem value={row.userId}>{row.user.FIO}</MenuItem>
+                  ))}
+                </Select>
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleTransferSorev}
+                  onClick={handleTransferSorev} 
                 >
                   Начислить и завершить!
                 </Button>
