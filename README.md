@@ -32,7 +32,12 @@
 
 
 ## Для старта необходимо:
+
 ### Для Server
+
+ ```sh 
+ cd server
+  ```
 
   ```sh
   npm i
@@ -43,6 +48,10 @@
   ```
 
   ### Для Client
+
+ ```sh 
+ cd client
+  ```
 
   ```sh
   npm i --legacy-peer-deps

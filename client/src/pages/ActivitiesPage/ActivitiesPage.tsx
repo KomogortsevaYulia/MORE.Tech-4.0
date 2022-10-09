@@ -85,7 +85,13 @@ const ActivitiesPage = () => {
   };
 
   const [typeActivityId, setTypeActivityId] = React.useState(1);
+  const [typeRewardId, setTypeRewardId] = React.useState(1);
 
+  const handleTypeRewardChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTypeRewardId(+(event.target as HTMLInputElement).value);
+  };
   const handleTypeActivityChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -185,6 +191,34 @@ const ActivitiesPage = () => {
                   value={activityDescription}
                   onChange={handleActivityDescriptionChange}
                 />
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">Тип награды</FormLabel>
+
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group"
+                    value={typeRewardId}
+                    onChange={handleTypeRewardChange}
+                  >
+
+                    <FormControlLabel
+                      value={1}
+                      control={<Radio />}
+                      label="Digital Rubles"
+                    />
+                    <FormControlLabel
+                      value={2}
+                      control={<Radio />}
+                      label="NFT"
+                    />
+                    <FormControlLabel
+                      value={3}
+                      control={<Radio />}
+                      label="Действие"
+                    />
+                  </RadioGroup>
+                </FormControl>
+
                 <TextField
                   disabled={typeActivityId === 2 ? true : false}
                   label="Награда"
