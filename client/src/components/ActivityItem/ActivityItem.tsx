@@ -220,6 +220,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               <Typography sx={{ color: "text.secondary" }}>Описание</Typography>
               <Typography>{row.description}</Typography>
             </div>
+            <div className={styles.flexColumn}>
+              <Typography sx={{ color: "text.secondary" }}>Награда</Typography>
+              <Typography>{row.reward}</Typography>
+            </div>
             <div className={styles.members}>
               <div className={styles.flexColumn}></div>
             </div>
