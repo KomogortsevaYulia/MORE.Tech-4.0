@@ -7,7 +7,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import PaymentIcon from "@mui/icons-material/Payment";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -51,7 +50,7 @@ export const ROUTES = {
   analytic: {
     name: "Аналитика",
     url: "/analytic",
-    roleId:ROLES_IDS.ADMIN,
+    roleId: ROLES_IDS.ADMIN,
     icon: <EqualizerIcon />,
   },
   wheel: {
