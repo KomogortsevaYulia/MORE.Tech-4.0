@@ -26,9 +26,7 @@ const HomePage = () => {
   }, [dispatch]);
 
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
-  React.useEffect(() => {
-    console.log(ActivitiesRecords);
-  }, [ActivitiesRecords]);
+
 
   return (
     <>
