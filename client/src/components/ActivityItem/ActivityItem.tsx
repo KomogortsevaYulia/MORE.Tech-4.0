@@ -21,7 +21,7 @@ import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { createActivityRecord } from "../../store/ActivitiesSlice/activitiesSlice";
-import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
+import { transferNft, transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { activitiesCurrency } from "../../const/activitiesCurrency"
 
 
@@ -106,6 +106,40 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
       })
     );
     handleClose();
+  };
+
+
+
+
+  const handleTransferStudy = () => {
+
+    currentActivity.users.map((userTo) => {
+      if (currentActivity.rewardType === 1) {
+        dispatch(
+          transferRubles({
+            amount: +currentActivity.rewardValue,
+            userId: user!.id,
+            toId: userTo.userId,
+            fromPrivateKey: user!.privateKey,
+            toPublicKey: userTo!.user.publicKey,
+            why: "За обучение "+ currentActivity.title,
+          })
+        )
+      } else if (currentActivity.rewardType === 2) {
+        const tokenId = user!.balanceNFT.balance.find(
+          (nft) => nft.uri === currentActivity.rewardValue
+        )!.tokens[0];
+        dispatch(
+          transferNft({
+            fromPrivateKey: user!.privateKey,
+            tokenId,
+            toPublicKey: userTo!.user.publicKey,
+          })
+        )
+      }
+    }
+    ) 
+    handleCloseEnd();
   };
 
   const canFinish = user && (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.CHALENG) ||
@@ -238,7 +272,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleEnrollClick}
+                  onClick={handleTransferStudy}
                 >
                   Начислить и завершить!
                 </Button>
@@ -303,7 +337,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                           />
                           :
                           <Chip
-                            label={`Награда: ${currentActivity.rewardValue} ${currentActivity.rewardType===1? 'Digital Rubles': " "}`}
+                            label={`Награда: ${currentActivity.rewardValue} ${currentActivity.rewardType === 1 ? 'Digital Rubles' : " "}`}
                             style={{
                               background: "var(--green)",
                             }}
@@ -376,14 +410,14 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       src={`${row.rewardValue}`}
                     />
                   </Tooltip>
-                : null }
+                  : null}
                 {row.rewardType === 3 ?
                   <Typography className="fw-bold">{row.rewardValue}</Typography>
                   : null}
               </div>
               : null}
 
-            {row.users.length !== 0 ? 
+            {row.users.length !== 0 ?
               <div >
                 <Typography sx={{ color: "text.secondary" }}>Участники</Typography>
                 <div className={styles.allMembers}>
