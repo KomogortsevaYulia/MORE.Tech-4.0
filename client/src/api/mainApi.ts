@@ -216,7 +216,7 @@ export class MainApi {
 
   static async fetchActivities() {
     const activities = await axios
-      .get<IActivities[]>(`${apiUrl}/activities`)
+      .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart`)
       .then((response) => response.data);
 
     const usersActivities = await axios
@@ -337,6 +337,12 @@ export class MainApi {
         console.log(err);
         return err;
       });
+  }
+
+  static async addActivity(data:IActivities) {
+    return axios
+      .post<IOrder[]>(`${apiUrl}/activities`, { ...data })
+      .then((response) => response.data);
   }
 
   static async fetchDepartmentsWithUsers() {

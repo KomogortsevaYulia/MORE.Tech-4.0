@@ -11,6 +11,7 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import MarketPage from "../../pages/MarketPage/MarketPage";
 import PersonalPage from "../../pages/PersonalPage/PersonalPage";
 import TransactionsPage from "../../pages/TransactionsPage/TransactionsPage";
+import EmployesPage from "../../pages/EmployesPage/EmployesPage";
 import WheelPage from "../../pages/WheelPage/WheelPage";
 import { fetchUserBalance } from "../../store/userSlice/userSlice";
 import { LoadingStatuses, ROLES_IDS } from "../../types/enums";
@@ -72,6 +73,7 @@ const AppRouter = () => {
               element={<TransactionsPage />}
             />
             <Route path={ROUTES.wheel.url} element={<WheelPage />} />
+            <Route path={ROUTES.employee.url} element={<EmployesPage />} />
           </Route>
         </Route>
       </Routes>
