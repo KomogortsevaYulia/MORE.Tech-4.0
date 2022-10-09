@@ -7,7 +7,7 @@ export const typeActivity: any = {
   2: {
     title: "Челлендж",
     id: 2,
-    color: "var(--green)",
+    color: "var(--pink)",
   },
   3: {
     title: "Обучение",
