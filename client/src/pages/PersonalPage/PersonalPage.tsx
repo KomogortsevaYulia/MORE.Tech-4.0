@@ -16,7 +16,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { fetchActivitiesWithUser } from "../../store/ActivitiesSlice/activitiesSlice";
-import { Stack, Chip } from "@mui/material";
 import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 import { fetchNFTBalance } from "../../store/adminSlice/adminSlice";
@@ -57,7 +56,7 @@ function a11yProps(index: number) {
 
 const PersonalPage = () => {
   const { user } = useAppSelector((state) => state.user);
-  React.useEffect(() => {}, [user]);
+  React.useEffect(() => { }, [user]);
 
   const [value, setValue] = React.useState(0);
 

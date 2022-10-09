@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const login = React.useCallback((id: number) => {
     dispatch(fetchUserById(id));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box

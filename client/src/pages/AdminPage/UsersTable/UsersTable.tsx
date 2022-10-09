@@ -1,10 +1,9 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
   GridRowId,
   GridSelectionModel,
-  GridValueGetterParams,
 } from "@mui/x-data-grid";
 
 import React from "react";
