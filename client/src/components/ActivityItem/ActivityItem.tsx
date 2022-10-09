@@ -23,16 +23,24 @@ import { styled } from "@mui/material/styles";
 import styles from "./ActivityItem.module.css";
 import { typeActivity } from "../../const/activityTypes";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { createActivityRecord, patchCompletedActivities } from "../../store/ActivitiesSlice/activitiesSlice";
-import { transferNft, transferRubles } from "../../store/transactionsSlice/transactionsSlice";
+import {
+  createActivityRecord,
+  patchCompletedActivities,
+  patchWinnerActivities,
+} from "../../store/ActivitiesSlice/activitiesSlice";
+import {
+  transferNft,
+  transferRubles,
+} from "../../store/transactionsSlice/transactionsSlice";
 
-import  { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from "@mui/material/Select";
+import { removeNftFromBalance } from "../../store/userSlice/userSlice";
 
 enum UserRoles {
   ADMIN = 1,
   HR = 2,
   RUKOVOD = 3,
-  SOTRUDNIK = 4
+  SOTRUDNIK = 4,
 }
 
 enum TypeActivityID {
@@ -71,12 +79,10 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   const isRec = userId !== -1 ? true : false;
 
   //Если пользователь выйграл
-  const userIsWin = isRec ?
-    (row.users[userId].isWin ? true : false)
-    : false;
+  const userIsWin = isRec ? (row.users[userId].isWin ? true : false) : false;
 
-
-  const wineerUser = row.users[row.users.findIndex((item) => item.isWin === true)]
+  const wineerUser =
+    row.users[row.users.findIndex((item) => item.isWin === true)];
 
   const [winSorevUser, setWinSorevUser] = React.useState(0);
 
@@ -97,7 +103,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   };
 
   const handleChangeWinSorevUser = (event: SelectChangeEvent<number>) => {
-    setWinSorevUser(Number(event.target.value ));
+    setWinSorevUser(Number(event.target.value));
   };
 
   const handleEnrollClick = (e: any) => {
@@ -123,38 +129,42 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
   };
 
   const handleTransferSorev = () => {
-    const winUser = row.users.find(item => item.userId === winSorevUser)?.user
-    currentActivity.users.map((userTo) => {
-      if (currentActivity.rewardType === 1) {
-        dispatch(
-          transferRubles({
-            amount: +currentActivity.rewardValue,
-            userId: user!.id,
-            toId: userTo.userId,
-            fromPrivateKey: user!.privateKey,
-            toPublicKey: userTo!.user.publicKey,
-            why: 
-            currentActivity.typeId===3?
-            "За обучение "+ currentActivity.title : currentActivity.typeId===4? "За командное взаимодействие "+ currentActivity.title: "'",
-          })
-        )
-      } else if (currentActivity.rewardType === 2) {
-        const tokenId = user!.balanceNFT.balance.find(
-          (nft) => nft.uri === currentActivity.rewardValue
-        )!.tokens[0];
-        dispatch(
-          transferNft({
-            fromPrivateKey: user!.privateKey,
-            tokenId,
-            toPublicKey: userTo!.user.publicKey,
-          })
-        )
-      }
+    const winUser = row.users.find(
+      (item) => item.userId === winSorevUser
+    )?.user;
+    if (currentActivity.rewardType === 1) {
+      dispatch(
+        transferRubles({
+          amount: +currentActivity.rewardValue,
+          userId: user!.id,
+          toId: winUser!.id,
+          fromPrivateKey: user!.privateKey,
+          toPublicKey: winUser!.publicKey,
+          why: "За победу в " + currentActivity.title,
+        })
+      );
+    } else if (currentActivity.rewardType === 2) {
+      const nft = user!.balanceNFT.balance.find(
+        (nft) => nft.uri === currentActivity.rewardValue
+      )!;
+      dispatch(
+        transferNft({
+          fromPrivateKey: user!.privateKey,
+          toPublicKey: winUser!.publicKey,
+          nft,
+          toId: winUser!.id,
+          userId: user!.id,
+          why: "За победу в " + currentActivity.title,
+        })
+      );
+      dispatch(removeNftFromBalance(nft.uri));
     }
-    ) 
+    dispatch(patchCompletedActivities(currentActivity.id));
     dispatch(
-      patchCompletedActivities(currentActivity.id)
-    )
+      patchWinnerActivities(
+        currentActivity!.users!.find((item) => item.userId === winUser!.id)!.id
+      )
+    );
     handleCloseEnd();
   };
 
@@ -169,35 +179,49 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
             fromPrivateKey: user!.privateKey,
             toPublicKey: userTo!.user.publicKey,
             why:
-              currentActivity.typeId === 3 ?
-                "За обучение " + currentActivity.title : currentActivity.typeId === 4 ? "За командное взаимодействие " + currentActivity.title : "'",
+              currentActivity.typeId === 3
+                ? "За обучение " + currentActivity.title
+                : currentActivity.typeId === 4
+                ? "За командное взаимодействие " + currentActivity.title
+                : "'",
           })
-        )
+        );
       } else if (currentActivity.rewardType === 2) {
-        const tokenId = user!.balanceNFT.balance.find(
+        const nft = user!.balanceNFT.balance.find(
           (nft) => nft.uri === currentActivity.rewardValue
-        )!.tokens[0];
+        )!;
         dispatch(
           transferNft({
             fromPrivateKey: user!.privateKey,
-            tokenId,
+
             toPublicKey: userTo!.user.publicKey,
+            nft,
+            toId: userTo!.userId,
+            userId: user!.id,
+            why:
+              currentActivity.typeId === 3
+                ? "За обучение " + currentActivity.title
+                : currentActivity.typeId === 4
+                ? "За командное взаимодействие " + currentActivity.title
+                : "'",
           })
-        )
+        );
+        dispatch(removeNftFromBalance(nft.uri));
       }
-    }
-    )
-    dispatch(
-      patchCompletedActivities(currentActivity.id)
-    )
+    });
+    dispatch(patchCompletedActivities(currentActivity.id));
     handleCloseEnd();
   };
 
-
-  const canFinish = user && ((user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.CHALENG) ||
-    (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.SOREV) ||
-    (user?.roleId === UserRoles.HR && row.typeId === TypeActivityID.OBUCH) ||
-    (user?.roleId === UserRoles.ADMIN && row.typeId === TypeActivityID.KOMAND))
+  const canFinish =
+    user &&
+    ((user?.roleId === UserRoles.ADMIN &&
+      row.typeId === TypeActivityID.CHALENG) ||
+      (user?.roleId === UserRoles.ADMIN &&
+        row.typeId === TypeActivityID.SOREV) ||
+      (user?.roleId === UserRoles.HR && row.typeId === TypeActivityID.OBUCH) ||
+      (user?.roleId === UserRoles.ADMIN &&
+        row.typeId === TypeActivityID.KOMAND));
 
   return (
     <div className={styles.activity}>
@@ -279,20 +303,8 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
               gap: "10px",
             }}
           >
-            <Typography variant="h5">
-              Завершение активности {row.title}
-            </Typography>
-            <Typography variant="body1">
-              Количество участвующих: {row.users.length}
-            </Typography>
-            {/* <Typography variant="h5">
-              Стоимость
-            </Typography>
-            <Typography variant="body1">
-              {row.rewardValue} {row.rewardType} * {row.users.length} кол-во =  {+row.rewardValue * row.users.length}
-            </Typography> */}
+            <Typography variant="body1">{row.title}</Typography>
             <Typography variant="h6">
-
               Баланс:{" "}
               {user!.balance?.coinsAmount.toLocaleString() ||
                 "Баланс загружается..."}
@@ -309,18 +321,20 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   {row.users &&
                     row.users?.map((row) => (
                       <MenuItem value={row.userId}>{row.user.FIO}</MenuItem>
-                  ))}
+                    ))}
                 </Select>
                 <Button
                   className={styles.enrollButton}
                   variant="contained"
-                  onClick={handleTransferSorev} 
+                  onClick={handleTransferSorev}
                 >
                   Начислить и завершить!
                 </Button>
               </div>
             ) : null}
-            {currentActivity?.typeId === 2 || currentActivity?.typeId === 3 || currentActivity?.typeId === 4 ? (
+            {currentActivity?.typeId === 2 ||
+            currentActivity?.typeId === 3 ||
+            currentActivity?.typeId === 4 ? (
               <div className="d-flex flex-row ">
                 <Button
                   className={styles.enrollButton}
@@ -346,27 +360,30 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "8px" }}
                 >
-
-                  {userIsWin && withoutButton ?
+                  {userIsWin && withoutButton ? (
                     <Chip
                       label="Победа"
                       style={{
                         background: "var(--purple)",
-                      }} />
-                    : null}
-                  {row.completed ?
+                      }}
+                    />
+                  ) : null}
+                  {row.completed ? (
                     <div className="m-0 p-0 d-flex flex-row align-items-center">
                       <Chip
                         label="Окончено"
                         className="me-2"
                         style={{
                           background: "var(--red)",
-                        }} />
-                      <Typography><s>{row.title}</s></Typography>
+                        }}
+                      />
+                      <Typography>
+                        <s>{row.title}</s>
+                      </Typography>
                     </div>
-                    :
+                  ) : (
                     <Typography>{row.title}</Typography>
-                  }
+                  )}
 
                   <Chip
                     label={typeActivity[row.typeId].title}
@@ -374,54 +391,69 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                       background: typeActivity[row.typeId].color as string,
                     }}
                   />
-                  {
-                    currentActivity?.typeId === 2 && !bet ? (
-                      <Chip
-                        label={`Ставка определяется вами`}
-                        style={{
-                          background: "var(--green)",
-                        }}
-                      />
-                    ) :
-                      currentActivity?.typeId === 2 && bet ? (
-                        <Chip
-                          label={`Ваша ставка: ${bet}`}
-                          style={{
-                            background: "var(--green)",
-                          }}
-                        />
-                      ) :
-                        currentActivity.rewardType === 2 ?
-                          <Chip
-                            label={`Награда: NFT`}
-                            style={{
-                              background: "var(--green)",
-                            }}
-                          />
-                          :
-                          <Chip
-                            label={`Награда: ${currentActivity.rewardValue} ${currentActivity.rewardType === 1 ? 'Digital Rubles' : " "}`}
-                            style={{
-                              background: "var(--green)",
-                            }}
-                          />
-                  }
+                  {currentActivity?.typeId === 2 && !bet ? (
+                    <Chip
+                      label={`Ставка определяется вами`}
+                      style={{
+                        background: "var(--green)",
+                      }}
+                    />
+                  ) : currentActivity?.typeId === 2 && bet ? (
+                    <Chip
+                      label={`Ваша ставка: ${bet}`}
+                      style={{
+                        background: "var(--green)",
+                      }}
+                    />
+                  ) : currentActivity.rewardType === 2 ? (
+                    <Chip
+                      label={`Награда: NFT`}
+                      style={{
+                        background: "var(--green)",
+                      }}
+                    />
+                  ) : (
+                    <Chip
+                      label={`Награда: ${currentActivity.rewardValue} ${
+                        currentActivity.rewardType === 1
+                          ? "Digital Rubles"
+                          : " "
+                      }`}
+                      style={{
+                        background: "var(--green)",
+                      }}
+                    />
+                  )}
                 </div>
                 <Typography sx={{ color: "var(--purple)" }}>
                   c {row.dateStart} до {row.dateEnd}
                 </Typography>
               </div>
               <div className={styles.activityButtons}>
-
-                {withoutButton || row.completed ?
-                  null
-                  :
+                {withoutButton || row.completed ? null : (
                   <div>
-                    {row.completed ?
-                      <Tooltip title="Завершено">
+                    {canFinish ? (
+                      <Tooltip title="Завершить активность">
                         <Button
-                          disabled={true}
-                          style={{ background: "var(--orange)", margin: "0 10px" }}
+                          style={{
+                            background: "rgb(221, 76, 76)",
+                            margin: "0 10px",
+                          }}
+                          variant="contained"
+                          onClick={(e) => {
+                            handleOpenEnd();
+                            setCurrentActivity(row);
+                            e.stopPropagation();
+                          }}
+                        >
+                          Завершить
+                        </Button>
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Записаться на мероприятие">
+                        <Button
+                          disabled={isRec}
+                          className={styles.enrollButton}
                           variant="contained"
                           onClick={(e) => {
                             handleOpen();
@@ -429,56 +461,30 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                             e.stopPropagation();
                           }}
                         >
-                          Завершено
+                          {isRec ? "Вы уже записаны" : "Записаться"}
                         </Button>
                       </Tooltip>
-                      :
-                      canFinish ?
-                        <Tooltip title="Завершить активность">
-                          <Button
-                            style={{ background: "rgb(221, 76, 76)", margin: "0 10px" }}
-                            variant="contained"
-                            onClick={(e) => {
-                              handleOpenEnd();
-                              setCurrentActivity(row);
-                              e.stopPropagation();
-                            }}
-                          >
-                            Завершить
-                          </Button>
-                        </Tooltip>
-                        :
-                        <Tooltip title="Записаться на мероприятие">
-                          <Button
-                            disabled={isRec}
-                            className={styles.enrollButton}
-                            variant="contained"
-                            onClick={(e) => {
-                              handleOpen();
-                              setCurrentActivity(row);
-                              e.stopPropagation();
-                            }}
-                          >
-                            {isRec ? "Вы уже записаны" : "Записаться"}
-                          </Button>
-                        </Tooltip>
-                    }
+                    )}
                   </div>
-                }
+                )}
               </div>
             </div>
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <div className={`${styles.details} d-flex flex-row justify-content-between`}>
+          <div
+            className={`${styles.details} d-flex flex-row justify-content-between`}
+          >
             <div className={`${styles.flexColumn} `}>
               <Typography sx={{ color: "text.secondary" }}>Описание</Typography>
               <Typography>{row.description}</Typography>
             </div>
 
-            {row.typeId === 1 && wineerUser ?
+            {row.typeId === 1 && wineerUser ? (
               <div className={styles.flexColumn}>
-                <Typography sx={{ color: "text.secondary" }}>Победитель</Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  Победитель
+                </Typography>
                 <Tooltip title={`${wineerUser?.user.FIO}`}>
                   <Avatar
                     alt={`${wineerUser?.user.FIO}`}
@@ -486,32 +492,35 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   />
                 </Tooltip>
               </div>
-              : null}
+            ) : null}
 
-            {row.rewardValue ?
+            {row.rewardValue ? (
               <div className={`${styles.flexColumn} mx-auto`}>
-                <Typography sx={{ color: "text.secondary " }}>Награда</Typography>
-                {row.rewardType === 1 ?
-                  <Typography className="fw-bold mx-auto">{row.rewardValue} Digital Rubles</Typography>
-                  : null}
+                <Typography sx={{ color: "text.secondary " }}>
+                  Награда
+                </Typography>
+                {row.rewardType === 1 ? (
+                  <Typography className="fw-bold mx-auto">
+                    {row.rewardValue} Digital Rubles
+                  </Typography>
+                ) : null}
 
-                {row.rewardType === 2 ?
+                {row.rewardType === 2 ? (
                   <Tooltip title="NFT">
-                    <Avatar
-                      alt="NFT"
-                      src={`${row.rewardValue}`}
-                    />
+                    <Avatar alt="NFT" src={`${row.rewardValue}`} />
                   </Tooltip>
-                  : null}
-                {row.rewardType === 3 ?
+                ) : null}
+                {row.rewardType === 3 ? (
                   <Typography className="fw-bold">{row.rewardValue}</Typography>
-                  : null}
+                ) : null}
               </div>
-              : null}
+            ) : null}
 
-            {row.users.length !== 0 ?
-              <div >
-                <Typography sx={{ color: "text.secondary" }}>Участники</Typography>
+            {row.users.length !== 0 ? (
+              <div>
+                <Typography sx={{ color: "text.secondary" }}>
+                  Участники
+                </Typography>
                 <div className={styles.allMembers}>
                   <AvatarGroup max={row.users.length}>
                     {row.users.map((user) => (
@@ -526,8 +535,7 @@ const ActivityItem: React.FC<IActivityItemProps> = ({ row, withoutButton }) => {
                   </AvatarGroup>
                 </div>
               </div>
-              : null}
-
+            ) : null}
           </div>
         </AccordionDetails>
       </Accordion>

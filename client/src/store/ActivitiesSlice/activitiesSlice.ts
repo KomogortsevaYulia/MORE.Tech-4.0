@@ -52,6 +52,12 @@ export const patchCompletedActivities = createAsyncThunk(
     return MainApi.patchCompletedActivities(id);
   },
 );
+export const patchWinnerActivities = createAsyncThunk(
+  'Activities/patchWinnerActivities',
+  async (id: number) => {
+    return MainApi.patchWinnerActivities(id);
+  },
+);
 
 export const createActivityRecord = createAsyncThunk(
   'Activities/createActivityRecord',
@@ -102,6 +108,9 @@ export const ActivitiesSlice = createSlice({
       })
       .addCase(patchCompletedActivities.fulfilled, (state, action) => {
         state.Activities!.find((a) => a.id === action.payload.id)!.completed = true;
+      })
+      .addCase(patchWinnerActivities.fulfilled, (state, action) => {
+        state.Activities!.find((a) => a.users.forEach(o=> {if( o.id === action.payload.id){o.isWin=true}}));
       })
       .addCase(createActivity.fulfilled, (state, action) => {
         state.Activities?.push(action.payload);

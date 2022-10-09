@@ -108,11 +108,11 @@ export class BlockchainApi {
         toPublicKey: toPublicKey,
         tokenId: tokenId,
       })
-      .then(function (response: TransactionResponse) {
-        return response;
+      .then(function (response: AxiosResponse) {
+        return response.data;
       })
       .catch(function (error: any) {
-        return error;
+        throw error;
       });
   }
 

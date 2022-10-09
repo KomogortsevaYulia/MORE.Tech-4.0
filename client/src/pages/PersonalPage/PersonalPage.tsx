@@ -20,6 +20,7 @@ import { fetchOrderWithUser } from "../../store/orderSlice/orderSlice";
 import ActivityItem from "../../components/ActivityItem/ActivityItem";
 import { fetchNFTBalance } from "../../store/adminSlice/adminSlice";
 import NftCard from "../AdminPage/NftCard/NftCard";
+import { fetchTransactionsNft } from "../../store/transactionsSlice/transactionsSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -71,9 +72,11 @@ const PersonalPage = () => {
     dispatch(fetchActivitiesWithUser(user!.id));
     dispatch(fetchOrderWithUser(user!.id));
     dispatch(fetchNFTBalance(user!.publicKey));
+    dispatch(fetchTransactionsNft());
   }, [dispatch, user]);
 
   const { transferRuble } = useAppSelector((state) => state.transferRuble);
+  const { transactionsNft } = useAppSelector((state) => state.transactions);
   const { ActivitiesRecords } = useAppSelector((state) => state.activities);
   const { order } = useAppSelector((state) => state.orders);
   const { nftCollections } = useAppSelector((state) => state.admin);
@@ -176,18 +179,46 @@ const PersonalPage = () => {
             </TableHead>
             <TableBody>
               {transferRuble &&
-                transferRuble?.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell align="left">{row.user.FIO}</TableCell>
-                    <TableCell align="left">{row.users2.FIO}</TableCell>
-                    <TableCell align="left">{row.amount}</TableCell>
-                    <TableCell align="left">{row.date.split("T")[0]}</TableCell>
-                    <TableCell align="left">{row.why}</TableCell>
-                  </TableRow>
-                ))}
+                transactionsNft &&
+                [
+                  ...transferRuble,
+                  ...transactionsNft.filter(
+                    (tNft) => tNft.toId === user!.id || tNft.userId === user!.id
+                  ),
+                ]!
+                  .sort((t1, t2) =>
+                    new Date(t1.date) < new Date(t2.date) ? 1 : -1
+                  )
+                  ?.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="left">{row.user.FIO}</TableCell>
+                      <TableCell align="left">{row.users2.FIO}</TableCell>
+                      {"amount" in row ? (
+                        <TableCell align="left">{row.amount}</TableCell>
+                      ) : (
+                        <TableCell align="left">
+                          x1
+                          <img
+                            src={row.nft.uri}
+                            alt={row.nft.uri}
+                            style={{
+                              marginLeft: "8px",
+                              width: "48px",
+                              height: "48px",
+                              borderRadius: "100%",
+                            }}
+                          />
+                        </TableCell>
+                      )}
+                      <TableCell align="left">
+                        {row.date.split("T")[0]}
+                      </TableCell>
+                      <TableCell align="left">{row.why}</TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </TableContainer>

@@ -93,7 +93,7 @@
       "dateEnd": "2022-13-10",
       "rewardValue": 55,
       "rewardType": 1,
-      "completed": true
+      "completed": false
     },
     {
       "id": 2,
@@ -104,7 +104,7 @@
       "dateEnd": "2022-15-08",
       "rewardValue": "https://games.mail.ru/hotbox/content_files/news/2022/01/26/d1c28756c16646898f81153f35c9d686.jpg",
       "rewardType": 2,
-      "completed": true
+      "completed": false
     },
     {
       "id": 3,
@@ -115,7 +115,7 @@
       "dateEnd": "2022-12-07",
       "rewardValue": 10,
       "rewardType": 1,
-      "completed": true
+      "completed": false
     },
     {
       "id": 4,
@@ -126,7 +126,7 @@
       "dateEnd": "2022-19-07",
       "rewardValue": 40,
       "rewardType": 1,
-      "completed": true
+      "completed": false
     },
     {
       "id": 6,
@@ -159,7 +159,7 @@
       "dateEnd": "2022-29-10",
       "rewardValue": 15,
       "rewardType": 1,
-      "completed": true
+      "completed": false
     },
     {
       "id": 9,
@@ -221,7 +221,7 @@
       "dateEnd": "2022-16-12",
       "rewardValue": 150,
       "rewardType": 1,
-      "completed": true
+      "completed": false
     },
     {
       "dateEnd": "2022-10-08",
@@ -591,144 +591,216 @@
       "id": 32
     },
     {
-      "amount": 10,
-      "userId": 2,
-      "toId": 3,
-      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "why": "По доброте душевной",
-      "date": "2022-10-09T04:45:40.231Z",
+      "amount": 44,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "userId": 3,
+      "why": "Покупка в маркетплейсе",
+      "toId": 1,
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "date": "2022-10-09T03:37:48.918Z",
       "id": 33
     },
     {
-      "amount": 10,
-      "userId": 2,
-      "toId": 4,
+      "amount": 0,
       "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
-      "why": "По доброте душевной",
-      "date": "2022-10-09T04:45:40.230Z",
+      "userId": 2,
+      "why": "Покупка в маркетплейсе",
+      "toId": 1,
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "date": "2022-10-09T04:37:08.759Z",
       "id": 34
     },
     {
-      "amount": 10,
-      "userId": 2,
-      "toId": 4,
-      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
-      "why": "По доброте душевной",
-      "date": "2022-10-09T04:46:41.154Z",
+      "amount": 11,
+      "userId": 3,
+      "toId": 2,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "why": ")",
+      "date": "2022-10-09T05:55:12.576Z",
       "id": 35
     },
     {
-      "amount": 10,
-      "userId": 2,
-      "toId": 3,
-      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "why": "По доброте душевной",
-      "date": "2022-10-09T04:46:41.156Z",
+      "amount": 11,
+      "userId": 3,
+      "toId": 2,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "why": ")",
+      "date": "2022-10-09T05:55:12.584Z",
       "id": 36
     },
     {
-      "amount": 134,
-      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
-      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
-      "toId": 1,
-      "userId": 1,
-      "why": "Начисление от администратора",
-      "date": "2022-10-09T04:59:09.389Z",
+      "amount": 11,
+      "userId": 3,
+      "toId": 2,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "why": ")",
+      "date": "2022-10-09T05:55:35.289Z",
       "id": 37
     },
     {
-      "amount": 1212,
-      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "toId": 3,
+      "amount": 11,
       "userId": 3,
-      "why": "Начисление от Руководителя отдела",
-      "date": "2022-10-09T05:06:09.407Z",
+      "toId": 2,
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "why": ")",
+      "date": "2022-10-09T05:56:08.581Z",
       "id": 38
     },
     {
-      "amount": 1212,
-      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
-      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
-      "toId": 4,
-      "userId": 3,
-      "why": "Начисление от Руководителя отдела",
-      "date": "2022-10-09T05:06:09.405Z",
+      "amount": 0,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "userId": 1,
+      "why": "Покупка в маркетплейсе",
+      "toId": 1,
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "date": "2022-10-09T06:19:30.461Z",
       "id": 39
     },
     {
-      "amount": 11,
-      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
-      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
-      "toId": 4,
-      "userId": 3,
-      "why": "Начисление от Руководителя отдела",
-      "date": "2022-10-09T05:06:16.845Z",
-      "id": 40
-    },
-    {
-      "amount": 11,
-      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "toId": 3,
-      "userId": 3,
-      "why": "Начисление от Руководителя отдела",
-      "date": "2022-10-09T05:06:16.846Z",
-      "id": 41
-    },
-    {
-      "amount": 40,
-      "userId": 2,
-      "toId": 3,
-      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "why": "За обучение Обучение медитации",
-      "date": "2022-10-09T05:28:42.952Z",
-      "id": 42
-    },
-    {
-      "amount": 10,
-      "userId": 2,
-      "toId": 3,
-      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "why": "За обучение Обучение таймменеджменту",
-      "date": "2022-10-09T05:29:16.194Z",
-      "id": 43
-    },
-    {
-      "amount": 10,
-      "userId": 2,
-      "toId": 4,
-      "fromPrivateKey": "6e0b609ff583df2cc08522ddf1cb1dfef002621371dd3213532b87e8b96215b9",
-      "toPublicKey": "0xfb9798B7fD552AF80659E87618787a13b2c17170",
-      "why": "За обучение Обучение таймменеджменту",
-      "date": "2022-10-09T05:29:16.192Z",
-      "id": 44
-    },
-    {
-      "amount": 55,
+      "amount": 0,
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "userId": 1,
+      "why": "Покупка в маркетплейсе",
+      "toId": 1,
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "date": "2022-10-09T06:19:47.848Z",
+      "id": 40
+    }
+  ],
+  "transferNft": [
+    {
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://www.meme-arsenal.com/memes/8f3a6affa4673b62b9fa3d4ce84403fc.jpg",
+        "tokens": [638]
+      },
       "toId": 2,
+      "userId": 3,
+      "why": "привет сладкий",
+      "date": "2022-10-09T05:41:22.985Z",
+      "id": 1
+    },
+    {
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://www.meme-arsenal.com/memes/8f3a6affa4673b62b9fa3d4ce84403fc.jpg",
+        "tokens": [639]
+      },
+      "toId": 2,
+      "userId": 3,
+      "why": "привет сладкий",
+      "date": "2022-10-09T05:44:57.054Z",
+      "id": 2
+    },
+    {
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://pic.rutubelist.ru/user/91/ba/91bafb3d37bed7c0538397d2135e7ade.jpg",
+        "tokens": [1218]
+      },
+      "toId": 2,
+      "userId": 3,
+      "why": "дангеон масстер",
+      "date": "2022-10-09T05:49:48.152Z",
+      "id": 3
+    },
+    {
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://www.meme-arsenal.com/memes/8f3a6affa4673b62b9fa3d4ce84403fc.jpg",
+        "tokens": [639]
+      },
+      "toId": 2,
+      "userId": 3,
+      "why": ")",
+      "date": "2022-10-09T05:52:51.854Z",
+      "id": 4
+    },
+    {
+      "fromPrivateKey": "6b2cc9d85fd086ed7ce3d33553969408536110d5068136d005b9161ea9c76713",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://pic.rutubelist.ru/user/91/ba/91bafb3d37bed7c0538397d2135e7ade.jpg",
+        "tokens": [1218]
+      },
+      "toId": 2,
+      "userId": 3,
+      "why": ")",
+      "date": "2022-10-09T05:56:48.134Z",
+      "id": 5
+    },
+    {
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "nft": {
+        "uri": "https://www.meme-arsenal.com/memes/8f3a6affa4673b62b9fa3d4ce84403fc.jpg",
+        "tokens": [675]
+      },
+      "toId": 1,
+      "userId": 1,
+      "why": "Покупка в маркетплейсе",
+      "date": "2022-10-09T06:19:30.461Z",
+      "id": 6
+    },
+    {
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0x93bD4F85e0b86f542663bcCFbAcFBd903371f1c9",
+      "nft": {
+        "uri": "https://www.meme-arsenal.com/memes/8f3a6affa4673b62b9fa3d4ce84403fc.jpg",
+        "tokens": [675]
+      },
+      "toId": 1,
+      "userId": 1,
+      "why": "Покупка в маркетплейсе",
+      "date": "2022-10-09T06:19:47.849Z",
+      "id": 7
+    },
+    {
       "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
       "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
-      "why": "За командное взаимодействие Поход на природу",
-      "date": "2022-10-09T05:31:31.122Z",
-      "id": 45
+      "nft": {
+        "uri": "https://games.mail.ru/hotbox/content_files/news/2022/01/26/d1c28756c16646898f81153f35c9d686.jpg",
+        "tokens": [1231]
+      },
+      "toId": 2,
+      "userId": 1,
+      "why": "приветствую смотрящих",
+      "date": "2022-10-09T06:34:25.316Z",
+      "id": 8
     },
     {
-      "amount": 55,
-      "userId": 1,
-      "toId": 3,
       "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
-      "toPublicKey": "0x8B0Efb9a637c6356F8B374D6259Fe484E7C5151B",
-      "why": "За командное взаимодействие Поход на природу",
-      "date": "2022-10-09T05:31:31.124Z",
-      "id": 46
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://i.ytimg.com/vi/K6bDF8f6MRM/maxresdefault.jpg",
+        "tokens": [1215]
+      },
+      "toId": 2,
+      "userId": 1,
+      "why": "Гачи босс",
+      "date": "2022-10-09T06:35:46.407Z",
+      "id": 9
+    },
+    {
+      "fromPrivateKey": "5c792dd862c2c9bd95155b655b937ff3760b84e5b1f80df85f6cf9e56413984d",
+      "toPublicKey": "0xEc6b62feD6ece4E879eA0640798a506439f53c6C",
+      "nft": {
+        "uri": "https://sun9-55.userapi.com/impg/VWK3MNiuiSQ4qkie2ZpGB8d6wsReUMN0VNxZyQ/I_JT4QYzGJE.jpg?size=1024x640&quality=95&sign=bf61540c0288113e0fadfbb7e8303a5d&type=album",
+        "tokens": [1190]
+      },
+      "toId": 2,
+      "userId": 1,
+      "why": "в чём сила брат?",
+      "date": "2022-10-09T06:42:20.659Z",
+      "id": 10
     }
   ],
   "products": [
@@ -796,7 +868,7 @@
       "isWin": false
     },
     {
-      "id": 1,
+      "id": 2,
       "userId": 2,
       "activitiesId": 2,
       "isWin": false
@@ -873,7 +945,7 @@
       "userId": 1,
       "activitiesId": 2,
       "id": 20,
-      "isWin": true
+      "isWin": false
     },
     {
       "userId": 1,
@@ -909,6 +981,18 @@
       "bet": 20,
       "id": 25,
       "isWin": false
+    },
+    {
+      "userId": 4,
+      "activitiesId": 16,
+      "bet": 10,
+      "id": 26
+    },
+    {
+      "userId": 4,
+      "activitiesId": 18,
+      "bet": 10,
+      "id": 27
     }
   ],
   "orders": [
@@ -927,6 +1011,102 @@
       "count": 1,
       "sum": 3,
       "date": "2022-10-08T02:35:42.510Z"
+    },
+    {
+      "userId": 2,
+      "productId": 1,
+      "count": 1,
+      "sum": 25,
+      "date": "2022-10-09T02:52:58.791Z",
+      "id": 2
+    },
+    {
+      "userId": 2,
+      "productId": 3,
+      "count": 2,
+      "sum": 40,
+      "date": "2022-10-09T02:52:58.792Z",
+      "id": 3
+    },
+    {
+      "userId": 2,
+      "productId": 2,
+      "count": 1,
+      "sum": 10,
+      "date": "2022-10-09T02:52:58.793Z",
+      "id": 4
+    },
+    {
+      "userId": 2,
+      "productId": 4,
+      "count": 4,
+      "date": "2022-10-09T03:07:09.106Z",
+      "id": 5,
+      "sum": 100
+    },
+    {
+      "userId": 2,
+      "productId": 3,
+      "count": 1,
+      "date": "2022-10-09T03:07:09.107Z",
+      "id": 6,
+      "sum": 56
+    },
+    {
+      "userId": 2,
+      "productId": 3,
+      "count": 4,
+      "date": "2022-10-09T03:08:08.082Z",
+      "sum": 136,
+      "id": 7
+    },
+    {
+      "userId": 3,
+      "productId": 1,
+      "count": 3,
+      "date": "2022-10-09T03:30:21.681Z",
+      "sum": 75,
+      "id": 8
+    },
+    {
+      "userId": 3,
+      "productId": 3,
+      "count": 1,
+      "date": "2022-10-09T03:37:48.916Z",
+      "sum": 34,
+      "id": 9
+    },
+    {
+      "userId": 3,
+      "productId": 2,
+      "count": 2,
+      "date": "2022-10-09T03:37:48.917Z",
+      "sum": 10,
+      "id": 10
+    },
+    {
+      "userId": 2,
+      "productId": 5,
+      "count": 1,
+      "date": "2022-10-09T04:37:08.757Z",
+      "sum": 768,
+      "id": 11
+    },
+    {
+      "userId": 1,
+      "productId": 5,
+      "count": 1,
+      "date": "2022-10-09T06:19:30.460Z",
+      "sum": 768,
+      "id": 12
+    },
+    {
+      "userId": 1,
+      "productId": 5,
+      "count": 1,
+      "date": "2022-10-09T06:19:47.847Z",
+      "sum": 768,
+      "id": 13
     }
   ]
 }

@@ -6,6 +6,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   fetchTransactions,
+  fetchTransactionsNft,
   transferNft,
   transferRubles,
 } from "../../store/transactionsSlice/transactionsSlice";
@@ -29,15 +30,19 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { fetchUsers } from "../../store/adminSlice/adminSlice";
+import { removeNftFromBalance } from "../../store/userSlice/userSlice";
 
 const TransactionsPage = () => {
   const dispatch = useAppDispatch();
-  const { transactions } = useAppSelector((state) => state.transactions);
+  const { transactions, transactionsNft } = useAppSelector(
+    (state) => state.transactions
+  );
   const { user } = useAppSelector((state) => state.user);
   const { users, nftCollections } = useAppSelector((state) => state.admin);
 
   React.useEffect(() => {
     dispatch(fetchTransactions());
+    dispatch(fetchTransactionsNft());
     dispatch(fetchUsers());
   }, [dispatch]);
 
@@ -121,16 +126,21 @@ const TransactionsPage = () => {
   };
 
   const handleTransferNft = () => {
-    const tokenId = nftCollections!.balance.find(
+    const nft = nftCollections!.balance.find(
       (nft) => nft.uri === nftToTransfer
-    )!.tokens[0];
+    )!;
+    const tokenId = nft.tokens[0];
     dispatch(
       transferNft({
         fromPrivateKey: user!.privateKey,
-        tokenId,
         toPublicKey: personNftReciever,
+        nft: { ...nft, tokens: [tokenId] },
+        toId: users!.find((u) => u.publicKey === personNftReciever)!.id,
+        userId: user!.id,
+        why: sendNftReason || "По доброте душевной",
       })
     );
+    dispatch(removeNftFromBalance(nft.uri));
   };
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -381,25 +391,50 @@ const TransactionsPage = () => {
           </TableHead>
           <TableBody>
             {transactions &&
-              transactions?.map((row, index) => (
-                <TableRow
-                  key={row.id}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    background: index % 2 === 0 ? "#D9D9D9" : "",
-                  }}
-                >
-                  <StyledTableCell align="left">{row.user.FIO}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {row.users2.FIO}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">{row.amount}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {row.date.split("T")[0]}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">{row.why}</StyledTableCell>
-                </TableRow>
-              ))}
+              transactionsNft &&
+              [...transactions!, ...transactionsNft!]
+                .sort((t1, t2) =>
+                  new Date(t1.date) < new Date(t2.date) ? 1 : -1
+                )
+                .map((row, index) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      background: index % 2 === 0 ? "#D9D9D9" : "",
+                    }}
+                  >
+                    <StyledTableCell align="left">
+                      {row.user.FIO}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {row.users2.FIO}
+                    </StyledTableCell>
+                    {"amount" in row ? (
+                      <StyledTableCell align="left">
+                        {row.amount}
+                      </StyledTableCell>
+                    ) : (
+                      <StyledTableCell align="left">
+                        x1
+                        <img
+                          src={row.nft.uri}
+                          alt={row.nft.uri}
+                          style={{
+                            marginLeft: "8px",
+                            width: "48px",
+                            height: "48px",
+                            borderRadius: "100%",
+                          }}
+                        />
+                      </StyledTableCell>
+                    )}
+                    <StyledTableCell align="left">
+                      {row.date.split("T")[0]}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">{row.why}</StyledTableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </TableContainer>
