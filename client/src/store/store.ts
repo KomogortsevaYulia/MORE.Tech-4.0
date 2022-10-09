@@ -1,11 +1,12 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import marketSlice from "./marketSlice/marketSlice";
-import userSlice from "./userSlice/userSlice";
-import transferRubleSlice from "./transferRubleSlice/transferRubleSlice";
-import adminSlice from "./adminSlice/adminSlice";
-import activitiesSlice from "./ActivitiesSlice/activitiesSlice";
-import transactionsSlice from "./transactionsSlice/transactionsSlice";
-import ordersSlice from "./orderSlice/orderSlice";
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import marketSlice from './marketSlice/marketSlice';
+import userSlice from './userSlice/userSlice';
+import transferRubleSlice from './transferRubleSlice/transferRubleSlice';
+import adminSlice from './adminSlice/adminSlice';
+import activitiesSlice from './ActivitiesSlice/activitiesSlice';
+import transactionsSlice from './transactionsSlice/transactionsSlice';
+import ordersSlice from './orderSlice/orderSlice';
+import departmentSlice from './departmentSlice/departmentSlice';
 export const store = configureStore({
   reducer: {
     market: marketSlice,
@@ -15,6 +16,7 @@ export const store = configureStore({
     activities: activitiesSlice,
     transactions: transactionsSlice,
     orders: ordersSlice,
+    departments: departmentSlice,
   },
 });
 
