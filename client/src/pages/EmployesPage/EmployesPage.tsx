@@ -35,7 +35,6 @@ const AnalyticPage = () => {
         setOpenModal(false);
     }, [setOpenModal]);
     const accrueClick = useCallback((amount: number) => {
-        console.log(usersToGetMoney)
         dispatch(
             transferRubles(
                 usersToGetMoney.map((u) => ({

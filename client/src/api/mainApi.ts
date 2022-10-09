@@ -352,7 +352,6 @@ export class MainApi {
         }
 
         await Promise.all(promises);
-        console.log(departments);
         return departments;
       })
       .catch((err) => {
