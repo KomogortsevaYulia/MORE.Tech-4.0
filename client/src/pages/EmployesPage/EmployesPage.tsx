@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, ListItem, List, ListItemButton, ListItemText, ListItemIcon } from "@mui/material";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchDepartments } from "../../store/departmentSlice/departmentSlice";
@@ -9,7 +9,7 @@ import { IUserWithBalance } from "../../api/mainApi";
 import AddModal from "../AdminPage/AddModal/AddModal";
 import { transferRubles } from "../../store/transactionsSlice/transactionsSlice";
 import { ROLES_IDS } from "../../types/enums";
-
+import PersonIcon from '@mui/icons-material/Person';
 const AnalyticPage = () => {
     const { users, nftCollections } = useAppSelector((state) => state.admin);
     const [usersToGetMoney, setUsersToGetMoney] = React.useState<any[]>([]);
@@ -67,21 +67,44 @@ const AnalyticPage = () => {
                             <h3>Сотрудники</h3>
 
                             <div>
-                                <UsersTable
-                                    rows={
-                                        d.users?.map((user) => ({
-                                            ...user,
-                                            balance:
-                                                (user as IUserWithBalance).balance?.coinsAmount?.toLocaleString() ||
-                                                "Загружается...",
-                                            name: user.FIO,
-                                        })) || []
-                                    }
-                                    onAddClick={addClick}
-                                    isAddVisible={
-                                        user?.roleId === ROLES_IDS.MASTER && user.departmentId === d.id
-                                    }
-                                />
+                                {
+                                    user?.roleId === ROLES_IDS.MASTER && user.departmentId === d.id ? (
+                                        <UsersTable
+                                            rows={
+                                                d.users?.map((user) => ({
+                                                    ...user,
+                                                    balance:
+                                                        (user as IUserWithBalance).balance?.coinsAmount?.toLocaleString() ||
+                                                        "Загружается...",
+                                                    name: user.FIO,
+                                                })) || []
+                                            }
+                                            onAddClick={addClick}
+                                        />
+                                    ) : (
+                                        <List>
+                                            {
+                                                d.users.map(u => (
+                                                    <ListItem key={u.id}>
+                                                        <ListItemButton
+
+                                                        >
+                                                            <ListItemIcon>
+                                                                <PersonIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText
+                                                                primary={u.FIO}
+                                                            />
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                ))
+                                            }
+
+
+                                        </List>
+                                    )
+                                }
+
                             </div>
                         </AccordionDetails>
                     </Accordion>
