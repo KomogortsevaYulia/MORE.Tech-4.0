@@ -20,7 +20,7 @@ export interface IDepartmentWithUser extends IDepartment {
   users: IUser[];
 }
 
-export interface IUserWithDepartment extends IUser {
+export interface IUserWithDepartment extends IUserWithBalance {
   department: IDepartment;
 }
 
@@ -94,7 +94,7 @@ export interface IActivityRecords {
   userId: number;
   activitiesId: number;
   user: IUser;
-  isWin:boolean;
+  isWin: boolean;
   activities: IActivities;
   bet?: number;
 }
@@ -221,7 +221,6 @@ export class MainApi {
     }));
   }
 
-
   static async fetchActivities() {
     const activities = await axios
       .get<IActivities[]>(`${apiUrl}/activities?_sort=dateStart`)
@@ -265,7 +264,7 @@ export class MainApi {
 
   static async patchCompletedActivities(id: number) {
     return axios
-      .patch(`${apiUrl}/activities/${id}`, { "completed": true })
+      .patch(`${apiUrl}/activities/${id}`, { completed: true })
       .then((response) => response.data);
   }
 
@@ -331,7 +330,7 @@ export class MainApi {
     return axios
       .get<IUserWithDepartment[]>(`${apiUrl}/users?&_expand=department`)
       .then((response) => response.data)
-      .then((users: IUserWithDepartment[]) => {
+      .then(async (users: IUserWithDepartment[]) => {
         const departments: IDepartmentWithUser[] = [];
 
         users.forEach((user) => {
@@ -341,6 +340,18 @@ export class MainApi {
             departments[user.departmentId] = { ...user.department, users: [user] };
           }
         });
+
+        const promises = [];
+
+        for (let user of users) {
+          promises.push(
+            BlockchainApi.balanceFiat(user.publicKey).then(
+              (balance: BalanceFiat) => (user.balance = balance),
+            ),
+          );
+        }
+
+        await Promise.all(promises);
         console.log(departments);
         return departments;
       })
